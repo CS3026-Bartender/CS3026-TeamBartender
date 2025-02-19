@@ -24,8 +24,8 @@
 /[Aa]ssets/Plugins/Editor/JetBrains*
 
 # TextMeshPro
-Assets/TextMeshPro/*
-Assets/TextMeshPro.meta
+Assets/TextMesh Pro/*
+Assets/TextMesh Pro.meta
 
 # Visual Studio cache directory
 .vs/
