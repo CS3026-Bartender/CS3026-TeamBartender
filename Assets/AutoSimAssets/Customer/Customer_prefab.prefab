@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6540772100189123551}
   - component: {fileID: 1297411701913124632}
   - component: {fileID: 5922144557752696456}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 8041344247828268118}
   - component: {fileID: 6612941032972536916}
   - component: {fileID: 964491651009820677}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Fillbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 2198407206028581394}
   - component: {fileID: 952293164497030164}
   - component: {fileID: 7139280402535381321}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0.29463917, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 3983809854138553128}
   - component: {fileID: 3200665124228962850}
   - component: {fileID: 233368005864943083}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: HealthBarCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,8 +406,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Max_satisfaction: 100
   Current_satisfaction: 0
-  HealthBarImage: {fileID: 0}
-  HealthBarBackground: {fileID: 0}
   currentType: 0
   regularColor: {r: 0, g: 1, b: 0, a: 1}
   regularBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
@@ -426,7 +424,7 @@ GameObject:
   - component: {fileID: 4660538947062163566}
   - component: {fileID: 8479035806299222722}
   - component: {fileID: 8409048362446759438}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -502,7 +500,7 @@ GameObject:
   - component: {fileID: 448889325706440093}
   - component: {fileID: 7992328963786247080}
   - component: {fileID: 4526937283772622267}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Customer_prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -609,8 +607,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Max_satisfaction: 100
   Current_satisfaction: 0
-  HealthBarImage: {fileID: 964491651009820677}
-  HealthBarBackground: {fileID: 8409048362446759438}
   currentType: 0
   regularColor: {r: 0.8431373, g: 0.10980393, b: 0.87843144, a: 1}
   regularBackgroundColor: {r: 0.5647059, g: 0.10980393, b: 0.87843144, a: 0}
@@ -628,7 +624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5917116445067511699}
   - component: {fileID: 2437585060073691217}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Healthbar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CustomerController : MonoBehaviour
 {
@@ -8,6 +9,12 @@ public class CustomerController : MonoBehaviour
     [SerializeField] private GameObject customerPrefab;
     [SerializeField] public Transform[] spawnPoints;
     [SerializeField] private float spawnInterval = 5f;
+
+
+    // Variables for targeted Customer
+    private GameObject SelectedCustomer;
+    [SerializeField] private Button[] CustomerTargetButtons;
+    [SerializeField] private Transform Target;
 
     // Keep track of customers in each slot (null = empty)
     private GameObject[] customerSlots = new GameObject[3];
@@ -22,6 +29,37 @@ public class CustomerController : MonoBehaviour
 
         // Spawn the first customer immediately
         SpawnCustomer();
+
+        // Set up targeted customer
+        SelectedCustomer = customerSlots[0];
+        Target.position = spawnPoints[0].position;
+
+        // Setup buttons to switch target. 
+        CustomerTargetButtons[0].onClick.AddListener(() => SetTargetToCustomer(0));
+        CustomerTargetButtons[1].onClick.AddListener(() => SetTargetToCustomer(1));
+        CustomerTargetButtons[2].onClick.AddListener(() => SetTargetToCustomer(2));
+
+    }
+
+
+    private void SetTargetToCustomer(int index)
+    {
+        if (customerSlots[index] != null)
+        {
+            SelectedCustomer = customerSlots[index];
+            Target.position = spawnPoints[index].position;
+            
+        }
+        Debug.Log("Button Pressed");
+    }
+
+    private void OnDestroy()
+    {
+        CustomerTargetButtons[0].onClick.RemoveListener(() => SetTargetToCustomer(0));
+        CustomerTargetButtons[1].onClick.RemoveListener(() => SetTargetToCustomer(1));
+        CustomerTargetButtons[2].onClick.RemoveListener(() => SetTargetToCustomer(2));
+
+
     }
 
     private IEnumerator SpawnCustomersRoutine()
