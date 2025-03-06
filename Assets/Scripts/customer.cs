@@ -40,7 +40,7 @@ public class customer : MonoBehaviour
         //Setup Healthbar
         Image[] images = GetComponentsInChildren<Image>();
         HealthBarImage = images[1];
-        HealthBarBackground = images[0];
+        HealthBarBackground = images[2];
         HealthBarSlider.maxValue = Max_satisfaction;
 
         //Setup Interaction with CustomerController

@@ -15,6 +15,7 @@ public static class DrinkManager
         public int bitterness; // Fixed capitalization to match style
         public int cooldownseconds;
         public Sprite drinkImage;
+
     }
 
     private static List<Drink> allDrinks = new List<Drink>();
