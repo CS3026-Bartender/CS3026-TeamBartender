@@ -8,7 +8,7 @@ public class ShopConfiguration : Object
 
     public ShopConfiguration(int numIngs)
     {
-        ingredients = IngredientManager.instance.GetRandomList(numIngs);
+        ingredients = IngredientData.GetRandomList(numIngs);
         ingredients.Sort((Ingredient i1, Ingredient i2) =>
         {
             if (i2.isSpirit)
@@ -25,7 +25,7 @@ public class ShopConfiguration : Object
     public void DebugPrintConfig()
     {
         foreach (Ingredient ing in ingredients) {
-            IngredientManager.instance.DebugPrintIng(ing);
+            IngredientData.DebugPrintIng(ing);
         }
     }
 }

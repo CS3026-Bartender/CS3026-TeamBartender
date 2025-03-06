@@ -1,6 +1,4 @@
-using System.Net.NetworkInformation;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class Ingredient : Object
 {

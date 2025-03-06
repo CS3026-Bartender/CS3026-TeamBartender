@@ -1,36 +1,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class IngredientManager : Manager<IngredientManager>
+// TEMP IMPLEMENTATION WHILE WAITING FOR THERYN'S DESIGN
+
+public static class IngredientData
 {
-    [SerializeField] private Sprite testSprite;
+    private static List<Ingredient> ingredients = new();
+    private static List<Ingredient> spirits = new();
 
-    private List<Ingredient> ingredients = new();
-    private List<Ingredient> spirits = new();
-
-    public void InitializeIngredients()
-    {
-        // Temp ingredients for testing
-        // TODO: replace with data read from csv
-        AddIngredient("Raspberry", 4.5f, "A tangy berry", testSprite);
-        AddSpirit("Rum", 8f, "Yo ho ho", testSprite);
-        AddIngredient("Bitters", 2f, "Deepens the flavor", testSprite);
-        AddIngredient("Lemon", 3f, "A sour citrus", testSprite);
-    }
-
-    public void AddIngredient(string name, float price, string desc, Sprite sprite)
+    public static void AddIngredient(string name, float price, string desc, Sprite sprite)
     {
         Ingredient newIng = new(name, price, desc, sprite, false);
         ingredients.Add(newIng);
     }
 
-    public void AddSpirit(string name, float price, string desc, Sprite sprite)
+    public static void AddSpirit(string name, float price, string desc, Sprite sprite)
     {
         Ingredient newIng = new(name, price, desc, sprite, true);
         spirits.Add(newIng);
     }
 
-    public List<Ingredient> GetRandomList(int numIngs)
+    public static List<Ingredient> GetRandomList(int numIngs)
     {
         List<Ingredient> all = new(spirits);
         all.AddRange(ingredients);
@@ -53,7 +43,7 @@ public sealed class IngredientManager : Manager<IngredientManager>
         return result;
     }
 
-    public void DebugPrintIng(Ingredient ing)
+    public static void DebugPrintIng(Ingredient ing)
     {
         Debug.Log(ing.GetDebug());
     }
