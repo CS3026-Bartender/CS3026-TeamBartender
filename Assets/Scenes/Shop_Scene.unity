@@ -1055,6 +1055,7 @@ GameObject:
   - component: {fileID: 629557345}
   - component: {fileID: 629557347}
   - component: {fileID: 629557346}
+  - component: {fileID: 629557348}
   m_Layer: 5
   m_Name: StartSim
   m_TagString: Untagged
@@ -1120,6 +1121,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 629557344}
   m_CullTransparentMesh: 1
+--- !u!114 &629557348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629557344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c6e1fb3216b6605cbc03c852872ea32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &634812287
 GameObject:
   m_ObjectHideFlags: 0
@@ -3152,7 +3165,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1410291195}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 629557348}
+        m_TargetAssemblyTypeName: LoadSim, Assembly-CSharp
+        m_MethodName: StartAutoSim
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1410291195
 MonoBehaviour:
   m_ObjectHideFlags: 0
