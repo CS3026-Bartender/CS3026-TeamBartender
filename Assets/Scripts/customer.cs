@@ -29,16 +29,33 @@ public class customer : MonoBehaviour
     [SerializeField] private Color vipBackgroundColor;
 
 
+    private CustomerController CustomerControllerScript;
+
+    public Slider HealthBarSlider;
+
+
     private void Awake()
     {
+
+        //Setup Healthbar
         Image[] images = GetComponentsInChildren<Image>();
         HealthBarImage = images[1];
         HealthBarBackground = images[0];
+        HealthBarSlider.maxValue = Max_satisfaction;
+
+        //Setup Interaction with CustomerController
+        GameObject ControllerObject = GameObject.Find("CustomerController");
+
+        if (ControllerObject != null)
+        {
+            CustomerControllerScript = ControllerObject.GetComponent<CustomerController>();
+        }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Current_satisfaction = Max_satisfaction;
+        Current_satisfaction = 0;
+        HealthBarSlider.value = Current_satisfaction;
         AssignRandomCustomerType(); 
     }
 
@@ -77,6 +94,12 @@ public class customer : MonoBehaviour
         return currentType;
     }
 
+    public void IncreaseSatisfaction(int Satisfaction)
+    {
+        Current_satisfaction += Satisfaction;
+        HealthBarSlider.value = Current_satisfaction;
+        if (Current_satisfaction >= Max_satisfaction) CustomerControllerScript.RemoveCustomer(gameObject);
+    }
     // Update is called once per frame
     void Update()
     {

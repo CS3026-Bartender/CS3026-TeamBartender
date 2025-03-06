@@ -50,7 +50,6 @@ public class CustomerController : MonoBehaviour
             Target.position = spawnPoints[index].position;
             
         }
-        Debug.Log("Button Pressed");
     }
 
     private void OnDestroy()
@@ -109,48 +108,32 @@ public class CustomerController : MonoBehaviour
     }
 
     // Public method to remove a customer (can be called from UI buttons, events, etc.)
-    public void RemoveCustomer(int slotIndex)
+    public void RemoveCustomer(GameObject Customer)
     {
-        // Validate the slot index
-        if (slotIndex < 0 || slotIndex >= customerSlots.Length)
+      
+       
+
+       for (int i=0; i< 3; i++)
         {
-            Debug.LogError("Invalid slot index: " + slotIndex);
+            if (customerSlots[i] == Customer)
+            {
+
+                Destroy(customerSlots[i]);
+                customerSlots[i] = null;
+                Debug.Log("Customer removed.");
+            }
             return;
         }
-
-        // Check if there's a customer in the specified slot
-        if (customerSlots[slotIndex] != null)
-        {
-            // Destroy the customer game object
-            Destroy(customerSlots[slotIndex]);
-
-            // Clear the slot reference
-            customerSlots[slotIndex] = null;
-
-            Debug.Log("Customer removed from slot: " + slotIndex);
-        }
-        else
-        {
-            Debug.Log("No customer in slot: " + slotIndex);
-        }
+       
+      
+            Debug.Log("Customer Couldnt be found");
+        
     }
 
-    // Overload to remove the first available customer (from lowest index)
-    public void RemoveCustomer()
-    {
-        for (int i = 0; i < customerSlots.Length; i++)
-        {
-            if (customerSlots[i] != null)
-            {
-                RemoveCustomer(i);
-                return;
-            }
-        }
 
-        Debug.Log("No customers to remove.");
-    }
 
-    // Optional: Stop the spawning process
+
+    //  Stop the spawning process
     public void StopSpawning()
     {
         if (spawnCoroutine != null)
@@ -160,7 +143,7 @@ public class CustomerController : MonoBehaviour
         }
     }
 
-    // Optional: Resume or start the spawning process
+    // Resume or start the spawning process
     public void StartSpawning()
     {
         if (spawnCoroutine == null)

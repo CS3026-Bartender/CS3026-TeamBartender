@@ -413,6 +413,7 @@ MonoBehaviour:
   premiumBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
   vipColor: {r: 1, g: 0, b: 0, a: 1}
   vipBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  HealthBarSlider: {fileID: 0}
 --- !u!1 &4849523656057789559
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,6 +615,7 @@ MonoBehaviour:
   premiumBackgroundColor: {r: 0.3529412, g: 0.7254902, b: 0.04705883, a: 0}
   vipColor: {r: 0.9960785, g: 0.16470589, b: 0.21568629, a: 1}
   vipBackgroundColor: {r: 0.5647059, g: 0.04705883, b: 0, a: 0}
+  HealthBarSlider: {fileID: 2437585060073691217}
 --- !u!1 &8594436715131498856
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,9 +700,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
-  m_Value: 1
+  m_MaxValue: 100
+  m_WholeNumbers: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
