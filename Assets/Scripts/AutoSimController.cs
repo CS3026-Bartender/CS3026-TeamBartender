@@ -111,7 +111,7 @@ public class AutoSimController : MonoBehaviour
         // Any cleanup or final satisfaction calculations can go here
 
         // Optional: Event that other systems can listen to
-        // OnSimulationEnded?.Invoke(totalSatisfaction);
+        // OnSimulationEnded?.Invoke(function);
     }
 
     // Add a drink to the active simulation
@@ -169,6 +169,7 @@ public class AutoSimController : MonoBehaviour
             customer customerScript = customerController.SelectedCustomer.GetComponent<customer>();
             if (customerScript != null)
             {
+                float satisfaction = CalculateSatisfaction(drink, customerScript);
                 customerScript.IncreaseSatisfaction(drink.potency);
                 Debug.Log($"Applied {drink.name} effect: +{drink.potency} satisfaction");
             }
@@ -177,5 +178,33 @@ public class AutoSimController : MonoBehaviour
                 Debug.LogError("Customer script component not found on target customer!");
             }
         }
+    }
+
+
+    float CalculateSatisfaction(Drink drink, customer customer)
+    {
+        float satisfaction = 0f;
+
+        switch (customer.currentType)
+        {
+            case customer.CustomerType.Regular:  // Type 0
+                satisfaction = drink.potency + drink.richness;
+                break;
+
+            case customer.CustomerType.Premium:  // Type 1
+                satisfaction = drink.potency + drink.fruityness;
+                break;
+
+            case customer.CustomerType.VIP:      // Type 2
+                satisfaction = drink.potency + drink.bitterness;
+                break;
+
+            default:
+                Debug.LogWarning("Unknown customer type encountered.");
+                satisfaction = drink.potency;  // Fallback to just potency
+                break;
+        }
+
+        return satisfaction;
     }
 }

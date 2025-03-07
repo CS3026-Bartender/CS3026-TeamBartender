@@ -11,7 +11,7 @@ public class customer : MonoBehaviour
         Premium,    // Type 1
         VIP         // Type 2
     }
-    [SerializeField] private CustomerType currentType;
+    [SerializeField] public CustomerType currentType;
 
     // Colors for each customer type
     [SerializeField] private Color regularColor;
