@@ -24,7 +24,9 @@ public class customer : MonoBehaviour
     private CustomerController CustomerControllerScript;
     public Slider HealthBarSlider;
 
-    // Health bar images - only need one set of variables
+    [SerializeField] private int MoneyPayed;
+
+    // Health bar images 
     [SerializeField] private Image healthBarImage;
     [SerializeField] private Image healthBarBackground;
 
@@ -103,6 +105,7 @@ public class customer : MonoBehaviour
         if (Current_satisfaction >= Max_satisfaction && CustomerControllerScript != null)
         {
             CustomerControllerScript.RemoveCustomer(gameObject);
+            CurrencyManager.Instance.AddMoney(MoneyPayed);
         }
     }
 

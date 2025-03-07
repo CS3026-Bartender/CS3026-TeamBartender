@@ -593,6 +593,7 @@ MonoBehaviour:
   vipColor: {r: 0.11753506, g: 0.9150943, b: 0, a: 1}
   vipBackgroundColor: {r: 0.078431375, g: 0.45098042, b: 0.023529414, a: 1}
   HealthBarSlider: {fileID: 2437585060073691217}
+  MoneyPayed: 25
   healthBarImage: {fileID: 964491651009820677}
   healthBarBackground: {fileID: 8409048362446759438}
 --- !u!1 &8594436715131498856
