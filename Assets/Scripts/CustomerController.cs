@@ -12,7 +12,7 @@ public class CustomerController : MonoBehaviour
 
 
     // Variables for targeted Customer
-    private GameObject SelectedCustomer;
+    public GameObject SelectedCustomer;
     [SerializeField] private Button[] CustomerTargetButtons;
     [SerializeField] private Transform Target;
 
@@ -22,17 +22,22 @@ public class CustomerController : MonoBehaviour
     // Coroutine reference for customer spawning
     private Coroutine spawnCoroutine;
 
+    private void Awake()
+    {
+        SpawnCustomer();
+        SelectedCustomer = customerSlots[0];
+        Target.position = spawnPoints[0].position;
+    }
     private void Start()
     {
         // Start the spawning process
         spawnCoroutine = StartCoroutine(SpawnCustomersRoutine());
 
         // Spawn the first customer immediately
-        SpawnCustomer();
+      
 
         // Set up targeted customer
-        SelectedCustomer = customerSlots[0];
-        Target.position = spawnPoints[0].position;
+     
 
         // Setup buttons to switch target. 
         CustomerTargetButtons[0].onClick.AddListener(() => SetTargetToCustomer(0));
@@ -121,8 +126,9 @@ public class CustomerController : MonoBehaviour
                 Destroy(customerSlots[i]);
                 customerSlots[i] = null;
                 Debug.Log("Customer removed.");
+                return;
             }
-            return;
+      
         }
        
       

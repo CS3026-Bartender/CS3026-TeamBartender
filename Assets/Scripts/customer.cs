@@ -1,15 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
-
 public class customer : MonoBehaviour
 {
-
     public int Max_satisfaction = 100;
     public int Current_satisfaction;
-
-    private Image HealthBarImage;
-    private Image HealthBarBackground;
-
 
     public enum CustomerType
     {
@@ -17,7 +11,6 @@ public class customer : MonoBehaviour
         Premium,    // Type 1
         VIP         // Type 2
     }
-
     [SerializeField] private CustomerType currentType;
 
     // Colors for each customer type
@@ -28,41 +21,43 @@ public class customer : MonoBehaviour
     [SerializeField] private Color vipColor;
     [SerializeField] private Color vipBackgroundColor;
 
-
     private CustomerController CustomerControllerScript;
-
     public Slider HealthBarSlider;
 
+    // Health bar images - only need one set of variables
+    [SerializeField] private Image healthBarImage;
+    [SerializeField] private Image healthBarBackground;
 
     private void Awake()
     {
-
-        //Setup Healthbar
-        Image[] images = GetComponentsInChildren<Image>();
-        HealthBarImage = images[1];
-        HealthBarBackground = images[2];
-        HealthBarSlider.maxValue = Max_satisfaction;
-
         //Setup Interaction with CustomerController
         GameObject ControllerObject = GameObject.Find("CustomerController");
-
         if (ControllerObject != null)
         {
             CustomerControllerScript = ControllerObject.GetComponent<CustomerController>();
         }
     }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Current_satisfaction = 0;
+
+        // Check if health bar components are assigned
+        if (healthBarImage == null || healthBarBackground == null)
+        {
+            Debug.LogError("Health bar images not assigned in inspector!");
+        }
+
+        AssignRandomCustomerType();
         HealthBarSlider.value = Current_satisfaction;
-        AssignRandomCustomerType(); 
     }
 
     private void AssignRandomCustomerType()
     {
         int typeIndex = Random.Range(0, 3);
-        SetCustomerType((CustomerType)typeIndex);
+        currentType = (CustomerType)typeIndex;
+        SetCustomerType(currentType);
     }
 
     // Set customer type and update visuals accordingly
@@ -70,22 +65,29 @@ public class customer : MonoBehaviour
     {
         currentType = type;
 
-        // Set health bar color based on type
-        switch (currentType)
+        // Make sure health bar images are not null before accessing
+        if (healthBarImage != null && healthBarBackground != null)
         {
-            case CustomerType.Regular:
-                HealthBarImage.color = regularColor;
-                HealthBarBackground.color = regularBackgroundColor;
-                break;
-            case CustomerType.Premium:
-                HealthBarImage.color = premiumColor;
-                HealthBarBackground.color = premiumBackgroundColor;
-                break;
-            case CustomerType.VIP:
-                HealthBarImage.color = vipColor;
-                HealthBarBackground.color = vipBackgroundColor;
-
-                break;
+            // Set health bar color based on type
+            switch (currentType)
+            {
+                case CustomerType.Regular:
+                    healthBarImage.color = regularColor;
+                    healthBarBackground.color = regularBackgroundColor;
+                    break;
+                case CustomerType.Premium:
+                    healthBarImage.color = premiumColor;
+                    healthBarBackground.color = premiumBackgroundColor;
+                    break;
+                case CustomerType.VIP:
+                    healthBarImage.color = vipColor;
+                    healthBarBackground.color = vipBackgroundColor;
+                    break;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Cannot set customer type visuals: health bar images not assigned!");
         }
     }
 
@@ -98,11 +100,15 @@ public class customer : MonoBehaviour
     {
         Current_satisfaction += Satisfaction;
         HealthBarSlider.value = Current_satisfaction;
-        if (Current_satisfaction >= Max_satisfaction) CustomerControllerScript.RemoveCustomer(gameObject);
+        if (Current_satisfaction >= Max_satisfaction && CustomerControllerScript != null)
+        {
+            CustomerControllerScript.RemoveCustomer(gameObject);
+        }
     }
+
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

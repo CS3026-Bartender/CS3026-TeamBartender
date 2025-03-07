@@ -300,7 +300,6 @@ GameObject:
   - component: {fileID: 1952309490841942988}
   - component: {fileID: 3983809854138553128}
   - component: {fileID: 3200665124228962850}
-  - component: {fileID: 233368005864943083}
   m_Layer: 2
   m_Name: HealthBarCanvas
   m_TagString: Untagged
@@ -392,28 +391,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &233368005864943083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3624496240087586570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8296bdc3c8bd5b41b7e64dae26bbc20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Max_satisfaction: 100
-  Current_satisfaction: 0
-  currentType: 0
-  regularColor: {r: 0, g: 1, b: 0, a: 1}
-  regularBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
-  premiumColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  premiumBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
-  vipColor: {r: 1, g: 0, b: 0, a: 1}
-  vipBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
-  HealthBarSlider: {fileID: 0}
 --- !u!1 &4849523656057789559
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,7 +477,7 @@ GameObject:
   - component: {fileID: 1069685840629265198}
   - component: {fileID: 448889325706440093}
   - component: {fileID: 7992328963786247080}
-  - component: {fileID: 4526937283772622267}
+  - component: {fileID: 6456111965280593921}
   m_Layer: 2
   m_Name: Customer_prefab
   m_TagString: Untagged
@@ -594,7 +571,7 @@ MonoBehaviour:
   _data:
     _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
     _objectReferences: []
---- !u!114 &4526937283772622267
+--- !u!114 &6456111965280593921
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -609,13 +586,15 @@ MonoBehaviour:
   Max_satisfaction: 100
   Current_satisfaction: 0
   currentType: 0
-  regularColor: {r: 0.8431373, g: 0.10980393, b: 0.87843144, a: 1}
-  regularBackgroundColor: {r: 0.5647059, g: 0.10980393, b: 0.87843144, a: 0}
-  premiumColor: {r: 0.16470589, g: 0.9960785, b: 0.21568629, a: 1}
-  premiumBackgroundColor: {r: 0.3529412, g: 0.7254902, b: 0.04705883, a: 0}
-  vipColor: {r: 0.9960785, g: 0.16470589, b: 0.21568629, a: 1}
-  vipBackgroundColor: {r: 0.5647059, g: 0.04705883, b: 0, a: 0}
+  regularColor: {r: 0.8773585, g: 0.07863116, b: 0.7952978, a: 1}
+  regularBackgroundColor: {r: 0.32342842, g: 0.012682447, b: 0.5377358, a: 1}
+  premiumColor: {r: 1, g: 0.07075471, b: 0.07075471, a: 1}
+  premiumBackgroundColor: {r: 0.5471698, g: 0.012904947, b: 0.012904947, a: 1}
+  vipColor: {r: 0.11753506, g: 0.9150943, b: 0, a: 1}
+  vipBackgroundColor: {r: 0.078431375, g: 0.45098042, b: 0.023529414, a: 1}
   HealthBarSlider: {fileID: 2437585060073691217}
+  healthBarImage: {fileID: 964491651009820677}
+  healthBarBackground: {fileID: 8409048362446759438}
 --- !u!1 &8594436715131498856
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,8 +631,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -173.65681, y: 56.6574}
-  m_SizeDelta: {x: 1.7752, y: 0.2642}
+  m_AnchoredPosition: {x: -171.15, y: 54.15}
+  m_SizeDelta: {x: 1.87, y: 0.36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2437585060073691217
 MonoBehaviour:
