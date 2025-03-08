@@ -8,7 +8,7 @@ public struct Drink
     public int richness;
     public int fruityness;
     public int bitterness;
-    public int cooldownseconds;
+    public float cooldownseconds;
     public Sprite drinkImage;
     public float cooldownRemaining;
 }

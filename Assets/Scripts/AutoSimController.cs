@@ -154,7 +154,7 @@ public class AutoSimController : MonoBehaviour
                 // Update the drink in the list again after resetting cooldown
                 activeDrinks[i] = drink;
 
-                Debug.Log($"Drink {drink.name} cooldown reset to {drink.cooldownseconds}s");
+             
             }
         }
     }
@@ -205,6 +205,6 @@ public class AutoSimController : MonoBehaviour
                 break;
         }
 
-        return satisfaction;
+        return Mathf.Max(0f, satisfaction);
     }
 }
