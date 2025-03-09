@@ -167,25 +167,6 @@ public class DrinkManager : MonoBehaviour
         return maxEquippedDrinks;
     }
 
-    // Set the max number of equipped drinks (will resize the array)
-    public void SetMaxEquippedDrinks(int max)
-    {
-        if (max < 1)
-        {
-            Debug.LogWarning("Max equipped drinks must be at least 1");
-            max = 1;
-        }
-
-        // Create a new array with the new size
-        string[] newEquippedDrinks = new string[max];
-
-        // Copy over existing drinks (up to the new max)
-        for (int i = 0; i < Mathf.Min(equippedDrinks.Length, max); i++)
-        {
-            newEquippedDrinks[i] = equippedDrinks[i];
-        }
-
-        equippedDrinks = newEquippedDrinks;
-        maxEquippedDrinks = max;
-    }
+  
+    
 }

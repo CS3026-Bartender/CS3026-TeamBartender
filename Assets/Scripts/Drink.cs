@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+
 
 [System.Serializable]
 public struct Drink
@@ -11,4 +13,5 @@ public struct Drink
     public float cooldownseconds;
     public Sprite drinkImage;
     public float cooldownRemaining;
+    [HideInInspector] public Ingredient[] Ingredients;
 }
