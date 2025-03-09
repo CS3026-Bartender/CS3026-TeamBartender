@@ -151,11 +151,17 @@ MonoBehaviour:
   drinkDatabase: {fileID: 11400000, guid: 38ce06c22b75e0b4aae29f0a6848bd28, type: 2}
   maxEquippedDrinks: 3
   equippedDrinks:
-  - drinkName: 
+  - drinkName: Drink1
+    additionalIngredients:
+    - name: 
+      additionalPotentcy: 5
+      additionalFruityness: 0
+      additionalBitterness: 0
+      additionalRichness: 0
+      IngredientImage: {fileID: 0}
+  - drinkName: Drink2
     additionalIngredients: []
-  - drinkName: 
-    additionalIngredients: []
-  - drinkName: 
+  - drinkName: Drink3
     additionalIngredients: []
 --- !u!4 &248578928
 Transform:
@@ -1630,7 +1636,6 @@ MonoBehaviour:
   customerController: {fileID: 1616300382}
   isSimulationRunning: 0
   currentSimulationTime: 0
-  activeDrinks: []
 --- !u!1 &1616300381
 GameObject:
   m_ObjectHideFlags: 0
