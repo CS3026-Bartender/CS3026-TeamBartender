@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class AutoSimController : MonoBehaviour
 {
@@ -108,7 +109,7 @@ public class AutoSimController : MonoBehaviour
         isSimulationRunning = false;
         Debug.Log($"Simulation ended after {currentSimulationTime:F1} seconds");
 
-        // Any cleanup or final satisfaction calculations can go here
+        SceneManager.LoadScene("Shop_Scene");
 
         // Optional: Event that other systems can listen to
         // OnSimulationEnded?.Invoke(function);
