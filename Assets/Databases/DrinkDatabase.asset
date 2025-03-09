@@ -21,6 +21,7 @@ MonoBehaviour:
     cooldownseconds: 2.5
     drinkImage: {fileID: 7482667652216324306, guid: 39d68e1644ca705459ce58d53a3241f0, type: 3}
     cooldownRemaining: 0
+    Ingredients: []
   - name: Drink2
     potency: 10
     richness: 10
@@ -29,6 +30,7 @@ MonoBehaviour:
     cooldownseconds: 2
     drinkImage: {fileID: 7482667652216324306, guid: 39d68e1644ca705459ce58d53a3241f0, type: 3}
     cooldownRemaining: 0
+    Ingredients: []
   - name: Drink3
     potency: 10
     richness: 10
@@ -37,3 +39,4 @@ MonoBehaviour:
     cooldownseconds: 1.5
     drinkImage: {fileID: 7482667652216324306, guid: 39d68e1644ca705459ce58d53a3241f0, type: 3}
     cooldownRemaining: 0
+    Ingredients: []

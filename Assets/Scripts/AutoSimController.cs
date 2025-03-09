@@ -12,7 +12,7 @@ public class AutoSimController : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool isSimulationRunning = false;
     [SerializeField] private float currentSimulationTime = 0f;
-    [SerializeField] private List<Drink> activeDrinks = new List<Drink>();
+    private List<Drink> activeDrinks = new List<Drink>();
 
     // Singleton pattern
     private static AutoSimController instance;
@@ -81,14 +81,32 @@ public class AutoSimController : MonoBehaviour
         // Initialize drinks from DrinkManager
         if (DrinkManager.Instance != null && DrinkManager.Instance.IsInitialized)
         {
+            // Get all equipped drinks with their ingredients applied
             List<Drink> equippedDrinks = DrinkManager.Instance.GetEquippedDrinks();
+
+            if (equippedDrinks.Count == 0)
+            {
+                Debug.LogWarning("No equipped drinks found! Please equip drinks before starting simulation.");
+                // Don't stop the simulation, but log a warning
+            }
+
+            Debug.Log($"Found {equippedDrinks.Count} equipped drinks for simulation");
+
             foreach (Drink drink in equippedDrinks)
             {
+                // Copy the drink to ensure we don't modify the original
+                Drink drinkCopy = drink.Clone();
+
                 // Initialize the cooldownRemaining value
-                Drink drinkCopy = drink;
                 drinkCopy.cooldownRemaining = drink.cooldownseconds;
 
-                // Add all equipped drinks to active drinks
+                // Log drink details for debugging
+                Debug.Log($"Adding drink to simulation: {drinkCopy.name} - Potency: {drinkCopy.potency}, " +
+                          $"Richness: {drinkCopy.richness}, Fruityness: {drinkCopy.fruityness}, " +
+                          $"Bitterness: {drinkCopy.bitterness}, Cooldown: {drinkCopy.cooldownseconds}s, " +
+                          $"Ingredients: {(drinkCopy.Ingredients != null ? drinkCopy.Ingredients.Length : 0)}");
+
+                // Add to active drinks
                 AddDrinkToSimulation(drinkCopy);
             }
         }
@@ -118,7 +136,11 @@ public class AutoSimController : MonoBehaviour
     // Add a drink to the active simulation
     public void AddDrinkToSimulation(Drink drink)
     {
-        if (!isSimulationRunning) return;
+        if (!isSimulationRunning)
+        {
+            Debug.LogWarning("Cannot add drink: Simulation is not running");
+            return;
+        }
 
         // Add drink to active drinks
         activeDrinks.Add(drink);
@@ -155,7 +177,7 @@ public class AutoSimController : MonoBehaviour
                 // Update the drink in the list again after resetting cooldown
                 activeDrinks[i] = drink;
 
-             
+                Debug.Log($"Applied {drink.name} effect again after cooldown elapsed");
             }
         }
     }
@@ -163,24 +185,39 @@ public class AutoSimController : MonoBehaviour
     // Apply a drink's effect to the target customer
     private void ApplyDrinkEffect(Drink drink)
     {
-        if (customerController != null && customerController.SelectedCustomer != null)
+        if (customerController == null)
         {
-            // Increase customer satisfaction based on drink's potency
-            // Get the Customer component from the target customer GameObject
-            customer customerScript = customerController.SelectedCustomer.GetComponent<customer>();
-            if (customerScript != null)
-            {
-                float satisfaction = CalculateSatisfaction(drink, customerScript);
-                customerScript.IncreaseSatisfaction(drink.potency);
-                Debug.Log($"Applied {drink.name} effect: +{drink.potency} satisfaction");
-            }
-            else
-            {
-                Debug.LogError("Customer script component not found on target customer!");
-            }
+            Debug.LogError("Customer controller is null!");
+            return;
+        }
+
+        if (customerController.SelectedCustomer == null)
+        {
+            Debug.LogError("No selected customer!");
+            return;
+        }
+
+        // Get the Customer component from the target customer GameObject
+        customer customerScript = customerController.SelectedCustomer.GetComponent<customer>();
+        if (customerScript != null)
+        {
+            float satisfaction = CalculateSatisfaction(drink, customerScript);
+
+            // Use the calculated satisfaction value instead of just potency
+            customerScript.IncreaseSatisfaction(satisfaction);
+
+            // Log detailed information about the drink effect
+            Debug.Log($"Applied '{drink.name}' effect to {customerScript.name} (Type: {customerScript.currentType})" +
+                      $"\n  Satisfaction increase: {satisfaction}" +
+                      $"\n  Drink stats - Potency: {drink.potency}, Richness: {drink.richness}, " +
+                      $"Fruityness: {drink.fruityness}, Bitterness: {drink.bitterness}" +
+                      $"\n  Customer preferences matched based on type {customerScript.currentType}");
+        }
+        else
+        {
+            Debug.LogError("Customer script component not found on target customer!");
         }
     }
-
 
     float CalculateSatisfaction(Drink drink, customer customer)
     {
@@ -206,6 +243,28 @@ public class AutoSimController : MonoBehaviour
                 break;
         }
 
+        // Log the satisfaction calculation for debugging
+        Debug.Log($"Calculated satisfaction for {customer.name} (Type: {customer.currentType}): {satisfaction}" +
+                  $"\n  Formula used: {GetSatisfactionFormula(customer.currentType)}" +
+                  $"\n  Using drink values - Potency: {drink.potency}, Richness: {drink.richness}, " +
+                  $"Fruityness: {drink.fruityness}, Bitterness: {drink.bitterness}");
+
         return Mathf.Max(0f, satisfaction);
+    }
+
+    // Helper method to get satisfaction formula as string for logging
+    private string GetSatisfactionFormula(customer.CustomerType customerType)
+    {
+        switch (customerType)
+        {
+            case customer.CustomerType.Regular:
+                return "potency + richness";
+            case customer.CustomerType.Premium:
+                return "potency + fruityness";
+            case customer.CustomerType.VIP:
+                return "potency + bitterness";
+            default:
+                return "potency";
+        }
     }
 }

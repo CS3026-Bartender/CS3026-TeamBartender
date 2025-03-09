@@ -6,8 +6,8 @@ public class DrinkManager : MonoBehaviour
     [SerializeField] private DrinkDatabase drinkDatabase;
     [SerializeField] private int maxEquippedDrinks = 3;
 
-  
-    [SerializeField] private string[] equippedDrinks;
+    // Replace string array with EquippedDrink array
+    [SerializeField] private EquippedDrink[] equippedDrinks;
 
     private static DrinkManager instance;
     private List<Drink> allDrinks = new List<Drink>();
@@ -33,7 +33,7 @@ public class DrinkManager : MonoBehaviour
         // Ensure equippedDrinks array is initialized with the correct size in the editor
         if (equippedDrinks == null || equippedDrinks.Length != maxEquippedDrinks)
         {
-            equippedDrinks = new string[maxEquippedDrinks];
+            equippedDrinks = new EquippedDrink[maxEquippedDrinks];
         }
     }
 
@@ -53,7 +53,7 @@ public class DrinkManager : MonoBehaviour
             // Initialize equipped drinks array if it hasn't been already
             if (equippedDrinks == null || equippedDrinks.Length != maxEquippedDrinks)
             {
-                equippedDrinks = new string[maxEquippedDrinks];
+                equippedDrinks = new EquippedDrink[maxEquippedDrinks];
             }
 
             isInitialized = true;
@@ -93,19 +93,41 @@ public class DrinkManager : MonoBehaviour
     {
         List<Drink> drinks = new List<Drink>();
 
-        foreach (string drinkName in equippedDrinks)
+        foreach (EquippedDrink equippedDrink in equippedDrinks)
         {
-            if (!string.IsNullOrEmpty(drinkName))
+            if (equippedDrink != null && !string.IsNullOrEmpty(equippedDrink.drinkName))
             {
-                Drink drink = GetDrink(drinkName);
-                if (drink.name != null) // Check if it's a valid drink
+                Drink baseDrink = GetDrink(equippedDrink.drinkName);
+                if (!string.IsNullOrEmpty(baseDrink.name)) // Check if it's a valid drink
                 {
-                    drinks.Add(drink);
+                    // Get the final drink with all ingredients applied
+                    // This uses Clone() to make sure we don't modify the database drink
+                    Drink finalDrink = equippedDrink.GetFinalDrink(baseDrink);
+                    drinks.Add(finalDrink);
                 }
             }
         }
 
         return drinks;
+    }
+
+    // Get a specific equipped drink by slot index
+    public Drink GetEquippedDrinkAt(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= equippedDrinks.Length || equippedDrinks[slotIndex] == null)
+        {
+            return new Drink(); // Return empty drink
+        }
+
+        EquippedDrink equippedDrink = equippedDrinks[slotIndex];
+        Drink baseDrink = GetDrink(equippedDrink.drinkName);
+
+        if (string.IsNullOrEmpty(baseDrink.name))
+        {
+            return new Drink(); // Return empty drink if base drink not found
+        }
+
+        return equippedDrink.GetFinalDrink(baseDrink);
     }
 
     // Add a drink to equipped drinks if there's room
@@ -122,7 +144,7 @@ public class DrinkManager : MonoBehaviour
         // Check if already equipped
         for (int i = 0; i < equippedDrinks.Length; i++)
         {
-            if (equippedDrinks[i] == drinkName)
+            if (equippedDrinks[i] != null && equippedDrinks[i].drinkName == drinkName)
             {
                 Debug.Log($"Drink '{drinkName}' is already equipped");
                 return true;
@@ -132,9 +154,9 @@ public class DrinkManager : MonoBehaviour
         // Find an empty slot
         for (int i = 0; i < equippedDrinks.Length; i++)
         {
-            if (string.IsNullOrEmpty(equippedDrinks[i]))
+            if (equippedDrinks[i] == null)
             {
-                equippedDrinks[i] = drinkName;
+                equippedDrinks[i] = new EquippedDrink(drinkName);
                 Debug.Log($"Equipped drink '{drinkName}' in slot {i}");
                 return true;
             }
@@ -149,7 +171,7 @@ public class DrinkManager : MonoBehaviour
     {
         for (int i = 0; i < equippedDrinks.Length; i++)
         {
-            if (equippedDrinks[i] == drinkName)
+            if (equippedDrinks[i] != null && equippedDrinks[i].drinkName == drinkName)
             {
                 equippedDrinks[i] = null;
                 Debug.Log($"Removed drink '{drinkName}' from equipped drinks");
@@ -161,12 +183,73 @@ public class DrinkManager : MonoBehaviour
         return false;
     }
 
+    // Add an ingredient to a drink in a specific slot
+    public bool AddIngredientToDrink(int slotIndex, Ingredient ingredient)
+    {
+        if (slotIndex < 0 || slotIndex >= equippedDrinks.Length || equippedDrinks[slotIndex] == null)
+        {
+            Debug.LogWarning($"Cannot add ingredient to slot {slotIndex}: No drink equipped in this slot");
+            return false;
+        }
+
+        equippedDrinks[slotIndex].AddIngredient(ingredient);
+        Debug.Log($"Added ingredient '{ingredient.name}' to drink in slot {slotIndex}");
+        return true;
+    }
+
+    // Add an ingredient to a drink by name
+    public bool AddIngredientToDrink(string drinkName, Ingredient ingredient)
+    {
+        for (int i = 0; i < equippedDrinks.Length; i++)
+        {
+            if (equippedDrinks[i] != null && equippedDrinks[i].drinkName == drinkName)
+            {
+                equippedDrinks[i].AddIngredient(ingredient);
+                Debug.Log($"Added ingredient '{ingredient.name}' to drink '{drinkName}'");
+                return true;
+            }
+        }
+
+        Debug.LogWarning($"Cannot add ingredient: Drink '{drinkName}' is not equipped");
+        return false;
+    }
+
+    // Remove an ingredient from a drink in a specific slot
+    public bool RemoveIngredientFromDrink(int slotIndex, int ingredientIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= equippedDrinks.Length || equippedDrinks[slotIndex] == null)
+        {
+            Debug.LogWarning($"Cannot remove ingredient from slot {slotIndex}: No drink equipped in this slot");
+            return false;
+        }
+
+        bool removed = equippedDrinks[slotIndex].RemoveIngredient(ingredientIndex);
+        if (removed)
+        {
+            Debug.Log($"Removed ingredient at index {ingredientIndex} from drink in slot {slotIndex}");
+        }
+        else
+        {
+            Debug.LogWarning($"Failed to remove ingredient at index {ingredientIndex} from drink in slot {slotIndex}");
+        }
+
+        return removed;
+    }
+
+    // Get all ingredients from a drink in a specific slot
+    public List<Ingredient> GetIngredientsForDrink(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= equippedDrinks.Length || equippedDrinks[slotIndex] == null)
+        {
+            return new List<Ingredient>();
+        }
+
+        return equippedDrinks[slotIndex].GetIngredients();
+    }
+
     // Get the max number of drinks that can be equipped
     public int GetMaxEquippedDrinks()
     {
         return maxEquippedDrinks;
     }
-
-  
-    
 }

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 public class customer : MonoBehaviour
 {
     public int Max_satisfaction = 100;
-    public int Current_satisfaction;
+    public float Current_satisfaction;
 
     public enum CustomerType
     {
@@ -98,7 +98,7 @@ public class customer : MonoBehaviour
         return currentType;
     }
 
-    public void IncreaseSatisfaction(int Satisfaction)
+    public void IncreaseSatisfaction(float Satisfaction)
     {
         Current_satisfaction += Satisfaction;
         HealthBarSlider.value = Current_satisfaction;

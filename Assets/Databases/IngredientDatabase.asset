@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f605cec6bf659d4192c660877cb96a0, type: 3}
   m_Name: IngredientDatabase
   m_EditorClassIdentifier: 
-  drinks: []
+  Ingredients:
+  - name: Ingredient1
+    additionalPotentcy: 0
+    additionalFruityness: 5
+    additionalBitterness: 0
+    additionalRichness: 0
+    IngredientImage: {fileID: 0}

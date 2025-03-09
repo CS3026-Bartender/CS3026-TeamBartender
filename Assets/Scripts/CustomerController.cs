@@ -15,6 +15,7 @@ public class CustomerController : MonoBehaviour
     public GameObject SelectedCustomer;
     [SerializeField] private Button[] CustomerTargetButtons;
     [SerializeField] private Transform Target;
+    private SpriteRenderer targetSpriteRenderer;
 
     // Keep track of customers in each slot (null = empty)
     private GameObject[] customerSlots = new GameObject[3];
@@ -24,28 +25,41 @@ public class CustomerController : MonoBehaviour
 
     private void Awake()
     {
+        // Get the sprite renderer component of the target
+        targetSpriteRenderer = Target.GetComponent<SpriteRenderer>();
+
         SpawnCustomer();
         SelectedCustomer = customerSlots[0];
         Target.position = spawnPoints[0].position;
     }
+
     private void Start()
     {
         // Start the spawning process
         spawnCoroutine = StartCoroutine(SpawnCustomersRoutine());
 
-        // Spawn the first customer immediately
-      
-
-        // Set up targeted customer
-     
-
-        // Setup buttons to switch target. 
+        // Set up buttons to switch target. 
         CustomerTargetButtons[0].onClick.AddListener(() => SetTargetToCustomer(0));
         CustomerTargetButtons[1].onClick.AddListener(() => SetTargetToCustomer(1));
         CustomerTargetButtons[2].onClick.AddListener(() => SetTargetToCustomer(2));
-
     }
 
+    private void Update()
+    {
+        // Check for keyboard input to select customers
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            SetTargetToCustomer(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            SetTargetToCustomer(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            SetTargetToCustomer(2);
+        }
+    }
 
     private void SetTargetToCustomer(int index)
     {
@@ -53,7 +67,12 @@ public class CustomerController : MonoBehaviour
         {
             SelectedCustomer = customerSlots[index];
             Target.position = spawnPoints[index].position;
-            
+
+            // Ensure target sprite is visible when a customer is selected
+            if (targetSpriteRenderer != null)
+            {
+                targetSpriteRenderer.enabled = true;
+            }
         }
     }
 
@@ -62,8 +81,6 @@ public class CustomerController : MonoBehaviour
         CustomerTargetButtons[0].onClick.RemoveListener(() => SetTargetToCustomer(0));
         CustomerTargetButtons[1].onClick.RemoveListener(() => SetTargetToCustomer(1));
         CustomerTargetButtons[2].onClick.RemoveListener(() => SetTargetToCustomer(2));
-
-
     }
 
     private IEnumerator SpawnCustomersRoutine()
@@ -115,31 +132,37 @@ public class CustomerController : MonoBehaviour
     // Public method to remove a customer (can be called from UI buttons, events, etc.)
     public void RemoveCustomer(GameObject Customer)
     {
-      
-       
-
-       for (int i=0; i< 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             if (customerSlots[i] == Customer)
             {
+                // Check if the removed customer was the selected one
+                bool wasSelected = (Customer == SelectedCustomer);
 
                 Destroy(customerSlots[i]);
                 customerSlots[i] = null;
                 Debug.Log("Customer removed.");
+
+                // If the removed customer was selected, set selected to null and hide the target
+                if (wasSelected)
+                {
+                    SelectedCustomer = null;
+
+                    // Hide the target sprite renderer
+                    if (targetSpriteRenderer != null)
+                    {
+                        targetSpriteRenderer.enabled = false;
+                    }
+                }
+
                 return;
             }
-      
         }
-       
-      
-            Debug.Log("Customer Couldnt be found");
-        
+
+        Debug.Log("Customer Couldn't be found");
     }
 
-
-
-
-    //  Stop the spawning process
+    // Stop the spawning process
     public void StopSpawning()
     {
         if (spawnCoroutine != null)
