@@ -2,38 +2,40 @@ using UnityEngine;
 
 public class DrinkMenuManager : Manager<DrinkMenuManager>
 {
-    [SerializeField] int ingsPerDrinkAllowed = 3;
+    [SerializeField] private DrinkData drinkData;
+
+    // [SerializeField] int ingsPerDrinkAllowed = 3;
     [SerializeField] int drinksAllowed = 3;
     // need drink menu display
 
-    public void AddIngredientToDrink(int drinkPos, Ingredient ing, int slot)
+    public void AddIngredientToDrink(int drinkPos, string ing, int slot)
     {
-        if (drinkPos >= DrinkData.GetNumDrinks())
+        Drink drink = drinkData.GetDrink(drinkPos);
+        if (drink == null)
         {
-            // TODO: tell UI failure, drink doesn't exist
-            return;
+            if (IngredientData.GetIngValue(ing) is Spirit)
+            {
+                drink = drinkData.AddDrink("Drink Name", ing, drinkPos);
+                Debug.Log(drink.drinkName + " added in manager");
+            }
+            else
+            {
+                Debug.Log("Can't add ingredient to drink " + drinkPos + "  without spirit");
+                // TODO: tell UI failure, drink doesn't exist
+                return;
+            }
         }
-        Drink drink = DrinkData.GetDrink(drinkPos);
         
-        if (drink.GetNumIngs() >= ingsPerDrinkAllowed)
+        if (drink.GetIngID(slot) != null)
         {
-            drink.RemoveIngredient(slot);
+            Debug.Log("Selling " + IngredientData.GetIngValue(drink.GetIngID(slot)));
             // TODO: tell currency system to add money
             // tell UI to display currency add
         }
-        drink.AddIngredient(ing);
+        drink.AddIngredient(ing, slot);
 
-        // TODO: update UI
-    }
+        Debug.Log(IngredientData.GetIngValue(ing).DisplayName + " added to drink " + drinkPos + " in slot " + slot);
 
-    public void AddNewDrink(Ingredient spirit)
-    {
-        if (DrinkData.GetNumDrinks() >= drinksAllowed)
-        {
-            // TODO: tell UI failure, cannot add another drink
-            return;
-        }
-        DrinkData.AddDrink("Drink Name", spirit);
         // TODO: update UI
     }
 }

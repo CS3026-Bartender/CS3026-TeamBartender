@@ -1,32 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class DrinkData : MonoBehaviour
 {
-    private static List<Drink> drinks;
+    private readonly Dictionary<int, Drink> drinks = new(); // int drinkPos
 
-    public static void AddDrink(string name, Ingredient spirit)
+    public Drink AddDrink(string name, string spirit, int drinkPos)
     {
         Drink drink = new(name, spirit);
-        drinks.Add(drink);
+        drinks.Add(drinkPos, drink);
+        Debug.Log(drinks[drinkPos].drinkName + " added");
+        return drink;
     }
 
-    public static void ForEachDrink(UnityAction<Drink> action)
+    public Drink GetDrink(int drinkPos)
     {
-        foreach (Drink d in drinks)
-        {
-            action.Invoke(d);
-        }
-    }
-
-    public static Drink GetDrink(int drinkPos)
-    {
-        return drinks[drinkPos];
-    }
-
-    public static int GetNumDrinks()
-    {
-        return drinks.Count;
+        Drink drink = drinks.GetValueOrDefault(drinkPos);
+        return drink;
     }
 }

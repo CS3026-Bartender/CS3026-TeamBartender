@@ -1,16 +1,15 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Drink : Object
+public class Drink
 {
     public string drinkName;
-    public Ingredient spirit;
-    public List<Ingredient> ingredients;
+    public string spiritID;
+    public string[] ingredients = new string[4];
 
-    public Drink(string name, Ingredient spirit)
+    public Drink(string name, string spirit)
     {
         drinkName = name;
-        this.spirit = spirit;
+        spiritID = spirit;
     }
 
     public float GetCalculatedServeTime()
@@ -25,18 +24,13 @@ public class Drink : Object
         return 0f;
     }
 
-    public int GetNumIngs()
+    public void AddIngredient(string ing, int slot)
     {
-        return ingredients.Count;
+        ingredients[slot] = ing;
     }
 
-    public void AddIngredient(Ingredient ing)
+    public string GetIngID(int slot)
     {
-        ingredients.Add(ing);
-    }
-
-    public void RemoveIngredient(int slot)
-    {
-        ingredients.RemoveAt(slot);
+        return ingredients[slot];
     }
 }

@@ -43,6 +43,7 @@ public sealed class ShopManager : Manager<ShopManager>
         // TODO: tell currency system to deduct price
 
         // TEMP: shop testing
+        Debug.Log("Bought " + IngredientData.GetIngValue(ingID).DisplayName);
         currentShop.DebugPrintConfig();
     }
 }
