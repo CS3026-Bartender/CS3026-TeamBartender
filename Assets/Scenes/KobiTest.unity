@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingsPerShopContents: 3
-  drinkMenuManager: {fileID: 0}
+  drinkMenuManager: {fileID: 950667464}
 --- !u!1 &708888595
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +213,6 @@ MonoBehaviour:
   shopMan: {fileID: 406955206}
   drinkMenuMan: {fileID: 950667464}
   drinkPurchaseMan: {fileID: 1096929610}
-  drinkData: {fileID: 1253723431}
 --- !u!1 &950667463
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,7 +243,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drinkData: {fileID: 1253723431}
-  drinksAllowed: 3
 --- !u!4 &950667465
 Transform:
   m_ObjectHideFlags: 0
