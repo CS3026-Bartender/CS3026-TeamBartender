@@ -1,42 +1,49 @@
-using NUnit.Framework.Internal;
-using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public sealed class ShopManager : Manager<ShopManager>
 {
-    [SerializeField] int ingsPerShopContents;
-    [SerializeField] Sprite testSprite;
+    [SerializeField] int ingsPerShopContents; // number of ingredients in the shop
+    [SerializeField] DrinkMenuManager drinkMenuManager;
 
     private ShopConfiguration currentShop;
-    // private ShopDisplay shopDisplay;
-
-    private void Start()
-    {
-        InitializeShop();
-    }
+    // need shop display
 
     public void RefreshShop()
     {
         currentShop = new ShopConfiguration(ingsPerShopContents);
-        // shopDisplay.UpdateDisplay();
+        // TODO: Update shop display
+
+        // TEMP: shop testing
+        currentShop.DebugPrintConfig();
     }
 
     public void InitializeShop()
     {
-        // Temp ingredients for testing
-        // TODO: replace with data read from csv
-        IngredientData.AddIngredient("Raspberry", 4.5f, "A tangy berry", testSprite);
-        IngredientData.AddSpirit("Rum", 8f, "Yo ho ho", testSprite);
-        IngredientData.AddIngredient("Bitters", 2f, "Deepens the flavor", testSprite);
-        IngredientData.AddIngredient("Lemon", 3f, "A sour citrus", testSprite);
-
         RefreshShop();
+    }
+
+    public string GetIngID(int slot)
+    {
+        return currentShop.GetIngID(slot);
+    }
+
+    public bool IsBuyAllowed(int slot)
+    {
+        string ingID = currentShop.GetIngID(slot);
+        // TODO: check with currency system
+
+        return true;
+    }
+
+    public void BuyIngredient(int slot)
+    {
+        string ingID = currentShop.GetIngID(slot);
+        currentShop.RemoveIngredient(slot);
+
+        // TODO: tell currency system to deduct price
 
         // TEMP: shop testing
-        currentShop.DebugPrintConfig();
-
-        RefreshShop();
+        Debug.Log("Bought " + IngredientData.GetIngValue(ingID).DisplayName);
         currentShop.DebugPrintConfig();
     }
 }
