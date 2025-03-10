@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DrinkData : MonoBehaviour
 {
-    private readonly Dictionary<int, Drink> drinks = new(); // int drinkPos
+    private readonly Dictionary<int, Drink> drinks = new(); // int is drink position
 
     public Drink AddDrink(string name, string spirit, int drinkPos)
     {

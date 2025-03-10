@@ -2,16 +2,16 @@ using UnityEngine;
 
 public sealed class ShopManager : Manager<ShopManager>
 {
-    [SerializeField] int ingsPerShopContents;
+    [SerializeField] int ingsPerShopContents; // number of ingredients in the shop
     [SerializeField] DrinkMenuManager drinkMenuManager;
 
     private ShopConfiguration currentShop;
-    // private ShopDisplay shopDisplay;
+    // need shop display
 
     public void RefreshShop()
     {
         currentShop = new ShopConfiguration(ingsPerShopContents);
-        // shopDisplay.UpdateDisplay(currentShop);
+        // TODO: Update shop display
 
         // TEMP: shop testing
         currentShop.DebugPrintConfig();

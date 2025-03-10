@@ -14,6 +14,7 @@ public static class IngredientData
     {
         Ingredient newIng = new(displayName, price, desc, sprite);
         bool success = ingredients.TryAdd(id, newIng);
+        // Check if add worked
         if (!success)
         {
             Debug.Log("Ingredient could not be added due to repeat ID");
@@ -24,6 +25,7 @@ public static class IngredientData
     {
         Spirit newSpirit = new(displayName, price, desc, sprite);
         bool success = ingredients.TryAdd(id, newSpirit);
+        // Check if add worked
         if (!success)
         {
             Debug.Log("Spirit could not be added due to repeat ID");
@@ -37,17 +39,19 @@ public static class IngredientData
 
     public static List<string> GetRandomList(int numIngs)
     {
+        // get all ids
         List<string> all = new(ingredients.Keys);
+        // put random ingredients in results list
         List<string> result = new();
         for (int i = 0; i < numIngs; i++)
         {
             int index;
+            // try/catch in case number of ingredients very small
             try
             {
-                index = Random.Range(0, all.Count);
-                Debug.Log("Random ingredient num: " + index);
-                result.Add(all[index]);
-                all.RemoveAt(index);
+                index = Random.Range(0, all.Count); // random index in all
+                result.Add(all[index]); // add id to result
+                all.RemoveAt(index); // remove from all to avoid repeats
             }
             catch (System.Exception e)
             {

@@ -29,6 +29,7 @@ public class Drink
         ingredients[slot] = ing;
     }
 
+    // slot is the index of the ingredient
     public string GetIngID(int slot)
     {
         return ingredients[slot];
