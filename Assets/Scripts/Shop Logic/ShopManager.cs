@@ -22,25 +22,25 @@ public sealed class ShopManager : Manager<ShopManager>
         RefreshShop();
     }
 
-    public Ingredient GetIngredient(int slot)
+    public string GetIngID(int slot)
     {
-        return currentShop.GetIngredient(slot);
+        return currentShop.GetIngID(slot);
+    }
+
+    public bool IsBuyAllowed(int slot)
+    {
+        string ingID = currentShop.GetIngID(slot);
+        // TODO: check with currency system
+
+        return true;
     }
 
     public void BuyIngredient(int slot)
     {
-        // TODO: check with currency system that buy is allowed
-
-        Ingredient ing = currentShop.GetIngredient(slot);
+        string ingID = currentShop.GetIngID(slot);
         currentShop.RemoveIngredient(slot);
 
         // TODO: tell currency system to deduct price
-        // tell UI to remove from shop display
-
-        if (ing.isSpirit)
-        {
-            
-        }
 
         // TEMP: shop testing
         currentShop.DebugPrintConfig();

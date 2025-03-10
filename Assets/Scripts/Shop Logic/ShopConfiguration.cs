@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class ShopConfiguration : Object
 {
-    public List<Ingredient> ingredients;
+    public List<string> spiritIDs;
+    public List<string> ingIDs;
 
     public ShopConfiguration(int numIngs)
     {
-        ingredients = IngredientData.GetRandomList(numIngs);
-        ingredients.Sort((Ingredient i1, Ingredient i2) =>
+        ingIDs = IngredientData.GetRandomList(numIngs);
+        ingIDs.Sort((string i1, string i2) =>
         {
-            if (i2.isSpirit)
+            if (IngredientData.GetIngValue(i1) is Spirit)
             {
                 return -1;
             }
@@ -24,17 +25,17 @@ public class ShopConfiguration : Object
 
     public void RemoveIngredient(int slot)
     {
-        ingredients.RemoveAt(slot);
+        ingIDs.RemoveAt(slot);
     }
 
-    public Ingredient GetIngredient(int slot)
+    public string GetIngID(int slot)
     {
-        return ingredients[slot];
+        return ingIDs[slot];
     }
 
     public void DebugPrintConfig()
     {
-        foreach (Ingredient ing in ingredients) {
+        foreach (string ing in ingIDs) {
             IngredientData.DebugPrintIng(ing);
         }
     }

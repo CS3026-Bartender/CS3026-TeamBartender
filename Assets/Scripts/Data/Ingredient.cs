@@ -2,24 +2,22 @@ using UnityEngine;
 
 public class Ingredient : Object
 {
-    public string ingName;
-    public float price;
-    public string desc;
-    public Sprite sprite;
-    public bool isSpirit;
+    public string DisplayName { get; private set; }
+    public float Price { get; private set; }
+    public string Description { get; private set; }
+    public Sprite Icon { get; private set; }
 
-    public Ingredient(string name, float price, string desc, Sprite sprite, bool isSpirit)
+    public Ingredient(string name, float price, string desc, Sprite sprite)
     {
         // this.name = name;
-        this.ingName = name;
-        this.price = price;
-        this.desc = desc;
-        this.sprite = sprite;
-        this.isSpirit = isSpirit;
+        DisplayName = name;
+        Price = price;
+        Description = desc;
+        Icon = sprite;
     }
 
     public string GetDebug()
     {
-        return ingName + ", $" + price + ", " + desc + ", is spirit: " + isSpirit;
+        return DisplayName + ", $" + Price + ", " + Description;
     }
 }

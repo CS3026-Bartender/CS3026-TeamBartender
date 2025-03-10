@@ -4,14 +4,15 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
 {
     [SerializeField] private ShopManager shopMan;
     [SerializeField] private DrinkMenuManager drinkMan;
-    // Display objects
+    // need display objects
 
     private bool purchaseActive = false;
     private int currentShopSlot;
 
     private void FindValidSlots()
     {
-        // TODO: tell drink menu display to highlight valid slots
+        // TODO: figure out which slots can be placed in
+        // tell drink menu display to highlight valid slots
     }
 
     public void StartPurchase(int shopSlot)
@@ -20,6 +21,7 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
         {
             purchaseActive = true;
             currentShopSlot = shopSlot;
+
             FindValidSlots();
         }
     }
@@ -39,6 +41,7 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
         if (purchaseActive)
         {
             // TODO: buy ingredient at shop slot, put in drink slot
+            shopMan.BuyIngredient(currentShopSlot);
 
             EndPurchase();
         }

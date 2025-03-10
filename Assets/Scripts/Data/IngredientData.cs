@@ -1,30 +1,34 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 // TEMP IMPLEMENTATION WHILE WAITING FOR THERYN'S DESIGN
 
 public static class IngredientData
 {
-    private static List<Ingredient> ingredients = new();
-    private static List<Ingredient> spirits = new();
+    private static Dictionary<string, Ingredient> ingredients = new();
 
-    public static void AddIngredient(string name, float price, string desc, Sprite sprite)
+    public static void AddIngredient(string id, string displayName, float price, string desc, Sprite sprite)
     {
-        Ingredient newIng = new(name, price, desc, sprite, false);
-        ingredients.Add(newIng);
+        Ingredient newIng = new(displayName, price, desc, sprite);
+        ingredients.Add(id, newIng);
     }
 
-    public static void AddSpirit(string name, float price, string desc, Sprite sprite)
+    public static void AddSpirit(string id, string displayName, float price, string desc, Sprite sprite)
     {
-        Ingredient newIng = new(name, price, desc, sprite, true);
-        spirits.Add(newIng);
+        Spirit newSpirit = new(displayName, price, desc, sprite);
+        ingredients.Add(id, newSpirit);
     }
 
-    public static List<Ingredient> GetRandomList(int numIngs)
+    public static Ingredient GetIngValue(string id)
     {
-        List<Ingredient> all = new(spirits);
-        all.AddRange(ingredients);
-        List<Ingredient> result = new();
+        return ingredients.GetValueOrDefault(id);
+    }
+
+    public static List<string> GetRandomList(int numIngs)
+    {
+        List<string> all = new(ingredients.Keys);
+        List<string> result = new();
         for (int i = 0; i < numIngs; i++)
         {
             int index;
@@ -43,8 +47,9 @@ public static class IngredientData
         return result;
     }
 
-    public static void DebugPrintIng(Ingredient ing)
+    public static void DebugPrintIng(string ingID)
     {
-        Debug.Log(ing.GetDebug());
+        Ingredient ing = ingredients.GetValueOrDefault(ingID);
+        Debug.Log(ing == null ? ing.GetDebug() : "Ingredient does not exist");
     }
 }

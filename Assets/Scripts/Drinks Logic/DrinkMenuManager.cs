@@ -4,6 +4,7 @@ public class DrinkMenuManager : Manager<DrinkMenuManager>
 {
     [SerializeField] int ingsPerDrinkAllowed = 3;
     [SerializeField] int drinksAllowed = 3;
+    // need drink menu display
 
     public void AddIngredientToDrink(int drinkPos, Ingredient ing, int slot)
     {
