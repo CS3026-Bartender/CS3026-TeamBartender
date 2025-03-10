@@ -22,6 +22,16 @@ public class ShopConfiguration : Object
         });
     }
 
+    public void RemoveIngredient(int slot)
+    {
+        ingredients.RemoveAt(slot);
+    }
+
+    public Ingredient GetIngredient(int slot)
+    {
+        return ingredients[slot];
+    }
+
     public void DebugPrintConfig()
     {
         foreach (Ingredient ing in ingredients) {
