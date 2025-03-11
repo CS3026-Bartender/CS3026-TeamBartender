@@ -10,6 +10,7 @@ public class Drink
     {
         drinkName = name;
         spiritID = spirit;
+        ingredients[0] = spirit;
     }
 
     public float GetCalculatedServeTime()
