@@ -35,4 +35,9 @@ public class Drink
     {
         return ingredients[slot];
     }
+
+    public string GetSpiritID()
+    {
+        return spiritID;
+    }
 }
