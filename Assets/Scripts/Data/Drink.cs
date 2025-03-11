@@ -10,6 +10,7 @@ public class Drink
     {
         drinkName = name;
         spiritID = spirit;
+        ingredients[0] = spirit;
     }
 
     public float GetCalculatedServeTime()
@@ -27,6 +28,11 @@ public class Drink
     public void AddIngredient(string ing, int slot)
     {
         ingredients[slot] = ing;
+
+        if (slot == 0)
+        {
+            spiritID = ing;
+        }
     }
 
     // slot is the index of the ingredient
