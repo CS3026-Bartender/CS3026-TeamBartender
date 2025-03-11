@@ -21,9 +21,9 @@ public static class IngredientData
         }
     }
 
-    public static void AddSpirit(string id, string displayName, float price, string desc, Sprite sprite)
+    public static void AddSpirit(string id, string displayName, float shopPrice, string desc, Sprite sprite, float simPrice, float serveTime)
     {
-        Spirit newSpirit = new(displayName, price, desc, sprite);
+        Spirit newSpirit = new(displayName, shopPrice, desc, sprite, simPrice, serveTime);
         bool success = ingredients.TryAdd(id, newSpirit);
         // Check if add worked
         if (!success)
