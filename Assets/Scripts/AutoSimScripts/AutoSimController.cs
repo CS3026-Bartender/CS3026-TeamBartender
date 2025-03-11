@@ -8,7 +8,7 @@ public class AutoSimController : MonoBehaviour
     [Header("Simulation Settings")]
     [SerializeField] private float maxSimulationTime = 30f;
     [SerializeField] private CustomerController customerController;
-    [SerializeField] private DrinkData drinkData;
+   
    
 
 
@@ -85,7 +85,7 @@ public class AutoSimController : MonoBehaviour
      
         
             // Get all equipped drinks with their ingredients applied
-            List<Drink> equippedDrinks = drinkData.GetAllDrinksAsList();
+            List<Drink> equippedDrinks = DrinkData.Instance.GetAllDrinksAsList();
 
             if (equippedDrinks.Count == 0)
             {
