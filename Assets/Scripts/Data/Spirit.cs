@@ -3,14 +3,24 @@ using UnityEngine;
 
 public class Spirit : Ingredient
 {
-    public Spirit(string name, float price, string desc, Sprite sprite, float simPrice, float serveTime)
-        : base(name, price, desc, sprite)
+
+    public float ServeTime { get; private set; }
+    public float Potentcy { get; private set; }
+    public float ServeTimeRemaining;
+
+// constructor = ingredient constructor
+public Spirit(string name, float price, string desc, Sprite sprite, float serveTime, float potentcy)
+         : base(name, price, desc, sprite)
     {
-        SimPrice = simPrice;
         ServeTime = serveTime;
+        Potentcy = potentcy;
     }
 
-    public float SimPrice { get; private set; }
-    public float ServeTime { get; private set; }
+
+ 
+
+
+
+
 }
 
