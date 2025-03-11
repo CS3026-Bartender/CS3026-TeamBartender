@@ -3,15 +3,24 @@ using UnityEngine;
 
 public class Spirit : Ingredient
 {
-    // constructor = ingredient constructor
-    public Spirit(string name, float price, string desc, Sprite sprite) : base(name, price, desc, sprite) { }
 
-    private Dictionary<string, float> stats = new(); // stat id, stat value
+    public float ServeTime { get; private set; }
+    public float Potentcy { get; private set; }
+    public float ServeTimeRemaining;
 
-    // get a stat base value from a stat id
-    public float GetStat(string id)
+// constructor = ingredient constructor
+public Spirit(string name, float price, string desc, Sprite sprite, float serveTime, float potentcy)
+         : base(name, price, desc, sprite)
     {
-        return stats.GetValueOrDefault(id);
+        ServeTime = serveTime;
+        Potentcy = potentcy;
     }
+
+
+ 
+
+
+
+
 }
 

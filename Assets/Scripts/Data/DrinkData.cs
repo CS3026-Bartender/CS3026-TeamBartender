@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class DrinkData : MonoBehaviour
 {
@@ -18,4 +19,10 @@ public class DrinkData : MonoBehaviour
         Drink drink = drinks.GetValueOrDefault(drinkPos);
         return drink;
     }
+
+    public List<Drink> GetAllDrinksAsList()
+    {
+        return drinks.Values.ToList();
+    }
+
 }
