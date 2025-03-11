@@ -4,7 +4,21 @@ using System.Linq;
 
 public class DrinkData : MonoBehaviour
 {
+    public static DrinkData Instance { get; private set; }
     private readonly Dictionary<int, Drink> drinks = new(); // int is drink position
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public Drink AddDrink(string name, string spirit, int drinkPos)
     {
