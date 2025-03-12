@@ -26,5 +26,14 @@ public class DrinkMenuSlot : Slot
 
         // TODO: remove visual indication (set back to neutral)
     }
+
+    public override void UpdateSlot(string newID)
+    {
+        base.UpdateSlot(newID);
+        if (ingDisplay != null)
+        {
+            ingDisplay.SetDraggable(false);
+        }
+    }
 }
 

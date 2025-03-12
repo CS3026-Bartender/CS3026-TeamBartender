@@ -22,6 +22,13 @@ public class DropArea : MonoBehaviour
 
 	public void Drop(DraggableComponent draggable)
 	{
+		draggable.transform.parent = transform;
+		draggable.transform.position = transform.position;
+
+        int drink = transform.parent.GetSiblingIndex();
+        int slot = transform.GetSiblingIndex();
+        DrinkPurchaseManager.Instance.CompletePurchase(drink, slot);
+
         OnDropHandler?.Invoke(draggable);
 	}
 }

@@ -141,6 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 8579114083872675340}
   nameDisplay: {fileID: 5057115678806150006}
+  dragComponent: {fileID: -5563431881961908336}
 --- !u!1 &6373200539881054134
 GameObject:
   m_ObjectHideFlags: 0
