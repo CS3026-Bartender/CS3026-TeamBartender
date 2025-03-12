@@ -5,7 +5,6 @@ public class DrinkMenuDisplay : MonoBehaviour
 {
     public void RefreshDisplay()
     {
-        // TODO: go through each drink/slot and update with data from DrinkData
         for (int i = 0; i < 3; i++)
         {
             Drink drink = DrinkData.Instance.GetDrink(i);
@@ -23,7 +22,6 @@ public class DrinkMenuDisplay : MonoBehaviour
                     slot.UpdateSlot(drink.GetIngID(j));
                 }
             }
-
         }
     }
 
