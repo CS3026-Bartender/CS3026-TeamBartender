@@ -104,6 +104,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingDisplay: {fileID: 173072917627386624}
+  dropArea: {fileID: 7313846041054857263}
+  ingDisplayPrefab: {fileID: 1748226954804699348, guid: 70ed5a0d8a5470d1fae1dfe808f1ae60, type: 3}
   priceDisplay: {fileID: 3199519966188801771}
 --- !u!1 &4387225259087951308
 GameObject:

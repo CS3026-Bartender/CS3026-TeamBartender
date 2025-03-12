@@ -116,6 +116,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingDisplay: {fileID: 1536586103395109505}
+  dropArea: {fileID: 5942849357867313396}
+  ingDisplayPrefab: {fileID: 1748226954804699348, guid: 70ed5a0d8a5470d1fae1dfe808f1ae60, type: 3}
 --- !u!1001 &2771693723268088345
 PrefabInstance:
   m_ObjectHideFlags: 0
