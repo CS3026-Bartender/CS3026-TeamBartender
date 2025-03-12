@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class DrinkMenuDisplay : MonoBehaviour
 {
-    [SerializeField] private GameObject drinkMenuObject;
-
     public void RefreshDisplay()
     {
         // TODO: go through each drink/slot and update with data from DrinkData

@@ -4,6 +4,7 @@ public sealed class ShopManager : Manager<ShopManager>
 {
     [SerializeField] int ingsPerShopContents; // number of ingredients in the shop
     [SerializeField] DrinkMenuManager drinkMenuManager;
+    [SerializeField] ShopDisplay shopDisplay;
 
     private ShopConfiguration currentShop;
     // need shop display
