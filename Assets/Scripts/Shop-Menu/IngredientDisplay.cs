@@ -11,6 +11,9 @@ public class IngredientDisplay : MonoBehaviour
 
     public void UpdateDisplay(string newID)
     {
-        // TODO: update display with new ingredient details
+        ingID = newID;
+        Ingredient ing = IngredientData.GetIngValue(ingID);
+        icon.sprite = ing.Icon;
+        nameDisplay.text = ing.DisplayName;
     }
 }

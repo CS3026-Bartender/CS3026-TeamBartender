@@ -21,4 +21,10 @@ public class ShopSlot : Slot
     {
         currentState = canBuy ? ShopState.CanBuy : ShopState.CantBuy;
     }
+
+    override public void UpdateSlot(string newID)
+    {
+        base.UpdateSlot(newID);
+        priceDisplay.text = "$ " + IngredientData.GetIngValue(newID).Price;
+    }
 }
