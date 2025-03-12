@@ -39,6 +39,7 @@ public sealed class ShopManager : Manager<ShopManager>
     {
         string ingID = currentShop.GetIngID(slot);
         currentShop.RemoveIngredient(slot);
+        shopDisplay.UpdateDisplay(currentShop);
 
         // TODO: tell currency system to deduct price
 

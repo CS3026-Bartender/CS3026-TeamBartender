@@ -5,7 +5,7 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
     [SerializeField] private ShopManager shopMan;
     [SerializeField] private DrinkMenuManager drinkMan;
     [SerializeField] private DrinkData drinkData;
-    // need display objects
+    [SerializeField] private ShopDisplay shopDisplay;
 
     // purchase tracking
     private bool purchaseActive = false;
@@ -79,7 +79,6 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
     {
         if (purchaseActive)
         {
-            // TODO: tell UI to update
             EndPurchase();
         }
     }

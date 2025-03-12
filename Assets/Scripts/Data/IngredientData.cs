@@ -34,6 +34,10 @@ public static class IngredientData
 
     public static Ingredient GetIngValue(string id)
     {
+        if (id == null)
+        {
+            return null;
+        }
         return ingredients.GetValueOrDefault(id);
     }
 

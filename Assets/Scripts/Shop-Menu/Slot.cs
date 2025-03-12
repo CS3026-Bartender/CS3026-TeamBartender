@@ -10,7 +10,7 @@ public class Slot : MonoBehaviour
 
     public virtual void UpdateSlot(string newID)
     {
-        if (IngredientData.GetIngValue(newID) == null)
+        if (newID == null || IngredientData.GetIngValue(newID) == null)
         {
             SetEmpty();
             return;

@@ -969,10 +969,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1084653487}
   - {fileID: 318552843}
   - {fileID: 186346392}
   - {fileID: 629557345}
-  - {fileID: 1084653487}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1754,6 +1754,54 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1749958731480439854, guid: 1bdbcf59bab72864eab264071637b712, type: 3}
   m_PrefabInstance: {fileID: 1905072429}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2051694137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2051694139}
+  - component: {fileID: 2051694138}
+  m_Layer: 0
+  m_Name: Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2051694138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051694137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029313007cafb854eb49d3dd2bfe34f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testSprite: {fileID: -2413806693520163455, guid: afb3a8a6056bfe9438a48dca6a2d50a0, type: 3}
+  shopMan: {fileID: 1007924001}
+  drinkMenuMan: {fileID: 328838852}
+  drinkPurchaseMan: {fileID: 1732620802}
+--- !u!4 &2051694139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051694137}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5795657744688537519
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1859,6 +1907,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1084653487}
     m_Modifications:
+    - target: {fileID: 647527278844729921, guid: 1bdbcf59bab72864eab264071637b712, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 1749958731480439854, guid: 1bdbcf59bab72864eab264071637b712, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1939,6 +1991,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3105758397668326560, guid: 1bdbcf59bab72864eab264071637b712, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3105758397668326560, guid: 1bdbcf59bab72864eab264071637b712, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -365
+      objectReference: {fileID: 0}
+    - target: {fileID: 3967237842449517927, guid: 1bdbcf59bab72864eab264071637b712, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3967237842449517927, guid: 1bdbcf59bab72864eab264071637b712, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 365
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632330810681204714, guid: 1bdbcf59bab72864eab264071637b712, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632330810681204714, guid: 1bdbcf59bab72864eab264071637b712, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -150
+      objectReference: {fileID: 0}
     - target: {fileID: 9215960167807946895, guid: 1bdbcf59bab72864eab264071637b712, type: 3}
       propertyPath: m_Name
       value: Drink
@@ -1959,3 +2035,4 @@ SceneRoots:
   - {fileID: 1732620803}
   - {fileID: 328838853}
   - {fileID: 1007924002}
+  - {fileID: 2051694139}

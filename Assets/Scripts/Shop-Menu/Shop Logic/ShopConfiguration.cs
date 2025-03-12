@@ -30,7 +30,14 @@ public class ShopConfiguration : Object
 
     public string GetIngID(int slot)
     {
-        return ingIDs[slot];
+        if (slot >= ingIDs.Count)
+        {
+            return null;
+        }
+        else
+        {
+            return ingIDs[slot];
+        }
     }
 
     public void DebugPrintConfig()
