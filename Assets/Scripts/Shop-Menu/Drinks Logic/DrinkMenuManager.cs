@@ -8,6 +8,11 @@ public class DrinkMenuManager : Manager<DrinkMenuManager>
     // [SerializeField] int drinksAllowed = 3;
     [SerializeField] private DrinkMenuDisplay drinkMenuDisplay;
 
+    private void Start()
+    {
+        drinkMenuDisplay.RefreshDisplay();
+    }
+
     public void AddIngredientToDrink(int drinkPos, string ing, int slot)
     {
         Drink drink = drinkData.GetDrink(drinkPos);
@@ -44,5 +49,6 @@ public class DrinkMenuManager : Manager<DrinkMenuManager>
         Debug.Log(IngredientData.GetIngValue(ing).DisplayName + " added to drink " + drinkPos + " in slot " + slot);
 
         // TODO: update UI
+        drinkMenuDisplay.RefreshDisplay();
     }
 }

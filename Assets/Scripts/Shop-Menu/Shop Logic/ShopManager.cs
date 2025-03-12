@@ -7,12 +7,11 @@ public sealed class ShopManager : Manager<ShopManager>
     [SerializeField] ShopDisplay shopDisplay;
 
     private ShopConfiguration currentShop;
-    // need shop display
 
     public void RefreshShop()
     {
         currentShop = new ShopConfiguration(ingsPerShopContents);
-        // TODO: Update shop display
+        shopDisplay.UpdateDisplay(currentShop);
 
         // TEMP: shop testing
         currentShop.DebugPrintConfig();
