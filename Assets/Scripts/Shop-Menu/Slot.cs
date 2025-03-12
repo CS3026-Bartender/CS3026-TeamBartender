@@ -10,6 +10,11 @@ public class Slot : MonoBehaviour
 
     public virtual void UpdateSlot(string newID)
     {
+        if (IngredientData.GetIngValue(newID) == null)
+        {
+            SetEmpty();
+            return;
+        }
         if (ingDisplay == null)
         {
             GameObject newIngDisplayObj = Instantiate(ingDisplayPrefab, transform.position, transform.rotation, transform);
