@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class DropArea : MonoBehaviour
 {
+	public bool IsDropAllowed { get; set; }
     public List<DropCondition> DropConditions = new List<DropCondition>();
 	public event Action<DraggableComponent> OnDropHandler;
 
 	public bool Accepts(DraggableComponent draggable)
 	{
-		return DropConditions.TrueForAll(cond => cond.Check(draggable));
+		if (IsDropAllowed)
+		{
+            return DropConditions.TrueForAll(cond => cond.Check(draggable));
+        }
+		else
+		{
+			return false;
+		}
 	}
 
 	public void Drop(DraggableComponent draggable)
 	{
-		OnDropHandler?.Invoke(draggable);
+        OnDropHandler?.Invoke(draggable);
 	}
 }
