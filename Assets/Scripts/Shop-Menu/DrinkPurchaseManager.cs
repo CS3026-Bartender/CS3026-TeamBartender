@@ -4,8 +4,8 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
 {
     [SerializeField] private ShopManager shopMan;
     [SerializeField] private DrinkMenuManager drinkMan;
-    [SerializeField] private DrinkData drinkData;
-    // need display objects
+    // [SerializeField] private DrinkData drinkData;
+    // [SerializeField] private ShopDisplay shopDisplay;
 
     // purchase tracking
     private bool purchaseActive = false;
@@ -31,7 +31,7 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
                 slots[i] = new bool[4];
                 slots[i][0] = false; // can't place non-spirit in first slot
 
-                Drink d = drinkData.GetDrink(i);
+                Drink d = DrinkData.Instance.GetDrink(i);
                 // if drink exists in this position, remaining slots are available
                 if (d != null)
                 {
@@ -79,7 +79,6 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
     {
         if (purchaseActive)
         {
-            // TODO: tell UI to update
             EndPurchase();
         }
     }

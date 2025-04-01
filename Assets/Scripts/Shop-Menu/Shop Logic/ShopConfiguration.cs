@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShopConfiguration : Object
 {
-    public List<string> spiritIDs;
+    // public List<string> spiritIDs;
     public List<string> ingIDs;
 
     public ShopConfiguration(int numIngs)
@@ -30,7 +30,14 @@ public class ShopConfiguration : Object
 
     public string GetIngID(int slot)
     {
-        return ingIDs[slot];
+        if (slot >= ingIDs.Count)
+        {
+            return null;
+        }
+        else
+        {
+            return ingIDs[slot];
+        }
     }
 
     public void DebugPrintConfig()

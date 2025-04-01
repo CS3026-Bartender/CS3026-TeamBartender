@@ -25,6 +25,7 @@ public class DraggableComponent : MonoBehaviour, IInitializePotentialDragHandler
     {
         if (!CanDrag) {return;}
 
+        DrinkPurchaseManager.Instance.StartPurchase(transform.GetSiblingIndex());
         OnBeginDragHandler?.Invoke(eventData);
     }
 
@@ -64,7 +65,8 @@ public class DraggableComponent : MonoBehaviour, IInitializePotentialDragHandler
 			}
 		}
 
-		rectTransform.anchoredPosition = StartPosition;
+        DrinkPurchaseManager.Instance.CancelPurchase();
+        rectTransform.anchoredPosition = StartPosition;
 		OnEndDragHandler?.Invoke(eventData, false);
     }
 

@@ -20,6 +20,7 @@ public class DrinkData : MonoBehaviour
         }
     }
 
+    /// <returns>Drink</returns>
     public Drink AddDrink(string name, string spirit, int drinkPos)
     {
         Drink drink = new(name, spirit);

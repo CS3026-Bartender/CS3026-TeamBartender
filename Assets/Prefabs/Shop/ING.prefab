@@ -85,6 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3528843766641250161}
   - component: {fileID: -5563431881961908336}
+  - component: {fileID: 3685074977326483608}
   m_Layer: 6
   m_Name: ING
   m_TagString: Untagged
@@ -126,6 +127,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &3685074977326483608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748226954804699348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13a58c476b28f224facfc7da76f666fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 8579114083872675340}
+  nameDisplay: {fileID: 5057115678806150006}
+  dragComponent: {fileID: -5563431881961908336}
 --- !u!1 &6373200539881054134
 GameObject:
   m_ObjectHideFlags: 0

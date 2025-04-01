@@ -3,15 +3,15 @@ using UnityEngine;
 public sealed class ShopManager : Manager<ShopManager>
 {
     [SerializeField] int ingsPerShopContents; // number of ingredients in the shop
-    [SerializeField] DrinkMenuManager drinkMenuManager;
+    // [SerializeField] DrinkMenuManager drinkMenuManager;
+    [SerializeField] ShopDisplay shopDisplay;
 
     private ShopConfiguration currentShop;
-    // need shop display
 
     public void RefreshShop()
     {
         currentShop = new ShopConfiguration(ingsPerShopContents);
-        // TODO: Update shop display
+        shopDisplay.UpdateDisplay(currentShop);
 
         // TEMP: shop testing
         currentShop.DebugPrintConfig();
@@ -39,6 +39,7 @@ public sealed class ShopManager : Manager<ShopManager>
     {
         string ingID = currentShop.GetIngID(slot);
         currentShop.RemoveIngredient(slot);
+        shopDisplay.UpdateDisplay(currentShop);
 
         // TODO: tell currency system to deduct price
 
