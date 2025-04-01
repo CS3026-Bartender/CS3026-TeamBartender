@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Spirit
+public class Spirit : Ingredient
 {
 
     public float ServeTime { get; private set; }
