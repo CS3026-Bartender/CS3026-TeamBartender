@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShopConfiguration : Object
 {
-    public List<string> spiritIDs;
+    // public List<string> spiritIDs;
     public List<string> ingIDs;
 
     public ShopConfiguration(int numIngs)

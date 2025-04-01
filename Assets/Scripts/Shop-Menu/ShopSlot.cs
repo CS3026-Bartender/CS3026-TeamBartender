@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class ShopSlot : Slot
+public class ShopSlot
 {
     private void Start()
     {

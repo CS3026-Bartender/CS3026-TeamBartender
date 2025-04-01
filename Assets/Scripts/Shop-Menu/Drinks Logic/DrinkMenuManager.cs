@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DrinkMenuManager : Manager<DrinkMenuManager>
 {
-    [SerializeField] private DrinkData drinkData;
+    // [SerializeField] private DrinkData drinkData;
 
     // [SerializeField] int ingsPerDrinkAllowed = 3;
     // [SerializeField] int drinksAllowed = 3;
@@ -15,14 +15,14 @@ public class DrinkMenuManager : Manager<DrinkMenuManager>
 
     public void AddIngredientToDrink(int drinkPos, string ing, int slot)
     {
-        Drink drink = drinkData.GetDrink(drinkPos);
+        Drink drink = DrinkData.Instance.GetDrink(drinkPos);
         // Check if drink exists
         if (drink == null)
         {
             // If spirit, make a new drink
             if (IngredientData.GetIngValue(ing) is Spirit)
             {
-                drink = drinkData.AddDrink("Drink Name", ing, drinkPos);
+                drink = DrinkData.Instance.AddDrink("Drink Name", ing, drinkPos);
                 Debug.Log(drink.drinkName + " added in manager");
             }
             // Otherwise, can't add ingredient
