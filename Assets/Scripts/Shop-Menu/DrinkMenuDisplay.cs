@@ -7,20 +7,25 @@ public class DrinkMenuDisplay : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            Drink drink = DrinkData.Instance.GetDrink(i);
-            Transform drinkChild = transform.GetChild(i);
-            for (int j = 0; j < 4; j++)
+            RefreshDisplay(i);
+        }
+    }
+
+    public void RefreshDisplay(int drinkIndex)
+    {
+        Drink drink = DrinkData.Instance.GetDrink(drinkIndex);
+        Transform drinkChild = transform.GetChild(drinkIndex);
+        for (int j = 0; j < 4; j++)
+        {
+            GameObject slotObject = drinkChild.GetChild(j).gameObject;
+            DrinkMenuSlot slot = slotObject.GetComponent<DrinkMenuSlot>();
+            if (drink == null)
             {
-                GameObject slotObject = drinkChild.GetChild(j).gameObject;
-                DrinkMenuSlot slot = slotObject.GetComponent<DrinkMenuSlot>();
-                if (drink == null)
-                {
-                    slot.SetEmpty();
-                }
-                else
-                {
-                    slot.UpdateSlot(drink.GetIngID(j));
-                }
+                slot.SetEmpty();
+            }
+            else
+            {
+                slot.UpdateSlot(drink.GetIngID(j));
             }
         }
     }

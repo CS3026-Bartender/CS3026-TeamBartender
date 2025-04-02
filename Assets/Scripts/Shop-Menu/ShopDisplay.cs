@@ -8,6 +8,7 @@ public class ShopDisplay : MonoBehaviour
         {
             string ingID = shopData.GetIngID(i);
             GameObject slotObj = transform.GetChild(i).gameObject;
+            slotObj.transform.GetChild(0).gameObject.SetActive(ingID != null);
             Slot slot = slotObj.GetComponent<Slot>();
             slot.UpdateSlot(ingID);
         }

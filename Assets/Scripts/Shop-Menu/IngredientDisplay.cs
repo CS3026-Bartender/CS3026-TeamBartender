@@ -14,6 +14,7 @@ public class IngredientDisplay : MonoBehaviour
     {
         ingID = newID;
         Ingredient ing = IngredientData.GetIngValue(ingID);
+        if (DebugLogger.Instance.logShopDisplay) Debug.Log("Updating ingredient " + nameDisplay.text + " to " + ing.DisplayName);
         icon.sprite = ing.Icon;
         nameDisplay.text = ing.DisplayName;
     }

@@ -53,6 +53,6 @@ public class DrinkMenuManager : Manager<DrinkMenuManager>
         Debug.Log(IngredientData.GetIngValue(ing).DisplayName + " added to drink " + drinkPos + " in slot " + slot);
 
         // Update UI
-        drinkMenuDisplay.RefreshDisplay();
+        drinkMenuDisplay.RefreshDisplay(drinkPos);
     }
 }

@@ -32,7 +32,7 @@ public class DrinkMenuSlot : Slot
         base.UpdateSlot(newID);
         if (ingDisplay != null)
         {
-            ingDisplay.SetDraggable(false);
+            // ingDisplay.SetDraggable(false);
         }
     }
 }

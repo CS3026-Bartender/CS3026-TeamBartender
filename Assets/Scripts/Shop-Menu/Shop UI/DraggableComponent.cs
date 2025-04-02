@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 
 public class DraggableComponent : MonoBehaviour, IInitializePotentialDragHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    [SerializeField] GameObject objectToDrag;
+
     public event Action<PointerEventData> OnBeginDragHandler;
 	public event Action<PointerEventData> OnDragHandler;
 	public event Action<PointerEventData, bool> OnEndDragHandler;
@@ -30,7 +32,9 @@ public class DraggableComponent : MonoBehaviour, IInitializePotentialDragHandler
             return;
         }
 
-        DrinkPurchaseManager.Instance.StartPurchase(transform.GetSiblingIndex());
+        Instantiate(objectToDrag, rectTransform);
+        objectToDrag.SetActive(false);
+        DrinkPurchaseManager.Instance.StartPurchase(transform.parent.GetSiblingIndex());
         OnBeginDragHandler?.Invoke(eventData);
     }
 
@@ -70,22 +74,21 @@ public class DraggableComponent : MonoBehaviour, IInitializePotentialDragHandler
             }
 		}
 
-		if (dropArea != null)
+		if (dropArea != null && dropArea.Accepts(this))
 		{
-			if (dropArea.Accepts(this))
-			{
-                if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Drop area is valid, dropping");
-                dropArea.Drop(this);
-				OnEndDragHandler?.Invoke(eventData, true);
-				return;
-			}
+            if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Drop area is valid, dropping");
+            dropArea.Drop(this);
+            OnEndDragHandler?.Invoke(eventData, true);
 		}
+        else
+        {
+            if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Drop area is not valid, canceling");
 
-        if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Drop area is not valid, canceling");
-
-        DrinkPurchaseManager.Instance.CancelPurchase();
+            DrinkPurchaseManager.Instance.CancelPurchase();
+            OnEndDragHandler?.Invoke(eventData, false);
+        }
         rectTransform.anchoredPosition = StartPosition;
-		OnEndDragHandler?.Invoke(eventData, false);
+        Destroy(transform.GetChild(0).gameObject);
     }
 
     public void OnInitializePotentialDrag(PointerEventData eventData)

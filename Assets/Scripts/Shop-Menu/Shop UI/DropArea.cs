@@ -24,8 +24,8 @@ public class DropArea : MonoBehaviour
 	{
         if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Drop area received item, setting new position & parent");
 
-		draggable.transform.SetParent(transform, false);
-		draggable.transform.position = transform.position;
+		//draggable.transform.SetParent(transform, false);
+		//draggable.transform.position = transform.position;
 
 		// Complete purchase with this drink & slot
         int drink = transform.parent.GetSiblingIndex();
