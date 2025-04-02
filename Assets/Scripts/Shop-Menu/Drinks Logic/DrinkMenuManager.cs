@@ -13,6 +13,29 @@ public class DrinkMenuManager : Manager<DrinkMenuManager>
         drinkMenuDisplay.RefreshDisplay();
     }
 
+    public bool CheckAddOkay(int drinkPos, string ing, int slot)
+    {
+        Drink drink = DrinkData.Instance.GetDrink(drinkPos);
+
+        if (IngredientData.GetIngValue(ing) is Spirit)
+        {
+            // spirit has to be in slot 0
+            if (slot != 0)
+            {
+                return false;
+            }
+        }
+        else
+        {
+            // non-spirit can't be in 0 and has to already have drinkE
+            if (slot == 0 || drink == null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void AddIngredientToDrink(int drinkPos, string ing, int slot)
     {
         Drink drink = DrinkData.Instance.GetDrink(drinkPos);
@@ -33,14 +56,18 @@ public class DrinkMenuManager : Manager<DrinkMenuManager>
                 return;
             }
         }
-        
+
         // Check if drink already has ingredient in slot
-        if (drink.GetIngID(slot) != null)
+        string currIngID = drink.GetIngID(slot);
+        if (currIngID != null)
         {
             // Sell old ingredient
-            Debug.Log("Selling " + IngredientData.GetIngValue(drink.GetIngID(slot)));
-            // TODO: tell currency system to add money
-            // tell UI to display currency add
+            Ingredient currIng = IngredientData.GetIngValue(currIngID);
+            Debug.Log("Selling " + currIng.DisplayName);
+
+            // Spend currency
+            // TODO: make currency always float or always int
+            CurrencyManager.Instance.SpendMoney((int)currIng.Price);
         }
 
         // Add new ingredient
@@ -48,7 +75,7 @@ public class DrinkMenuManager : Manager<DrinkMenuManager>
 
         Debug.Log(IngredientData.GetIngValue(ing).DisplayName + " added to drink " + drinkPos + " in slot " + slot);
 
-        // TODO: update UI
-        drinkMenuDisplay.RefreshDisplay();
+        // Update UI
+        drinkMenuDisplay.RefreshDisplay(drinkPos);
     }
 }

@@ -86,22 +86,31 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
     // Call if ingredient dropped on a valid slot
     public void CompletePurchase(int drinkSlot, int drinkIngSlot)
     {
+
         if (purchaseActive)
         {
-            Debug.Log("Attempting to place ingredient in drink " + drinkSlot + ", slot " + drinkIngSlot);
+            if (DebugLogger.Instance.logPurchase) Debug.Log("Attempting to place ingredient in drink " + drinkSlot + ", slot " + drinkIngSlot);
 
-            // buy ingredient at shop slot, put in drink slot
-            shopMan.BuyIngredient(currentShopSlot);
-            drinkMan.AddIngredientToDrink(drinkSlot, currentIng, drinkIngSlot);
-
-            EndPurchase();
+            if (DrinkMenuManager.Instance.CheckAddOkay(drinkSlot, currentIng, drinkIngSlot))
+            {
+                if (DebugLogger.Instance.logPurchase) Debug.Log("Placement is valid");
+                // buy ingredient at shop slot, put in drink slot
+                shopMan.BuyIngredient(currentShopSlot);
+                drinkMan.AddIngredientToDrink(drinkSlot, currentIng, drinkIngSlot);
+                EndPurchase();
+            }
+            else
+            {
+                if (DebugLogger.Instance.logPurchase) Debug.Log("Placement is not valid, canceling");
+                CancelPurchase();
+            }
         }
     }
 
     private void EndPurchase()
     {
         // TODO: update moving ingredient display
-
+        ShopManager.Instance.ReloadDisplay();
         purchaseActive = false;
     }
 }

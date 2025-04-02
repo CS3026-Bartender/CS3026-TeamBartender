@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 
 public class DraggableComponent : MonoBehaviour, IInitializePotentialDragHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    [SerializeField] GameObject objectToDrag;
+
     public event Action<PointerEventData> OnBeginDragHandler;
 	public event Action<PointerEventData> OnDragHandler;
 	public event Action<PointerEventData, bool> OnEndDragHandler;
@@ -23,9 +25,16 @@ public class DraggableComponent : MonoBehaviour, IInitializePotentialDragHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!CanDrag) {return;}
+        if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Begin drag");
+        if (!CanDrag)
+        {
+            if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Oops, can't drag");
+            return;
+        }
 
-        DrinkPurchaseManager.Instance.StartPurchase(transform.GetSiblingIndex());
+        Instantiate(objectToDrag, rectTransform);
+        objectToDrag.SetActive(false);
+        DrinkPurchaseManager.Instance.StartPurchase(transform.parent.GetSiblingIndex());
         OnBeginDragHandler?.Invoke(eventData);
     }
 
@@ -41,33 +50,45 @@ public class DraggableComponent : MonoBehaviour, IInitializePotentialDragHandler
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!CanDrag) {return;}
+        if (DebugLogger.Instance.logDragAndDrop) Debug.Log("End drag");
+        if (!CanDrag)
+        {
+            if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Oops, couldn't drag");
+            return;
+        }
         
         var results = new List<RaycastResult>();
 		EventSystem.current.RaycastAll(eventData, results);
+        if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Raycast got " + results.Count + " results");
 
-		DropArea dropArea = null;
+        DropArea dropArea = null;
 
 		foreach (var result in results)
 		{
 			dropArea = result.gameObject.GetComponent<DropArea>();
 
-			if (dropArea != null) {break;}
+			if (dropArea != null)
+            {
+                if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Found drop area");
+                break;
+            }
 		}
 
-		if (dropArea != null)
+		if (dropArea != null && dropArea.Accepts(this))
 		{
-			if (dropArea.Accepts(this))
-			{
-				dropArea.Drop(this);
-				OnEndDragHandler?.Invoke(eventData, true);
-				return;
-			}
+            if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Drop area is valid, dropping");
+            dropArea.Drop(this);
+            OnEndDragHandler?.Invoke(eventData, true);
 		}
+        else
+        {
+            if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Drop area is not valid, canceling");
 
-        DrinkPurchaseManager.Instance.CancelPurchase();
+            DrinkPurchaseManager.Instance.CancelPurchase();
+            OnEndDragHandler?.Invoke(eventData, false);
+        }
         rectTransform.anchoredPosition = StartPosition;
-		OnEndDragHandler?.Invoke(eventData, false);
+        Destroy(transform.GetChild(0).gameObject);
     }
 
     public void OnInitializePotentialDrag(PointerEventData eventData)

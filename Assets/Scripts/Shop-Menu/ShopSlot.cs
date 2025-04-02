@@ -5,7 +5,7 @@ public class ShopSlot : Slot
 {
     private void Start()
     {
-        dropArea.IsDropAllowed = false;
+        // dropArea.IsDropAllowed = false;
     }
 
     private enum ShopState
@@ -31,6 +31,6 @@ public class ShopSlot : Slot
             priceDisplay.text = "";
             return;
         }
-        priceDisplay.text = "$ " + IngredientData.GetIngValue(newID).Price;
+        priceDisplay.text = "$ " + ing.Price;
     }
 }

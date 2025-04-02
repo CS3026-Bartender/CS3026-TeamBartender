@@ -47,4 +47,9 @@ public sealed class ShopManager : Manager<ShopManager>
         Debug.Log("Bought " + IngredientData.GetIngValue(ingID).DisplayName);
         currentShop.DebugPrintConfig();
     }
+
+    public void ReloadDisplay()
+    {
+        shopDisplay.UpdateDisplay(currentShop);
+    }
 }

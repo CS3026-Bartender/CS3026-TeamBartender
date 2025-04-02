@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DropArea : MonoBehaviour
 {
-	public bool IsDropAllowed { get; set; }
+	public bool IsDropAllowed { get; set; } = true;
     public List<DropCondition> DropConditions = new List<DropCondition>();
 	public event Action<DraggableComponent> OnDropHandler;
 
@@ -22,9 +22,12 @@ public class DropArea : MonoBehaviour
 
 	public void Drop(DraggableComponent draggable)
 	{
-		draggable.transform.parent = transform;
-		draggable.transform.position = transform.position;
+        if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Drop area received item");
 
+		//draggable.transform.SetParent(transform, false);
+		//draggable.transform.position = transform.position;
+
+		// Complete purchase with this drink & slot
         int drink = transform.parent.GetSiblingIndex();
         int slot = transform.GetSiblingIndex();
         DrinkPurchaseManager.Instance.CompletePurchase(drink, slot);
