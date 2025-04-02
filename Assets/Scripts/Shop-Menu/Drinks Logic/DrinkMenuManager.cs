@@ -13,6 +13,21 @@ public class DrinkMenuManager : Manager<DrinkMenuManager>
         drinkMenuDisplay.RefreshDisplay();
     }
 
+    public bool CheckAddOkay(int drinkPos, string ing, int slot)
+    {
+        Drink drink = DrinkData.Instance.GetDrink(drinkPos);
+        // Check if drink exists
+        if (drink == null)
+        {
+            // If not spirit, not cool
+            if (IngredientData.GetIngValue(ing) is not Spirit)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void AddIngredientToDrink(int drinkPos, string ing, int slot)
     {
         Drink drink = DrinkData.Instance.GetDrink(drinkPos);

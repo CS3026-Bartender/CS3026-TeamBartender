@@ -22,7 +22,7 @@ public class DropArea : MonoBehaviour
 
 	public void Drop(DraggableComponent draggable)
 	{
-        if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Drop area received item, setting new position & parent");
+        if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Drop area received item");
 
 		//draggable.transform.SetParent(transform, false);
 		//draggable.transform.position = transform.position;
