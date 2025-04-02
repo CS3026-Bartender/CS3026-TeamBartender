@@ -33,14 +33,18 @@ public class DrinkMenuManager : Manager<DrinkMenuManager>
                 return;
             }
         }
-        
+
         // Check if drink already has ingredient in slot
-        if (drink.GetIngID(slot) != null)
+        string currIngID = drink.GetIngID(slot);
+        if (currIngID != null)
         {
             // Sell old ingredient
-            Debug.Log("Selling " + IngredientData.GetIngValue(drink.GetIngID(slot)));
-            // TODO: tell currency system to add money
-            // tell UI to display currency add
+            Ingredient currIng = IngredientData.GetIngValue(currIngID);
+            Debug.Log("Selling " + currIng.DisplayName);
+
+            // Spend currency
+            // TODO: make currency always float or always int
+            CurrencyManager.Instance.SpendMoney((int)currIng.Price);
         }
 
         // Add new ingredient
@@ -48,7 +52,7 @@ public class DrinkMenuManager : Manager<DrinkMenuManager>
 
         Debug.Log(IngredientData.GetIngValue(ing).DisplayName + " added to drink " + drinkPos + " in slot " + slot);
 
-        // TODO: update UI
+        // Update UI
         drinkMenuDisplay.RefreshDisplay();
     }
 }

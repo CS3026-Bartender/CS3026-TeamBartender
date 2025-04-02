@@ -4,9 +4,6 @@ using UnityEngine;
 public class TestScript : MonoBehaviour
 {
     [SerializeField] Sprite testSprite;
-    [SerializeField] ShopManager shopMan;
-    [SerializeField] DrinkMenuManager drinkMenuMan;
-    [SerializeField] DrinkPurchaseManager drinkPurchaseMan;
 
     void Start()
     {
@@ -17,11 +14,15 @@ public class TestScript : MonoBehaviour
         IngredientData.AddIngredient("ing_bitters", "Bitters", 2f, "Deepens the flavor", testSprite);
         IngredientData.AddIngredient("ing_lemon", "Lemon", 3f, "A sour citrus", testSprite);
 
-        shopMan.InitializeShop();
-        drinkPurchaseMan.StartPurchase(0);
-        drinkPurchaseMan.CompletePurchase(0, 0);
+        ShopManager.Instance.InitializeShop();
 
-        drinkPurchaseMan.StartPurchase(1);
-        drinkPurchaseMan.CompletePurchase(0, 1);
+        /*
+        DrinkPurchaseManager.Instance.StartPurchase(0);
+        DrinkPurchaseManager.Instance.CompletePurchase(0, 0);
+
+        
+        DrinkPurchaseManager.Instance.StartPurchase(1);
+        DrinkPurchaseManager.Instance.CompletePurchase(0, 1);
+        */
     }
 }

@@ -23,7 +23,12 @@ public class DraggableComponent : MonoBehaviour, IInitializePotentialDragHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!CanDrag) {return;}
+        if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Begin drag");
+        if (!CanDrag)
+        {
+            if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Oops, can't drag");
+            return;
+        }
 
         DrinkPurchaseManager.Instance.StartPurchase(transform.GetSiblingIndex());
         OnBeginDragHandler?.Invoke(eventData);
@@ -41,29 +46,42 @@ public class DraggableComponent : MonoBehaviour, IInitializePotentialDragHandler
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!CanDrag) {return;}
+        if (DebugLogger.Instance.logDragAndDrop) Debug.Log("End drag");
+        if (!CanDrag)
+        {
+            if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Oops, couldn't drag");
+            return;
+        }
         
         var results = new List<RaycastResult>();
 		EventSystem.current.RaycastAll(eventData, results);
+        if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Raycast got " + results.Count + " results");
 
-		DropArea dropArea = null;
+        DropArea dropArea = null;
 
 		foreach (var result in results)
 		{
 			dropArea = result.gameObject.GetComponent<DropArea>();
 
-			if (dropArea != null) {break;}
+			if (dropArea != null)
+            {
+                if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Found drop area");
+                break;
+            }
 		}
 
 		if (dropArea != null)
 		{
 			if (dropArea.Accepts(this))
 			{
-				dropArea.Drop(this);
+                if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Drop area is valid, dropping");
+                dropArea.Drop(this);
 				OnEndDragHandler?.Invoke(eventData, true);
 				return;
 			}
 		}
+
+        if (DebugLogger.Instance.logDragAndDrop) Debug.Log("Drop area is not valid, canceling");
 
         DrinkPurchaseManager.Instance.CancelPurchase();
         rectTransform.anchoredPosition = StartPosition;
