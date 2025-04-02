@@ -86,7 +86,6 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
     // Call if ingredient dropped on a valid slot
     public void CompletePurchase(int drinkSlot, int drinkIngSlot)
     {
-        // TODO: Fix bug: can replace spirit with other ingredient
 
         if (purchaseActive)
         {

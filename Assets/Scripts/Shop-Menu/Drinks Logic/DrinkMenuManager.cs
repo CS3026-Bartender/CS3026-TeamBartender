@@ -16,11 +16,19 @@ public class DrinkMenuManager : Manager<DrinkMenuManager>
     public bool CheckAddOkay(int drinkPos, string ing, int slot)
     {
         Drink drink = DrinkData.Instance.GetDrink(drinkPos);
-        // Check if drink exists
-        if (drink == null)
+
+        if (IngredientData.GetIngValue(ing) is Spirit)
         {
-            // If not spirit, not cool
-            if (IngredientData.GetIngValue(ing) is not Spirit)
+            // spirit has to be in slot 0
+            if (slot != 0)
+            {
+                return false;
+            }
+        }
+        else
+        {
+            // non-spirit can't be in 0 and has to already have drinkE
+            if (slot == 0 || drink == null)
             {
                 return false;
             }
