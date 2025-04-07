@@ -91,9 +91,9 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
         {
             if (DebugLogger.Instance.logPurchase) Debug.Log("Attempting to place ingredient in drink " + drinkSlot + ", slot " + drinkIngSlot);
 
-            if (DrinkMenuManager.Instance.CheckAddOkay(drinkSlot, currentIng, drinkIngSlot))
+            if (ShopManager.Instance.IsBuyAllowed(currentShopSlot) && DrinkMenuManager.Instance.CheckAddOkay(drinkSlot, currentIng, drinkIngSlot))
             {
-                if (DebugLogger.Instance.logPurchase) Debug.Log("Placement is valid");
+                if (DebugLogger.Instance.logPurchase) Debug.Log("Purchase is valid");
                 // buy ingredient at shop slot, put in drink slot
                 shopMan.BuyIngredient(currentShopSlot);
                 drinkMan.AddIngredientToDrink(drinkSlot, currentIng, drinkIngSlot);
@@ -101,7 +101,7 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
             }
             else
             {
-                if (DebugLogger.Instance.logPurchase) Debug.Log("Placement is not valid, canceling");
+                if (DebugLogger.Instance.logPurchase) Debug.Log("Purchase is not valid, canceling");
                 CancelPurchase();
             }
         }

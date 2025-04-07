@@ -181,11 +181,11 @@ public class AutoSimController : MonoBehaviour
 
             if (spirits is Spirit spirit)
             {
-                customerScript.IncreaseSatisfaction(spirit.Potentcy);
+                customerScript.IncreaseSatisfaction(spirit.Potency);
 
                 // Log detailed information about the drink effect
                 Debug.Log($"Applied '{spirit.DisplayName}' effect to {customerScript.name} (Type: {customerScript.currentType})" +
-                          $"\n  Satisfaction increase: {spirit.Potentcy}");
+                          $"\n  Satisfaction increase: {spirit.Potency}");
 
             }
         }

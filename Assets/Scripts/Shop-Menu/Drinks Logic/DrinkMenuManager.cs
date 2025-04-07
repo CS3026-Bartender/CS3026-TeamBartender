@@ -39,6 +39,7 @@ public class DrinkMenuManager : Manager<DrinkMenuManager>
     public void AddIngredientToDrink(int drinkPos, string ing, int slot)
     {
         Drink drink = DrinkData.Instance.GetDrink(drinkPos);
+
         // Check if drink exists
         if (drink == null)
         {
@@ -56,24 +57,26 @@ public class DrinkMenuManager : Manager<DrinkMenuManager>
                 return;
             }
         }
-
-        // Check if drink already has ingredient in slot
-        string currIngID = drink.GetIngID(slot);
-        if (currIngID != null)
+        else
         {
-            // Sell old ingredient
-            Ingredient currIng = IngredientData.GetIngValue(currIngID);
-            Debug.Log("Selling " + currIng.DisplayName);
+            // Check if drink already has ingredient in slot
+            string currIngID = drink.GetIngID(slot);
+            if (currIngID != null)
+            {
+                // Sell old ingredient
+                Ingredient currIng = IngredientData.GetIngValue(currIngID);
+                if (DebugLogger.Instance.logDrinkLogic) Debug.Log("Selling " + currIng.DisplayName);
 
-            // Spend currency
-            // TODO: make currency always float or always int
-            CurrencyManager.Instance.SpendMoney((int)currIng.Price);
+                // Get currency
+                // TODO: make currency always float or always int
+                CurrencyManager.Instance.AddMoney((int)currIng.Price);
+            }
         }
 
         // Add new ingredient
         drink.AddIngredient(ing, slot);
 
-        Debug.Log(IngredientData.GetIngValue(ing).DisplayName + " added to drink " + drinkPos + " in slot " + slot);
+        if (DebugLogger.Instance.logDrinkLogic) Debug.Log(IngredientData.GetIngValue(ing).DisplayName + " added to drink " + drinkPos + " in slot " + slot);
 
         // Update UI
         drinkMenuDisplay.RefreshDisplay(drinkPos);
