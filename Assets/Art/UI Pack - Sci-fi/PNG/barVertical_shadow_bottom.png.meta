@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      barVertical_shadow_bottom_0: -1757949693648977090
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

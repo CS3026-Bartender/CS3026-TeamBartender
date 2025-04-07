@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      crossair_black_0: -756057768733867747
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      barHorizontal_shadow_left_0: -1770396696970582891
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
