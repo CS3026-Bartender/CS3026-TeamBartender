@@ -30,7 +30,19 @@ public sealed class ShopManager : Manager<ShopManager>
     public bool IsBuyAllowed(int slot)
     {
         string ingID = currentShop.GetIngID(slot);
-        // TODO: check with currency system
+        Ingredient ing = IngredientData.GetIngValue(ingID);
+
+        // check ing exists
+        if (ing == null)
+        {
+            return false;
+        }
+
+        // check with currency system
+        if (CurrencyManager.Instance.Money < ing.Price)
+        {
+            return false;
+        }
 
         return true;
     }
@@ -41,11 +53,15 @@ public sealed class ShopManager : Manager<ShopManager>
         currentShop.RemoveIngredient(slot);
         shopDisplay.UpdateDisplay(currentShop);
 
-        // TODO: tell currency system to deduct price
+        // tell currency system to deduct price
+        CurrencyManager.Instance.SpendMoney((int)IngredientData.GetIngValue(ingID).Price);
 
-        // TEMP: shop testing
-        Debug.Log("Bought " + IngredientData.GetIngValue(ingID).DisplayName);
-        currentShop.DebugPrintConfig();
+
+        if (DebugLogger.Instance.logShopLogic)
+        {
+            Debug.Log("Bought " + IngredientData.GetIngValue(ingID).DisplayName);
+            currentShop.DebugPrintConfig();
+        }
     }
 
     public void ReloadDisplay()
