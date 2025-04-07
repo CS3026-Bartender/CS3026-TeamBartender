@@ -45,7 +45,7 @@ public class DataReader : Manager<DataReader>
 
     private Sprite FindSprite(string id)
     {
-        string filePath = spritesFolderPath + "/" + id + ".png";
+        string filePath = spritesFolderPath + "/" + id;
         Sprite sprite;
         sprite = Resources.Load<Sprite>(filePath);
         if (sprite == null ) {
