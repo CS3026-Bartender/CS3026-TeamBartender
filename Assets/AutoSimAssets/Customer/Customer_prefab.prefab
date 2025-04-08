@@ -494,7 +494,7 @@ Transform:
   m_GameObject: {fileID: 6824050789650091963}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.03, y: 0, z: 90}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
   m_LocalScale: {x: 1.8726591, y: 1.8726591, z: 0.018726591}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -586,8 +586,8 @@ MonoBehaviour:
   Max_satisfaction: 100
   Current_satisfaction: 0
   currentType: 0
-  regularColor: {r: 0.8773585, g: 0.07863116, b: 0.7952978, a: 1}
-  regularBackgroundColor: {r: 0.32342842, g: 0.012682447, b: 0.5377358, a: 1}
+  regularColor: {r: 0.8784314, g: 0.07843139, b: 0.09394004, a: 1}
+  regularBackgroundColor: {r: 0.254717, g: 0, b: 0.036151886, a: 1}
   premiumColor: {r: 1, g: 0.07075471, b: 0.07075471, a: 1}
   premiumBackgroundColor: {r: 0.5471698, g: 0.012904947, b: 0.012904947, a: 1}
   vipColor: {r: 0.11753506, g: 0.9150943, b: 0, a: 1}

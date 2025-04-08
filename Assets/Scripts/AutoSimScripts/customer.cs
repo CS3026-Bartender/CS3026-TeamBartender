@@ -1,25 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+
 public class customer : MonoBehaviour
 {
     public int Max_satisfaction = 100;
     public float Current_satisfaction;
+    public bool CanbeServed = true;
+    private Drink preferredDrink;
 
-    public enum CustomerType
-    {
-        Regular,    // Type 0
-        Premium,    // Type 1
-        VIP         // Type 2
-    }
-    [SerializeField] public CustomerType currentType;
+
 
     // Colors for each customer type
     [SerializeField] private Color regularColor;
     [SerializeField] private Color regularBackgroundColor;
-    [SerializeField] private Color premiumColor;
-    [SerializeField] private Color premiumBackgroundColor;
-    [SerializeField] private Color vipColor;
-    [SerializeField] private Color vipBackgroundColor;
+   
+    private List<Drink> equippedDrinks = DrinkData.Instance.GetAllDrinksAsList();
+
 
     private CustomerController CustomerControllerScript;
     public Slider HealthBarSlider;
@@ -38,6 +36,7 @@ public class customer : MonoBehaviour
         {
             CustomerControllerScript = ControllerObject.GetComponent<CustomerController>();
         }
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -51,52 +50,14 @@ public class customer : MonoBehaviour
             Debug.LogError("Health bar images not assigned in inspector!");
         }
 
-        AssignRandomCustomerType();
+        healthBarImage.color = regularColor;
+        healthBarBackground.color = regularBackgroundColor;
         HealthBarSlider.value = Current_satisfaction;
+
+        WantsDrink();
     }
 
-    private void AssignRandomCustomerType()
-    {
-        int typeIndex = Random.Range(0, 3);
-        currentType = (CustomerType)typeIndex;
-        SetCustomerType(currentType);
-    }
-
-    // Set customer type and update visuals accordingly
-    public void SetCustomerType(CustomerType type)
-    {
-        currentType = type;
-
-        // Make sure health bar images are not null before accessing
-        if (healthBarImage != null && healthBarBackground != null)
-        {
-            // Set health bar color based on type
-            switch (currentType)
-            {
-                case CustomerType.Regular:
-                    healthBarImage.color = regularColor;
-                    healthBarBackground.color = regularBackgroundColor;
-                    break;
-                case CustomerType.Premium:
-                    healthBarImage.color = premiumColor;
-                    healthBarBackground.color = premiumBackgroundColor;
-                    break;
-                case CustomerType.VIP:
-                    healthBarImage.color = vipColor;
-                    healthBarBackground.color = vipBackgroundColor;
-                    break;
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Cannot set customer type visuals: health bar images not assigned!");
-        }
-    }
-
-    public CustomerType GetCustomerType()
-    {
-        return currentType;
-    }
+    
 
     public void IncreaseSatisfaction(float Satisfaction)
     {
@@ -112,6 +73,24 @@ public class customer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+    }
+
+
+    public void WantsDrink()
+    {
+        CanbeServed = true;
+
+        if (equippedDrinks != null && equippedDrinks.Count > 0)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, equippedDrinks.Count);
+            preferredDrink = equippedDrinks[randomIndex];
+        }
+    }
+
+    public void Serve()
+    {
+        CanbeServed = false;
 
     }
 }
