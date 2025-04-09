@@ -14,7 +14,7 @@ public class CustomerController : MonoBehaviour
     [SerializeField] private float simulationDuration = 180f; // Duration in seconds before switching to shop scene
 
     [Header("Scene Settings")]
-
+    [SerializeField] private EarningsOverlay earningsOverlay; // Reference to the earnings overlay
 
     [Header("Cooldown Settings")]
     [SerializeField] private Image cooldownImage; // Reference to UI cooldown image WIP
@@ -69,8 +69,6 @@ public class CustomerController : MonoBehaviour
 
         // Start the simulation timer
         simulationCoroutine = StartCoroutine(SimulationTimerRoutine());
-
-      
     }
 
     private void Update()
@@ -90,10 +88,10 @@ public class CustomerController : MonoBehaviour
         }
     }
 
-    // New coroutine to handle the simulation duration
+    // Modified coroutine to handle the simulation duration with earnings overlay
     private IEnumerator SimulationTimerRoutine()
     {
-        Debug.Log($"Simulation will run for {simulationDuration} seconds before switching to shop scene");
+        Debug.Log($"Simulation will run for {simulationDuration} seconds before showing earnings");
 
         // Wait for the specified duration
         yield return new WaitForSeconds(simulationDuration);
@@ -103,11 +101,19 @@ public class CustomerController : MonoBehaviour
         ClearAllCustomers();
 
         // Wait a moment to let any animations finish if needed
-      //  yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
 
-       
-        Debug.Log("Simulation ended. Switching to shop scene.");
-        SceneManager.LoadScene("Shop_Scene");
+        // Show the earnings overlay instead of immediately switching scenes
+        if (earningsOverlay != null)
+        {
+            Debug.Log("Simulation ended. Showing earnings overlay.");
+            earningsOverlay.ShowEarningsOverlay();
+        }
+        else
+        {
+            Debug.LogWarning("Earnings overlay not assigned! Switching directly to shop scene.");
+            SceneManager.LoadScene("Shop_Scene");
+        }
     }
 
     // New method to remove all customers at once
@@ -387,6 +393,15 @@ public class CustomerController : MonoBehaviour
 
         StopSpawning();
         ClearAllCustomers();
-        SceneManager.LoadScene("Shop_Scene");
+
+        // Show earnings overlay instead of direct scene switch
+        if (earningsOverlay != null)
+        {
+            earningsOverlay.ShowEarningsOverlay();
+        }
+        else
+        {
+            SceneManager.LoadScene("Shop_Scene");
+        }
     }
 }
