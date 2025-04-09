@@ -333,9 +333,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bee1f47121b1e6808416cd9ebc5ddb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingDisplay: {fileID: 8236728544483545816}
   content: 
   header: 
+  ingDisplay: {fileID: 8236728544483545816}
 --- !u!1 &7860632615045061275
 GameObject:
   m_ObjectHideFlags: 0

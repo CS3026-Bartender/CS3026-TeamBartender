@@ -4,6 +4,7 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
 {
     [SerializeField] private ShopManager shopMan;
     [SerializeField] private DrinkMenuManager drinkMan;
+    [SerializeField] private DrinkMenuDisplay drinkMenuDisplay;
     // [SerializeField] private DrinkData drinkData;
     // [SerializeField] private ShopDisplay shopDisplay;
 
@@ -57,6 +58,7 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
         //}
 
         // TODO: tell drink menu display to highlight valid slots
+        drinkMenuDisplay.RefreshValid(slots);
     }
 
     // Call when drag ingredient starts
@@ -105,6 +107,8 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
                 CancelPurchase();
             }
         }
+        drinkMenuDisplay.FixDisplay();
+        
     }
 
     private void EndPurchase()

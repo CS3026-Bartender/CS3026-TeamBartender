@@ -128,6 +128,7 @@ MonoBehaviour:
   icon: {fileID: 8579114083872675340}
   nameDisplay: {fileID: 5057115678806150006}
   dragComponent: {fileID: 0}
+  description: 
 --- !u!1 &6373200539881054134
 GameObject:
   m_ObjectHideFlags: 0

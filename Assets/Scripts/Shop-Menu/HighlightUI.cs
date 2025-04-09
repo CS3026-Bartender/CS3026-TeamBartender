@@ -2,28 +2,32 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 using Unity.VisualScripting;
 
-public class HighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class HighlightUI : MonoBehaviour
 {
     [SerializeField] private Image image;
-    [SerializeField] private Color highlight;
 
     private Color originalcolor;
 
     private void Start()
     {
-        highlight.a = 1;
+        originalcolor = image.color;
     }
 
-    public void OnPointerEnter(PointerEventData eventData) 
+    public void HighlightValid()
     {
-        image.tintColor = highlight;
+        image.color = new Color32(255, 223, 115, 255);
     }
 
-    public void OnPointerExit(PointerEventData eventData) 
+    public void HighlightInvalid()
     {
-        image.tintColor = originalcolor;
+        image.color = new Color32(198, 38, 25, 255);
+    }
+
+    public void DehighlightImage()
+    {
+        image.color = originalcolor;
     }
 }
