@@ -4,16 +4,28 @@ public class Ingredient
 {
     public string DisplayName { get; private set; }
     public float Price { get; private set; }
+
+    public float SellPrice { get; private set; }
+
     public string Description { get; private set; }
     public Sprite Icon { get; private set; }
 
-    public Ingredient(string name, float price, string desc, Sprite sprite)
+    // Modifiers that ingredients apply to drinks
+    public float ServeTimeModifier { get; private set; } = 0f;
+    public float CustomerDrinkTimeModifier { get; private set; } = 0f;
+    public float PotencyModifier { get; private set; } = 0f;
+
+    public Ingredient(string name, float price, float sellPrice, string desc, Sprite sprite,
+                     float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
     {
-        // this.name = name;
         DisplayName = name;
         Price = price;
+        SellPrice = price;
         Description = desc;
         Icon = sprite;
+        ServeTimeModifier = serveTimeMod;
+        CustomerDrinkTimeModifier = customerDrinkTimeMod;
+        PotencyModifier = potencyMod;
     }
 
     public string GetDebug()
