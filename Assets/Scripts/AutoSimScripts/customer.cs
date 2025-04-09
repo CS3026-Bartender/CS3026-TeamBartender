@@ -16,7 +16,7 @@ public class Customer : MonoBehaviour
     private List<Drink> equippedDrinks;
     private CustomerController CustomerControllerScript;
     public Slider HealthBarSlider;
-    [SerializeField] private int MoneyPayed;
+    [SerializeField] private float MoneyPayed;
     // Health bar images 
     [SerializeField] private Image healthBarImage;
     [SerializeField] private Image healthBarBackground;
@@ -44,6 +44,7 @@ public class Customer : MonoBehaviour
         healthBarImage.color = regularColor;
         healthBarBackground.color = regularBackgroundColor;
         HealthBarSlider.value = Current_satisfaction;
+        MoneyPayed = 0;
         WantsDrink();
     }
 
@@ -107,7 +108,8 @@ public class Customer : MonoBehaviour
 
         DisplayText.text = "Enjoying " + (IngredientData.GetIngValue(preferredDrink.GetIngID(0))).DisplayName;
 
-        // Start the coroutine to fill satisfaction over time
+        MoneyPayed += preferredDrink.GetCalculatedSellPrice();
+
         drinkServiceCoroutine = StartCoroutine(FillSatisfactionOverTime());
     }
 

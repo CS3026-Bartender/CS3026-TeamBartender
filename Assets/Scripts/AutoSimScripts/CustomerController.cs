@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CustomerController : MonoBehaviour
 {
@@ -9,10 +11,14 @@ public class CustomerController : MonoBehaviour
     [SerializeField] private GameObject customerPrefab;
     [SerializeField] public Transform[] spawnPoints;
     [SerializeField] private float spawnInterval = 5f;
+    [SerializeField] private float simulationDuration = 180f; // Duration in seconds before switching to shop scene
+
+    [Header("Scene Settings")]
+
 
     [Header("Cooldown Settings")]
-    [SerializeField] private Image cooldownImage; // Reference to UI cooldown image
-    [SerializeField] private GameObject cooldownPanel; // Reference to cooldown panel
+    [SerializeField] private Image cooldownImage; // Reference to UI cooldown image WIP
+    [SerializeField] private GameObject cooldownPanel; // Reference to cooldown panel WIP
 
     // Variables for targeted Customer
     public GameObject SelectedCustomer;
@@ -25,6 +31,7 @@ public class CustomerController : MonoBehaviour
 
     // Coroutine reference for customer spawning
     private Coroutine spawnCoroutine;
+    private Coroutine simulationCoroutine;
 
     // Cooldown tracking
     private bool isInCooldown = false;
@@ -60,8 +67,10 @@ public class CustomerController : MonoBehaviour
         CustomerTargetButtons[1].onClick.AddListener(() => TrySelectCustomer(1));
         CustomerTargetButtons[2].onClick.AddListener(() => TrySelectCustomer(2));
 
-        // Don't automatically select the first customer
-        // The player must intentionally select a customer
+        // Start the simulation timer
+        simulationCoroutine = StartCoroutine(SimulationTimerRoutine());
+
+      
     }
 
     private void Update()
@@ -78,6 +87,48 @@ public class CustomerController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
         {
             TrySelectCustomer(2);
+        }
+    }
+
+    // New coroutine to handle the simulation duration
+    private IEnumerator SimulationTimerRoutine()
+    {
+        Debug.Log($"Simulation will run for {simulationDuration} seconds before switching to shop scene");
+
+        // Wait for the specified duration
+        yield return new WaitForSeconds(simulationDuration);
+
+        // Time's up! Stop spawning and clear all customers
+        StopSpawning();
+        ClearAllCustomers();
+
+        // Wait a moment to let any animations finish if needed
+      //  yield return new WaitForSeconds(1.5f);
+
+       
+        Debug.Log("Simulation ended. Switching to shop scene.");
+        SceneManager.LoadScene("Shop_Scene");
+    }
+
+    // New method to remove all customers at once
+    private void ClearAllCustomers()
+    {
+        Debug.Log("Clearing all customers");
+
+        for (int i = 0; i < customerSlots.Length; i++)
+        {
+            if (customerSlots[i] != null)
+            {
+                Destroy(customerSlots[i]);
+                customerSlots[i] = null;
+            }
+        }
+
+        // Make sure the selected customer is cleared and target is hidden
+        SelectedCustomer = null;
+        if (targetSpriteRenderer != null)
+        {
+            targetSpriteRenderer.enabled = false;
         }
     }
 
@@ -208,6 +259,22 @@ public class CustomerController : MonoBehaviour
         CustomerTargetButtons[0].onClick.RemoveListener(() => TrySelectCustomer(0));
         CustomerTargetButtons[1].onClick.RemoveListener(() => TrySelectCustomer(1));
         CustomerTargetButtons[2].onClick.RemoveListener(() => TrySelectCustomer(2));
+
+        // Make sure to stop all coroutines when destroyed
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(spawnCoroutine);
+        }
+
+        if (simulationCoroutine != null)
+        {
+            StopCoroutine(simulationCoroutine);
+        }
+
+        if (cooldownCoroutine != null)
+        {
+            StopCoroutine(cooldownCoroutine);
+        }
     }
 
     private IEnumerator SpawnCustomersRoutine()
@@ -296,6 +363,7 @@ public class CustomerController : MonoBehaviour
         {
             StopCoroutine(spawnCoroutine);
             spawnCoroutine = null;
+            Debug.Log("Customer spawning stopped");
         }
     }
 
@@ -305,6 +373,20 @@ public class CustomerController : MonoBehaviour
         if (spawnCoroutine == null)
         {
             spawnCoroutine = StartCoroutine(SpawnCustomersRoutine());
+            Debug.Log("Customer spawning started");
         }
+    }
+
+    // Method to manually end the simulation early if needed
+    public void EndSimulationEarly()
+    {
+        if (simulationCoroutine != null)
+        {
+            StopCoroutine(simulationCoroutine);
+        }
+
+        StopSpawning();
+        ClearAllCustomers();
+        SceneManager.LoadScene("Shop_Scene");
     }
 }

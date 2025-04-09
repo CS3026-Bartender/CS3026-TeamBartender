@@ -1030,6 +1030,10 @@ MonoBehaviour:
   - {fileID: 708892220}
   - {fileID: 565419958}
   spawnInterval: 5
+  simulationDuration: 20
+  shopSceneName: ShopScene
+  cooldownImage: {fileID: 0}
+  cooldownPanel: {fileID: 0}
   SelectedCustomer: {fileID: 0}
   CustomerTargetButtons:
   - {fileID: 354384466}

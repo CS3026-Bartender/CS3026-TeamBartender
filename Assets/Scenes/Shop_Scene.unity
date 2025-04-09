@@ -1070,8 +1070,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spritesFolderPath: Sprites
   defaultSprite: {fileID: -2413806693520163455, guid: afb3a8a6056bfe9438a48dca6a2d50a0, type: 3}
-  ingredientsFile: {fileID: 4900000, guid: e28d1f4479289eb4f9072107b771d35e, type: 3}
-  spiritsFile: {fileID: 4900000, guid: 6c37ab1e79601064f8010ad1bc72ab41, type: 3}
+  ingredientsFile: {fileID: 4900000, guid: 6029a95b115a6cd4988595855d34e76a, type: 3}
+  spiritsFile: {fileID: 4900000, guid: 10511b02d2f87ea4db639760140d8351, type: 3}
 --- !u!4 &996053962
 Transform:
   m_ObjectHideFlags: 0

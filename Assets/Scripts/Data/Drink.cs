@@ -56,6 +56,22 @@ public class Drink
         return totalPrice;
     }
 
+    public float GetCalculatedSellPrice()
+    {
+        float totalSellPrice = 0f;
+
+        for (int i = 0; i < ingredients.Length; i++)
+        {
+            if (ingredients[i] != null)
+            {
+                Ingredient ingredient = IngredientData.GetIngValue(ingredients[i]);
+                totalSellPrice += ingredient.SellPrice;
+            }
+        }
+
+        return totalSellPrice;
+    }
+
     // Get the customer drink time (how long it takes to drink)
     public float GetCalculatedCustomerDrinkTime()
     {
