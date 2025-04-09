@@ -25,7 +25,7 @@ public class MoneyDisplay : MonoBehaviour
     }
 
     // Update the UI text with the current money value
-    private void UpdateMoneyDisplay(int currentMoney)
+    private void UpdateMoneyDisplay(float currentMoney)
     {
         if (moneyText != null)
         {

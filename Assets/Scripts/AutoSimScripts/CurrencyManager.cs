@@ -4,7 +4,7 @@ using System;
 public class CurrencyManager : MonoBehaviour
 {
     // Events
-    public static event Action<int> OnMoneyChanged;
+    public static event Action<float> OnMoneyChanged;
 
     // Singleton instance
     private static CurrencyManager _instance;
@@ -14,8 +14,8 @@ public class CurrencyManager : MonoBehaviour
     }
 
     // Game data
-    [SerializeField] private int _money = 0;
-    public int Money
+    [SerializeField] private float _money = 0;
+    public float Money
     {
         get { return _money; }
         private set
@@ -50,7 +50,7 @@ public class CurrencyManager : MonoBehaviour
     }
 
     // Add money
-    public void AddMoney(int amount)
+    public void AddMoney(float amount)
     {
         if (amount > 0)
         {
@@ -60,7 +60,7 @@ public class CurrencyManager : MonoBehaviour
     }
 
     // Spend money, returns true if successful
-    public bool SpendMoney(int amount)
+    public bool SpendMoney(float amount)
     {
         if (amount <= 0)
         {
