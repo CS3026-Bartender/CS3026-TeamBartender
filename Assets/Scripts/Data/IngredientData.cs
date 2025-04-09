@@ -10,22 +10,24 @@ public static class IngredientData
 {
     private static Dictionary<string, Ingredient> ingredients = new();
 
-    public static void AddIngredient(string id, string displayName, float price, string desc, Sprite sprite)
+    public static void AddIngredient(string id, string displayName, float price, string desc, Sprite sprite,
+                                float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
     {
-        Ingredient newIng = new(displayName, price, desc, sprite);
+        Ingredient newIng = new Ingredient(displayName, price, desc, sprite, serveTimeMod, customerDrinkTimeMod, potencyMod);
         bool success = ingredients.TryAdd(id, newIng);
-        // Check if add worked
         if (!success)
         {
             Debug.Log("Ingredient could not be added due to repeat ID");
         }
     }
 
-    public static void AddSpirit(string id, string displayName, float price, string desc, Sprite sprite, float serveTime, float potentcy)
+    public static void AddSpirit(string id, string displayName, float price, string desc, Sprite sprite,
+                                float serveTime, float customerDrinkTime, float potency,
+                                float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
     {
-        Spirit newSpirit = new(displayName, price, desc, sprite, serveTime, potentcy);
+        Spirit newSpirit = new Spirit(displayName, price, desc, sprite, serveTime, customerDrinkTime, potency,
+                                     serveTimeMod, customerDrinkTimeMod, potencyMod);
         bool success = ingredients.TryAdd(id, newSpirit);
-        // Check if add worked
         if (!success)
         {
             Debug.Log("Spirit could not be added due to repeat ID");

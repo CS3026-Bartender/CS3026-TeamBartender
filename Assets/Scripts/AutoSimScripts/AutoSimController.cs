@@ -15,7 +15,7 @@ public class AutoSimController : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool isSimulationRunning = false;
     [SerializeField] private float currentSimulationTime = 0f;
-    private List<Ingredient> activeSpirits = new List<Ingredient>();
+    private List<Drink> Drinks = new List<Drink>();
 
     // Singleton pattern
     private static AutoSimController instance;
@@ -46,7 +46,7 @@ public class AutoSimController : MonoBehaviour
             }
 
             // Update all active drink cooldowns
-            UpdateDrinkCooldowns();
+        
         }
     }
 
@@ -67,28 +67,24 @@ public class AutoSimController : MonoBehaviour
 
         // Reset simulation values
         currentSimulationTime = 0f;
-        activeSpirits.Clear();
+        Drinks.Clear();
         isSimulationRunning = true;
 
         // Initialize drinks from DrinkManager
      
         
             // Get all equipped drinks with their ingredients applied
-            List<Drink> equippedDrinks = DrinkData.Instance.GetAllDrinksAsList();
+             Drinks = DrinkData.Instance.GetAllDrinksAsList();
 
-            if (equippedDrinks.Count == 0)
+            if (Drinks.Count == 0)
             {
                 Debug.LogWarning("No equipped drinks found! Please equip drinks before starting simulation.");
                 // Don't stop the simulation, but log a warning
             }
 
-            Debug.Log($"Found {equippedDrinks.Count} equipped drinks for simulation");
+            Debug.Log($"Found {Drinks.Count} equipped drinks for simulation");
 
-            foreach (Drink drink in equippedDrinks)
-            {
-                string spiritidstring = drink.GetSpiritID();
-                AddSpiritToSimulation(IngredientData.GetIngValue(spiritidstring));
-            }
+           
       
 
         Debug.Log("Auto simulation started!");
@@ -109,89 +105,10 @@ public class AutoSimController : MonoBehaviour
     }
 
     // Add a drink to the active simulation
-    public void AddSpiritToSimulation(Ingredient spirit)
-    {
-        if (!isSimulationRunning)
-        {
-            Debug.LogWarning("Cannot add drink: Simulation is not running");
-            return;
-        }
+   
 
-        // Add drink to active drinks
-        activeSpirits.Add(spirit);
-
-        // Immediately apply first satisfaction increase
-        ApplyDrinkEffect(spirit);
-
+    // Update all active drink cooldowns
     
     }
 
-    // Update all active drink cooldowns
-    private void UpdateDrinkCooldowns()
-    {
-        for (int i = activeSpirits.Count - 1; i >= 0; i--)
-        {
-          
-                Ingredient spirits = activeSpirits[i];
-            if (spirits is Spirit spirit)
-            {
-                // Reduce remaining cooldown
-                spirit.ServeTimeRemaining -= Time.deltaTime;
-
-            // Important: Update the drink in the list immediately after modifying it
-            activeSpirits[i] = spirit;
-
-                // Check if cooldown has elapsed
-                if (spirit.ServeTimeRemaining <= 0)
-                {
-                    // Apply the drink effect
-                    ApplyDrinkEffect(spirit);
-
-                    // Reset cooldown
-                    spirit.ServeTimeRemaining = spirit.ServeTime;
-
-                    // Update the drink in the list again after resetting cooldown
-                    activeSpirits[i] = spirit;
-
-                    Debug.Log($"Applied {spirit.DisplayName} effect again after cooldown elapsed");
-                }
-            }
-        }
-    }
-
-    // Apply a drink's effect to the target customer
-    private void ApplyDrinkEffect(Ingredient spirits)
-    {
-        if (customerController == null)
-        {
-            Debug.LogError("Customer controller is null!");
-            return;
-        }
-
-        if (customerController.SelectedCustomer == null)
-        {
-            Debug.LogError("No selected customer!");
-            return;
-        }
-
-        // Get the Customer component from the target customer GameObject
-        customer customerScript = customerController.SelectedCustomer.GetComponent<customer>();
-        if (customerScript != null)
-        {
-
-            if (spirits is Spirit spirit)
-            {
-                customerScript.IncreaseSatisfaction(spirit.Potency);
-
-                // Log detailed information about the drink effect
-                Debug.Log($"Applied '{spirit.DisplayName}' effect to '{customerScript.name}'\nSatisfaction increase: {spirit.Potency}");
-            }
-        }
-        else
-        {
-            Debug.LogError("Customer script component not found on target customer!");
-        }
-    }
-
   
-}

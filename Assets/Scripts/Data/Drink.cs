@@ -15,14 +15,97 @@ public class Drink
 
     public float GetCalculatedServeTime()
     {
-        // TODO
-        return 0f;
+        if (ingredients[0] == null)
+            return 0f;
+
+
+        Ingredient baseIngredient = IngredientData.GetIngValue(ingredients[0]);
+        if (!(baseIngredient is Spirit))
+            return 0f;
+
+        Spirit spirit = (Spirit)baseIngredient;
+        float totalServeTime = ((Spirit)spirit).BaseServeTime;
+
+        // Apply modifiers from all ingredients
+        for (int i = 0; i < ingredients.Length; i++)
+        {
+            if (ingredients[i] != null)
+            {
+                Ingredient ingredient = IngredientData.GetIngValue(ingredients[i]);
+                totalServeTime += ingredient.ServeTimeModifier;
+            }
+        }
+
+        return Mathf.Max(0.1f, totalServeTime); // Ensure serve time is at least 0.1 seconds
     }
 
+    // Recalculate price based on all ingredients
     public float GetCalculatedPrice()
     {
-        // TODO
-        return 0f;
+        float totalPrice = 0f;
+
+        for (int i = 0; i < ingredients.Length; i++)
+        {
+            if (ingredients[i] != null)
+            {
+                Ingredient ingredient = IngredientData.GetIngValue(ingredients[i]);
+                totalPrice += ingredient.Price;
+            }
+        }
+
+        return totalPrice;
+    }
+
+    // Get the customer drink time (how long it takes to drink)
+    public float GetCalculatedCustomerDrinkTime()
+    {
+        if (ingredients[0] == null)
+            return 0f;
+
+        Ingredient baseIngredient = IngredientData.GetIngValue(ingredients[0]);
+        if (!(baseIngredient is Spirit))
+            return 0f;
+
+        Spirit spirit = (Spirit)baseIngredient;
+        float totalDrinkTime = spirit.BaseCustomerDrinkTime;
+
+        // Apply modifiers from all ingredients
+        for (int i = 0; i < ingredients.Length; i++)
+        {
+            if (ingredients[i] != null)
+            {
+                Ingredient ingredient = IngredientData.GetIngValue(ingredients[i]);
+                totalDrinkTime += ingredient.CustomerDrinkTimeModifier;
+            }
+        }
+
+        return Mathf.Max(0.5f, totalDrinkTime); // Ensure drink time is at least 0.5 seconds
+    }
+
+    // Get the potency of the drink
+    public float GetCalculatedPotency()
+    {
+        if (ingredients[0] == null)
+            return 0f;
+
+        Ingredient baseIngredient = IngredientData.GetIngValue(ingredients[0]);
+        if (!(baseIngredient is Spirit))
+            return 0f;
+
+        Spirit spirit = (Spirit)baseIngredient;
+        float totalPotency = spirit.BasePotency;
+
+        // Apply modifiers from all ingredients
+        for (int i = 0; i < ingredients.Length; i++)
+        {
+            if (ingredients[i] != null)
+            {
+                Ingredient ingredient = IngredientData.GetIngValue(ingredients[i]);
+                totalPotency += ingredient.PotencyModifier;
+            }
+        }
+
+        return Mathf.Max(0f, totalPotency); // Ensure potency is not negative
     }
 
     public void AddIngredient(string ing, int slot)
