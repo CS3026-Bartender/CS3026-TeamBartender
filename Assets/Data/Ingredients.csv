@@ -1,11 +1,5 @@
 id,displayName,price,description,serveTimeMod,customerDrinkTimeMod,potencyMod
-lime,Lime,1.25,Adds a sour citrus flavor and refreshing scent.,-0.1,0.2,-0.5
-lemon,Lemon,1.00,Bright and sour citrus that adds zesty notes.,-0.1,0.3,-0.4
-orange,Orange,1.50,Sweet citrus that balances stronger spirits.,0.0,0.4,-0.6
-mint,Fresh Mint,1.75,Aromatic herb that adds a cool refreshing flavor.,-0.2,0.5,-0.3
-sugar,Sugar Syrup,0.75,Sweetens drinks and balances sour ingredients.,-0.1,-0.2,0.0
-soda,Soda Water,0.50,Adds fizz and dilutes strong spirits.,-0.3,0.4,-1.0
-tonic,Tonic Water,1.00,Bitter-sweet carbonated mixer with quinine.,-0.2,0.5,-0.8
-ginger,Ginger Beer,1.50,Spicy and sweet carbonated mixer.,0.0,0.3,-0.3
-grenadine,Grenadine,1.25,Sweet pomegranate syrup that adds color and sweetness.,0.1,-0.1,0.0
-bitters,Aromatic Bitters,2.00,Concentrated botanical infusion that adds complexity.,0.0,0.2,0.2
+lime,Lime,1.25,"Adds a sour citrus flavor and refreshing scent.",0.5,0.3,5
+lemon,Lemon,1.00,"Bright and sour citrus that adds zesty notes.",1,0,15
+orange,Orange,1.50,"Sweet citrus that balances stronger spirits.",2,0.4,-0.6
+mint,Fresh Mint,1.75,"Aromatic herb that adds a cool refreshing flavor.",1,2,6
