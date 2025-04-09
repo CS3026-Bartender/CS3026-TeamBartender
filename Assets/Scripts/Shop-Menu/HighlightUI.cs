@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 using Unity.VisualScripting;
 
 public class HighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -14,16 +14,16 @@ public class HighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private void Start()
     {
-        highlight.a = 1;
+        originalcolor = image.color;
     }
 
     public void OnPointerEnter(PointerEventData eventData) 
     {
-        image.tintColor = highlight;
+        image.color = highlight;
     }
 
     public void OnPointerExit(PointerEventData eventData) 
     {
-        image.tintColor = originalcolor;
+        image.color = originalcolor;
     }
 }
