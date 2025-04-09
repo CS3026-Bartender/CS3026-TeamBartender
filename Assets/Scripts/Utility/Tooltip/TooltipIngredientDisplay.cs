@@ -1,24 +1,43 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 
 public class TooltipIngredientDisplay : TooltipDisplay
 {
-    
     [SerializeField] protected IngredientDisplay ingDisplay;
 
-    public override void OnPointerEnter(PointerEventData eventData) 
+    protected override void Display()
     {
-        StartCoroutine(Wait());
-    }
+        if (DebugLogger.Instance.logTooltip) Debug.Log("Displaying with TooltipIngredientDisplay method: " + ingDisplay.IngID);
+        Ingredient ing = IngredientData.GetIngValue(ingDisplay.IngID);
+        if (ing == null)
+        {
+            return;
+        }
+        header = ing.DisplayName;
+        content = ing.Description;
 
-    private IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(0.5f);
-        header = ingDisplay.Name.text;
-        content = ingDisplay.Desc;
-        ToolTipManager.Show(content, header);
+        if (ing is Spirit)
+        {
+            Spirit sp = (Spirit)ing;
+            content += "\nServe time: " + sp.BaseServeTime;
+            content += "\nDrink time: " + sp.BaseCustomerDrinkTime;
+            content += "\nPotency: " + sp.BasePotency;
+        }
+        else
+        {
+            if (ing.ServeTimeModifier != 0)
+            {
+                content += "\nServe time +" + ing.ServeTimeModifier;
+            }
+            if (ing.CustomerDrinkTimeModifier != 0)
+            {
+                content += "\nDrink time +" + ing.CustomerDrinkTimeModifier;
+            }
+            if (ing.PotencyModifier != 0)
+            {
+                content += "\nPotency +" + ing.PotencyModifier;
+            }
+        }
+
+        ToolTipManager.Instance.Show(content, header);
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5942849357867313396}
   - component: {fileID: -3325586186496042376}
   - component: {fileID: 7138706849416504589}
-  - component: {fileID: 3645261066288756224}
+  - component: {fileID: 5414158391784539065}
   m_Layer: 5
   m_Name: DrinkSlot
   m_TagString: Untagged
@@ -119,7 +119,7 @@ MonoBehaviour:
   ingDisplay: {fileID: 1536586103395109505}
   dropArea: {fileID: 5942849357867313396}
   ingDisplayPrefab: {fileID: 1748226954804699348, guid: 70ed5a0d8a5470d1fae1dfe808f1ae60, type: 3}
---- !u!114 &3645261066288756224
+--- !u!114 &5414158391784539065
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,8 +131,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bee1f47121b1e6808416cd9ebc5ddb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  content: 
-  header: 
+  content: ing desc
+  header: ing
   ingDisplay: {fileID: 1536586103395109505}
 --- !u!1001 &2771693723268088345
 PrefabInstance:

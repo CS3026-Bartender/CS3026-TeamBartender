@@ -2,7 +2,7 @@ using UnityEngine;
 
 public sealed class ShopManager : Manager<ShopManager>
 {
-    [SerializeField] int ingsPerShopContents; // number of ingredients in the shop
+    [SerializeField] int ingsPerShopContents = 3; // number of ingredients in the shop
     // [SerializeField] DrinkMenuManager drinkMenuManager;
     [SerializeField] ShopDisplay shopDisplay;
 
@@ -10,11 +10,10 @@ public sealed class ShopManager : Manager<ShopManager>
 
     public void RefreshShop()
     {
-        currentShop = new ShopConfiguration(ingsPerShopContents);
+        currentShop = new ShopConfiguration(1,ingsPerShopContents - 1);
         shopDisplay.UpdateDisplay(currentShop);
 
-        // TEMP: shop testing
-        currentShop.DebugPrintConfig();
+        if (DebugLogger.Instance.logShopLogic) currentShop.DebugPrintConfig();
     }
 
     public void InitializeShop()

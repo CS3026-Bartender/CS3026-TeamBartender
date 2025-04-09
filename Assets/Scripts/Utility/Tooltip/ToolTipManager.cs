@@ -3,26 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Search;
 
-public class ToolTipManager : MonoBehaviour
+public class ToolTipManager : Manager<ToolTipManager>
 {
-    private static ToolTipManager current;
-
     public Tooltip tooltip;
 
-    public void Awake()
+    public void Show(string content, string header = "") 
     {
-        current = this;
+        tooltip.SetText(content, header);
+        tooltip.gameObject.SetActive(true);
     }
 
-    public static void Show(string content, string header = "") 
+    public void Hide()
     {
-        current.tooltip.SetText(content, header);
-        current.tooltip.gameObject.SetActive(true);
-    }
-
-    public static void Hide()
-    {
-        current.tooltip.gameObject.SetActive(false);
+        tooltip.gameObject.SetActive(false);
     }
 
 }
