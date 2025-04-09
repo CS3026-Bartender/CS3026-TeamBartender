@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -3325586186496042376}
   - component: {fileID: 7138706849416504589}
   - component: {fileID: 3645261066288756224}
-  - component: {fileID: 7325571484975065411}
+  - component: {fileID: -3481708544305333774}
   m_Layer: 5
   m_Name: DrinkSlot
   m_TagString: Untagged
@@ -135,7 +135,7 @@ MonoBehaviour:
   content: 
   header: 
   ingDisplay: {fileID: 1536586103395109505}
---- !u!114 &7325571484975065411
+--- !u!114 &-3481708544305333774
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,7 +148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 3308412315021108620}
-  highlight: {r: 1, g: 0.8747413, b: 0.4492936, a: 1}
 --- !u!1001 &2771693723268088345
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -2156,6 +2156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopMan: {fileID: 1007924001}
   drinkMan: {fileID: 328838852}
+  drinkMenuDisplay: {fileID: 1084653488}
 --- !u!4 &1732620803
 Transform:
   m_ObjectHideFlags: 0

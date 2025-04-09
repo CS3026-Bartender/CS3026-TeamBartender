@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 
 public class DrinkMenuDisplay : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class DrinkMenuDisplay : MonoBehaviour
         {
             GameObject slotObject = drinkChild.GetChild(j).gameObject;
             DrinkMenuSlot slot = slotObject.GetComponent<DrinkMenuSlot>();
+            HighlightUI highlight = slotObject.GetComponent<HighlightUI>();
             if (drink == null)
             {
                 slot.SetEmpty();
@@ -30,8 +32,42 @@ public class DrinkMenuDisplay : MonoBehaviour
         }
     }
 
-    public void HighlightSlots(bool[][] data)
+    public void RefreshValid(bool[][] slots) 
     {
-        // TODO: go through each drink/slot and set available/unavailable based on data
+        for (int i=0; i<3; i++)
+        {
+            Drink drink = DrinkData.Instance.GetDrink(i);
+            Transform drinkChild = transform.GetChild(i);
+            for (int j=0; j<4; j++) 
+            {
+                GameObject slotObject = drinkChild.GetChild(j).gameObject;
+                DrinkMenuSlot slot = slotObject.GetComponent<DrinkMenuSlot>();
+                HighlightUI highlight = slotObject.GetComponent<HighlightUI>();
+                if (slots[i][j])
+                {
+                    highlight.HighlightValid();
+                }
+                else {
+                    highlight.HighlightInvalid();
+                }
+            }
+        }
     }
+
+    public void FixDisplay() {
+        for (int i=0; i<3; i++)
+        {
+            Drink drink = DrinkData.Instance.GetDrink(i);
+            Transform drinkChild = transform.GetChild(i);
+            for (int j=0; j<4; j++)
+            {
+                GameObject slotObject = drinkChild.GetChild(j).gameObject;
+                DrinkMenuSlot slot = slotObject.GetComponent<DrinkMenuSlot>();
+                HighlightUI highlight = slotObject.GetComponent<HighlightUI>();
+
+                highlight.DehighlightImage();
+            }
+        }
+    }
+
 }

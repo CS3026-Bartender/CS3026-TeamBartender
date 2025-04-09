@@ -239,7 +239,6 @@ GameObject:
   - component: {fileID: 1801182242382317977}
   - component: {fileID: 3063361021366785208}
   - component: {fileID: 8599951405026486814}
-  - component: {fileID: 4216193001674063174}
   m_Layer: 5
   m_Name: IngSlot
   m_TagString: Untagged
@@ -337,20 +336,6 @@ MonoBehaviour:
   content: 
   header: 
   ingDisplay: {fileID: 8236728544483545816}
---- !u!114 &4216193001674063174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2495565468259467147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39fbdfc7d51d1c3a69fa57a504b6b2b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  image: {fileID: 3063361021366785208}
-  highlight: {r: 0.5131792, g: 1, b: 0.47395182, a: 1}
 --- !u!1 &7860632615045061275
 GameObject:
   m_ObjectHideFlags: 0
