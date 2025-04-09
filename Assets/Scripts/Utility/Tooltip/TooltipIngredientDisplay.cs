@@ -6,6 +6,12 @@ public class TooltipIngredientDisplay : TooltipDisplay
 
     protected override void Display()
     {
+        if (Tooltip.Instance == null)
+        {
+            if (DebugLogger.Instance.logTooltip) Debug.Log("Fail to display, no tooltip");
+            return;
+        }
+
         if (DebugLogger.Instance.logTooltip) Debug.Log("Displaying with TooltipIngredientDisplay method: " + ingDisplay.IngID);
         Ingredient ing = IngredientData.GetIngValue(ingDisplay.IngID);
         if (ing == null)
@@ -38,6 +44,6 @@ public class TooltipIngredientDisplay : TooltipDisplay
             }
         }
 
-        ToolTipManager.Instance.Show(content, header);
+        Tooltip.Instance.Show(content, header);
     }
 }

@@ -13,11 +13,14 @@ public class Tooltip : MonoBehaviour
     public TextMeshProUGUI contentField;
     public LayoutElement layoutElement;
     public int characterWrapLimit;
+    public static Tooltip Instance { get; private set; }
 
     private void Awake()
     {
+        Instance = this;
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
+        Hide();
     }
 
     public void SetText(string content, string header = "")
@@ -40,10 +43,20 @@ public class Tooltip : MonoBehaviour
         layoutElement.enabled = (headerLength > characterWrapLimit || contentLength > characterWrapLimit) ? true : false;
 
     }
+    public void Show(string content, string header = "")
+    {
+        rectTransform.anchoredPosition = Mouse.current.position.ReadValue() / canvas.scaleFactor;
+        SetText(content, header);
+        gameObject.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
 
     private void Update()
-    {        
+    {
         rectTransform.anchoredPosition = Mouse.current.position.ReadValue() / canvas.scaleFactor;
-        
     }
 }

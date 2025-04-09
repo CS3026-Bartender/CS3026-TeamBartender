@@ -1,9 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using System.Net.NetworkInformation;
+using UnityEngine.InputSystem;
 
 public class TooltipDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -21,7 +19,7 @@ public class TooltipDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public virtual void OnPointerExit(PointerEventData eventData)
     {
         if (DebugLogger.Instance.logTooltip) Debug.Log("Exited element");
-        ToolTipManager.Instance.Hide();
+        if (Tooltip.Instance != null) Tooltip.Instance.Hide();
         onElement = false;
     }
 
@@ -31,13 +29,13 @@ public class TooltipDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (onElement)
         {
             if (DebugLogger.Instance.logTooltip) Debug.Log("Still on element, time to display");
-            this.Display();
+            Display();
         }
     }
 
     protected virtual void Display()
     {
         if (DebugLogger.Instance.logTooltip) Debug.Log("Displaying with TooltipDisplay method");
-        ToolTipManager.Instance.Show(content, header);
+        if (Tooltip.Instance != null) Tooltip.Instance.Show(content, header);
     }
 }
