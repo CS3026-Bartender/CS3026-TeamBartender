@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DraggableComponent : MonoBehaviour, IInitializePotentialDragHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
@@ -41,7 +42,6 @@ public class DraggableComponent : MonoBehaviour, IInitializePotentialDragHandler
     public void OnDrag(PointerEventData eventData)
     {
         if (!CanDrag) {return;}
-        
         OnDragHandler?.Invoke(eventData);
         if (FollowCursor) {
             rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
