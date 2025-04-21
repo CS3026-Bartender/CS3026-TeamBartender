@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using UnityEditor.Build;
 using UnityEngine;
 
 // TEMP IMPLEMENTATION WHILE WAITING FOR THERYN'S DESIGN
@@ -9,6 +6,7 @@ using UnityEngine;
 public static class IngredientData
 {
     private static Dictionary<string, Ingredient> ingredients = new();
+    private static Dictionary<string, Spirit> spirits = new();
 
     public static void AddIngredient(string id, string displayName, float price, float sellPrice, string desc, Sprite sprite,
                                 float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
@@ -27,7 +25,7 @@ public static class IngredientData
     {
         Spirit newSpirit = new Spirit(displayName, price, sellPrice, desc, sprite, serveTime, customerDrinkTime, potency,
                                      serveTimeMod, customerDrinkTimeMod, potencyMod);
-        bool success = ingredients.TryAdd(id, newSpirit);
+        bool success = spirits.TryAdd(id, newSpirit);
         if (!success)
         {
             Debug.Log("Spirit could not be added due to repeat ID");
@@ -40,24 +38,45 @@ public static class IngredientData
         {
             return null;
         }
+        if (id.StartsWith("sp"))
+        {
+            return spirits.GetValueOrDefault(id);
+        }
         return ingredients.GetValueOrDefault(id);
     }
 
-    public static List<string> GetRandomList(int numIngs)
+    public static List<string> GetRandomList(int numSps, int numIngs)
     {
         // get all ids
-        List<string> all = new(ingredients.Keys);
+        List<string> sps = new(spirits.Keys);
+        List<string> ings = new(ingredients.Keys);
         // put random ingredients in results list
         List<string> result = new();
+        for (int i = 0; i < numSps; i++)
+        {
+            int index;
+            // try/catch in case number of ingredients very small
+            try
+            {
+                index = Random.Range(0, sps.Count); // random index in all
+                result.Add(sps[index]); // add id to result
+                sps.RemoveAt(index); // remove from all to avoid repeats
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e.Message);
+                return result;
+            }
+        }
         for (int i = 0; i < numIngs; i++)
         {
             int index;
             // try/catch in case number of ingredients very small
             try
             {
-                index = Random.Range(0, all.Count); // random index in all
-                result.Add(all[index]); // add id to result
-                all.RemoveAt(index); // remove from all to avoid repeats
+                index = Random.Range(0, ings.Count); // random index in all
+                result.Add(ings[index]); // add id to result
+                ings.RemoveAt(index); // remove from all to avoid repeats
             }
             catch (System.Exception e)
             {

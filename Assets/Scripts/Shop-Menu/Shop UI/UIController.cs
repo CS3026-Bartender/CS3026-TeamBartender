@@ -1,7 +1,6 @@
-using System;
-using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class IngText : MonoBehaviour
 {

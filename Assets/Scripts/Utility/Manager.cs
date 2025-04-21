@@ -5,7 +5,7 @@ public abstract class Manager<T> : MonoBehaviour where T : Manager<T>
 {
     public static T Instance { get; private set; } = null;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         if (Instance == null)
         {

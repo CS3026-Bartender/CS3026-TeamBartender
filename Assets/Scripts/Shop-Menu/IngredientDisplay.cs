@@ -9,15 +9,12 @@ public class IngredientDisplay : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameDisplay;
     [SerializeField] private DraggableComponent dragComponent;
     [SerializeField] private string description;
-    private string ingID;
-
-    public TextMeshProUGUI Name => nameDisplay;
-    public string Desc => description;
+    public string IngID { get; private set; }
 
     public void UpdateDisplay(string newID)
     {
-        ingID = newID;
-        Ingredient ing = IngredientData.GetIngValue(ingID);
+        IngID = newID;
+        Ingredient ing = IngredientData.GetIngValue(IngID);
         if (DebugLogger.Instance.logShopDisplay) Debug.Log("Updating ingredient " + nameDisplay.text + " to " + ing.DisplayName);
         icon.sprite = ing.Icon;
         nameDisplay.text = ing.DisplayName;
