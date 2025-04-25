@@ -27,6 +27,7 @@ public class TooltipIngredientDisplay : TooltipDisplay
             content += "\nServe time: " + sp.BaseServeTime;
             content += "\nDrink time: " + sp.BaseCustomerDrinkTime;
             content += "\nPotency: " + sp.BasePotency;
+            content += "\nPrice: " + sp.Price;
         }
         else
         {
@@ -41,6 +42,10 @@ public class TooltipIngredientDisplay : TooltipDisplay
             if (ing.PotencyModifier != 0)
             {
                 content += "\nPotency +" + ing.PotencyModifier;
+            }
+            if (ing.Price != 0)
+            {
+                content += "\nPrice +" + ing.Price;
             }
         }
 
