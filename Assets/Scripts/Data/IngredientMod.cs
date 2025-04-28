@@ -1,15 +1,21 @@
 using UnityEngine;
 
+public enum ModifierType
+{
+  Add,
+  Multiply
+}
+
 public class IngredientMod
 {
-  public ModifierType Type { get; private set; }
+  public ModifierType ModifierType { get; private set; }
   public string StatID { get; private set; }
-  public float Value { get; private set; }
+  public float ModifierValue { get; private set; }
 
-  public IngredientMod(ModifierType type, string statID, float value)
+  public IngredientMod(ModifierType modifierType, string statID, float modifierValue)
   {
-    Type = type;
+    ModifierType = modifierType;
     StatID = statID;
-    Value = value;
+    ModifierValue = ModifierValue;
   }
 }
