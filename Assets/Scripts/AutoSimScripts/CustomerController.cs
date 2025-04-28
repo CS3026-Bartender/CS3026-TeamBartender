@@ -12,7 +12,6 @@ public class CustomerController : MonoBehaviour
     [SerializeField] public Transform[] spawnPoints;
     [SerializeField] private float spawnInterval = 5f;
     [SerializeField] private float simulationDuration = 180f; // Duration in seconds before switching to shop scene
-    [SerializeField] private Transform customerParent;
 
     [Header("Scene Settings")]
     [SerializeField] private EarningsOverlay earningsOverlay; // Reference to the earnings overlay
@@ -306,7 +305,7 @@ public class CustomerController : MonoBehaviour
         }
 
         // Spawn a customer at the appropriate position
-        GameObject newCustomer = Instantiate(customerPrefab, spawnPoints[emptySlotIndex].position, Quaternion.identity, customerParent);
+        GameObject newCustomer = Instantiate(customerPrefab, spawnPoints[emptySlotIndex].position, Quaternion.identity);
 
         // Store reference to the customer in the appropriate slot
         customerSlots[emptySlotIndex] = newCustomer;

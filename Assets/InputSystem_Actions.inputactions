@@ -15,7 +15,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Escape",
+                    "name": "Quit",
                     "type": "Button",
                     "id": "6fb29795-943b-4af9-904b-7ec5f66d814e",
                     "expectedControlType": "",
@@ -54,7 +54,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Escape",
+                    "action": "Quit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

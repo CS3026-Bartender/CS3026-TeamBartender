@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using System.IO;
 
 public class CurrencyManager : MonoBehaviour
 {
@@ -30,8 +29,6 @@ public class CurrencyManager : MonoBehaviour
         }
     }
 
-    private float startingMoney;
-
     private void Awake()
     {
         // Singleton pattern
@@ -48,15 +45,8 @@ public class CurrencyManager : MonoBehaviour
 
     private void Start()
     {
-        startingMoney = Money;
         // Trigger an initial money changed event to update any UI
         OnMoneyChanged?.Invoke(_money);
-    }
-
-    // Resets the money to whatever it was at the start
-    public void ResetMoney()
-    {
-        Money = startingMoney;
     }
 
     // Add money
