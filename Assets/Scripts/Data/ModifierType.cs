@@ -1,11 +1,8 @@
 using UnityEngine;
 
-namespace Modifiers 
+public enum ModifierType
 {
-  public enum ModifierType
-  {
     Add,
     Multiply,
     AddPercent
-  }
 }
