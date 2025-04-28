@@ -21,7 +21,7 @@ public class PauseMenu : Manager<PauseMenu>
     public void Unpause()
     {
         gameObject.SetActive(false);
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
         GamePaused = false;
     }
 
