@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Ingredient
@@ -17,50 +18,35 @@ public class Ingredient
 
     // Track tiers
     public string Tier { get; private set; }
+    public List<IngredientMod> Mods { get; private set; }
 
-    public Ingredient(string name, float price, float sellPrice, string desc, Sprite sprite, string tier,
-                     float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
+    public Ingredient(string name, float price, float sellPrice, string desc, Sprite sprite,
+                     float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f,
+                     string tier = "Normal")
     {
         DisplayName = name;
         Price = price;
         SellPrice = price;
         Description = desc;
         Icon = sprite;
-        Tier = tier;
         ServeTimeModifier = serveTimeMod;
         CustomerDrinkTimeModifier = customerDrinkTimeMod;
         PotencyModifier = potencyMod;
-    }
+        Tier = tier;
 
-    // Apply tier-based price scaling
-    public float GetTieredPrice()
-    {
-        switch (Tier) 
+        Mods = new List<IngredientMod>
         {
-            case "Great":
-                return Price * 1.2f;
-            case "Epic":
-                return Price * 1.5f
-            default:
-                return Price;
-        }
-    }
+            new IngredientMod(ModifierType.Add, nameof(Spirit.BaseServeTime), serveTimeMod),
+            new IngredientMod(ModifierType.Add, nameof(Spirit.BaseCustomerDrinkTime), customerDrinkTimeMod),
+            new IngredientMod(ModifierType.Add, nameof(Spirit.BasePotency), potencyMod),
 
-    public float GetTieredModifier(float baseValue, string modifierType)
-    {
-        switch (modifierType)
-        {
-            case "serveTime":
-                return baseValue * (Tier == "Epic" ? 1.2f : 1f);
-            case "potency":
-                return baseValue * (Tier == "Great" ? 1.1f : 1f);
-            default:
-                return baseValue;
-        }
+            new IngredientMod(ModifierType.Multiply, nameof(Spirit.BasePotency), tier == "Great" ? 1.10f : 1f),
+            new IngredientMod(ModifierType.Multiply, nameof(Spirit.BasePotency), tier == "Epic" ? 1.25f : 1f)
+        };
     }
 
     public string GetDebug()
     {
-        return $"{DisplayName} ({Tier}), ${Price}, {Description}";
+        return $"{DisplayName} ({Tier}), ${Price}/{SellPrice}, {Description}";
     }
 }
