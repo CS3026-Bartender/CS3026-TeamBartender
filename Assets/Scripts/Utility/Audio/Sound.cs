@@ -3,7 +3,11 @@ using UnityEngine;
 public class Sound : MonoBehaviour
 {
     [SerializeField] private AudioSource source;
-    [SerializeField] public string ID { get; private set; }
+    [SerializeField] private string id;
+    public string ID {
+        get => id;
+        private set => id = value;
+    }
     [SerializeField] private float volume;
     [SerializeField] private float minPitch;
     [SerializeField] private float maxPitch;
