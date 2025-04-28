@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Modifiers 
 {
   public enum ModifierType
