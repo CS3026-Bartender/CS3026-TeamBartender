@@ -1,0 +1,7 @@
+using UnityEngine;
+
+public class IngredientMod
+{
+  public ModifierType Type { get; }
+  public string StatID { get; }
+  public float Value { get; }
