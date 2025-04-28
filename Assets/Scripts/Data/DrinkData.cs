@@ -20,6 +20,11 @@ public class DrinkData : MonoBehaviour
         }
     }
 
+    public void ResetDrinks()
+    {
+        drinks.Clear();
+    }
+
     /// <returns>Drink</returns>
     public Drink AddDrink(string name, string spirit, int drinkPos)
     {

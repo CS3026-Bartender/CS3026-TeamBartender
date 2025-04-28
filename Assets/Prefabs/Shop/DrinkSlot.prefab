@@ -64,15 +64,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.40574938, g: 0.8867924, b: 0.77712244, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 8622324674869148534, guid: 2504262997a4ca64aa90bfae280ca9f0, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -238,6 +238,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3528843766641250161, guid: 70ed5a0d8a5470d1fae1dfe808f1ae60, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5057115678806150006, guid: 70ed5a0d8a5470d1fae1dfe808f1ae60, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8a03c081b710d9d449be3b7e1cf11557, type: 2}
+    - target: {fileID: 5057115678806150006, guid: 70ed5a0d8a5470d1fae1dfe808f1ae60, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3588195764545772396, guid: 8a03c081b710d9d449be3b7e1cf11557, type: 2}
+    - target: {fileID: 5057115678806150006, guid: 70ed5a0d8a5470d1fae1dfe808f1ae60, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
