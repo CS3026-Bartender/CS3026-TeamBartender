@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Ingredient
@@ -17,19 +18,21 @@ public class Ingredient
 
     // Track tiers
     public string Tier { get; private set; }
+    public List<IngredientMod> Mods { get; private set: }
 
-    public Ingredient(string name, float price, float sellPrice, string desc, Sprite sprite, string tier,
-                     float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
+    public Ingredient(string name, float price, float sellPrice, string desc, Sprite sprite,
+                     float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f,
+                     string tier = "Normal", List<IngredientMod> additionalMods = null)
     {
         DisplayName = name;
         Price = price;
         SellPrice = price;
         Description = desc;
         Icon = sprite;
-        Tier = tier;
         ServeTimeModifier = serveTimeMod;
         CustomerDrinkTimeModifier = customerDrinkTimeMod;
         PotencyModifier = potencyMod;
+        Tier = tier;
     }
 
     // Apply tier-based price scaling
