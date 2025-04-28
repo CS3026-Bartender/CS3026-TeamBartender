@@ -17,14 +17,16 @@ public class Ingredient
     public float PotencyModifier { get; private set; } = 0f;
 
     // Track tiers
-    public string Tier { get; private set; }
     public List<IngredientMod> Mods { get; private set: }
+    public int Tier { get; private set; } = 1;
+    public string ID { get; private set; }
 
-    public Ingredient(string name, float price, float sellPrice, string desc, Sprite sprite,
+    public Ingredient(string name, string id, float price, float sellPrice, string desc, Sprite sprite,
                      float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f,
-                     string tier = "Normal", List<IngredientMod> additionalMods = null)
+                     List<IngredientMod> mods = null, int tier = 1)
     {
         DisplayName = name;
+        ID = id;
         Price = price;
         SellPrice = price;
         Description = desc;
