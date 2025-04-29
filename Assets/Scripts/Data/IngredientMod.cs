@@ -2,20 +2,20 @@ using UnityEngine;
 
 public enum ModifierType
 {
-  Add,
-  Multiply
+  Additive,
+  Multiplicative
 }
 
 public class IngredientMod
 {
-  public ModifierType ModifierType { get; private set; }
-  public string StatID { get; private set; }
-  public float ModifierValue { get; private set; }
+  public ModifierType ModifierType { get; }
+  public string StatID { get; }
+  public float Value { get; }
 
-  public IngredientMod(ModifierType modifierType, string statID, float modifierValue)
+  public IngredientMod(ModifierType modifierType, string statID, float value)
   {
     ModifierType = modifierType;
     StatID = statID;
-    ModifierValue = ModifierValue;
+    Value = value;
   }
 }
