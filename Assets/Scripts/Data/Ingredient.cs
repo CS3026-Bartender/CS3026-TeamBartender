@@ -16,17 +16,12 @@ public class Ingredient
     public float CustomerDrinkTimeModifier { get; private set; } = 0f;
     public float PotencyModifier { get; private set; } = 0f;
 
-    // Track tiers
-    public List<IngredientMod> Mods { get; private set: }
-    public int Tier { get; private set; } = 1;
-    public string ID { get; private set; }
+    public List<IngredientMod> Mods { get; private set: } = new();
 
-    public Ingredient(string name, string id, float price, float sellPrice, string desc, Sprite sprite,
-                     float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f,
-                     List<IngredientMod> mods = null, int tier = 1)
+    public Ingredient(string name, float price, float sellPrice, string desc, Sprite sprite,
+                     float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
     {
         DisplayName = name;
-        ID = id;
         Price = price;
         SellPrice = price;
         Description = desc;
@@ -34,34 +29,19 @@ public class Ingredient
         ServeTimeModifier = serveTimeMod;
         CustomerDrinkTimeModifier = customerDrinkTimeMod;
         PotencyModifier = potencyMod;
-        Tier = tier;
     }
 
-    // Apply tier-based price scaling
-    public float GetTieredPrice()
+    public Ingredient(string name, float price, float sellPrice, string desc, Sprite sprite,
+                     List<IngredientMod> mods
+    ) : this(name, price, sellPrice, desc, sprite,
+        mods?.FindAll(m => m.StatID == nameof(ServeTimeModifier) && mods.ModifierType = ModifierType.Additive)
+            .Sum(m => m.Value),
+        mods?.FindAll(m => m.statID == nameof(CustomerDrinkTimeModifier) && m.ModifierType == ModifierType.Additive)
+            .Sum(m => m.Value),
+        mods?.FindAll(m => m.statID == nameof(PotencyModifier) && m.ModifierType == ModifierType.Additive)
+            .Sum(m => m.Value))
     {
-        switch (Tier) 
-        {
-            case "Great":
-                return Price * 1.2f;
-            case "Epic":
-                return Price * 1.5f
-            default:
-                return Price;
-        }
-    }
-
-    public float GetTieredModifier(float baseValue, string modifierType)
-    {
-        switch (modifierType)
-        {
-            case "serveTime":
-                return baseValue * (Tier == "Epic" ? 1.2f : 1f);
-            case "potency":
-                return baseValue * (Tier == "Great" ? 1.1f : 1f);
-            default:
-                return baseValue;
-        }
+        Mods = mods;
     }
 
     public string GetDebug()
