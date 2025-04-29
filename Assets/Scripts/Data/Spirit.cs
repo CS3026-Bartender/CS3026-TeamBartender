@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 public class Spirit : Ingredient
 {
@@ -8,11 +8,20 @@ public class Spirit : Ingredient
     // constructor = ingredient constructor
     public Spirit(string name, float price, float sellPrice, string desc, Sprite sprite,
                  float serveTime, float customerDrinkTime, float potency,
-                 float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
-             : base(name, price, sellPrice, desc, sprite, serveTimeMod, customerDrinkTimeMod, potencyMod)
+                 List<IngredientMod>  mods = null) 
+                : base(name, price, sellPrice, desc, sprite,
+                
+                    mods?.FindAll(m => m.StatID == nameof(ServeTimeModifier) && mods.modifierType = ModifierType.Additive)
+                        .Sum(m => m.Value) ?? 0f,
+                    mods?.FindAll(m => m.statID == nameof(CustomerDrinkTimeModifier) && m.ModifierType == ModifierType.Additive)
+                        .Sum(m => m.Value) ?? 0f,
+                    mods?.FindAll(m => m.statID == nameof(PotencyModifier) && m.ModifierType == ModifierType.Additive)
+                        .Sum(m => m.Value) ?? 0f,
+                    )
     {
         BaseServeTime = serveTime;
         BaseCustomerDrinkTime = customerDrinkTime;
         BasePotency = potency;
+        if (mods != null) mods = mods;
     }
 }
