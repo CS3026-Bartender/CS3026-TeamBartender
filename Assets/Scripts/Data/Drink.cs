@@ -172,7 +172,7 @@ public class Drink
         float baseVal = (float)prop.GetValue(sp);
 
         statTotals.TryGetValue((ModifierType.Additive, statID + "Modifier"), out float add);
-        statTotals.TryGetValue((ModifierType.Multiplicative, statID + "Modifier", out float mult));
+        statTotals.TryGetValue((ModifierType.Multiplicative, statID + "Modifier"), out float mult));
 
         return (baseVal + add) * mult;
     }
