@@ -21,7 +21,7 @@ public class Drink
 
     public void RecalcModifiers()
     {
-        statTotals.Clear;
+        statTotals.Clear();
 
         foreach (var id in ingredients)
         {
