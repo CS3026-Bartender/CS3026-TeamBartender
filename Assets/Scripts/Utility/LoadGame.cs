@@ -10,6 +10,7 @@ public class LoadGame : MonoBehaviour
 
     public void Load()
     {
+        AudioManager.Instance.PlaySound("play_game");
         ResetGame.Instance.Reset();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }

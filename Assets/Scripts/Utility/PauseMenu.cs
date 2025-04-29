@@ -8,11 +8,13 @@ public class PauseMenu : Manager<PauseMenu>
 
     public void LoadMainMenu()
     {
+        AudioManager.Instance.PlaySound("return_to_menu");
         SceneManager.LoadScene(0);
     }
 
     public void Pause()
     {
+        AudioManager.Instance.PlaySound("pause");
         gameObject.SetActive(true);
         Time.timeScale = 0f;
         GamePaused = true;
@@ -20,6 +22,7 @@ public class PauseMenu : Manager<PauseMenu>
 
     public void Unpause()
     {
+        AudioManager.Instance.PlaySound("unpause");
         gameObject.SetActive(false);
         Time.timeScale = 1f;
         GamePaused = false;
