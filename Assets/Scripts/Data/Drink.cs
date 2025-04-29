@@ -165,7 +165,7 @@ public class Drink
     public float GetStat(string statID)
     {
         var baseObj = IngredientData.GetIngValue(spiritID);
-        if (!(baseObj is spiritID sp)) return 0f;
+        if (!(baseObj is Spirit sp)) return 0f;
 
         var prop typeof(Spirit).GetProperty("Base " + statID);
         if (prop == null) return 0f;
