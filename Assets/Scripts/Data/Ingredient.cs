@@ -12,9 +12,9 @@ public class Ingredient
     public Sprite Icon { get; private set; }
 
     // Modifiers that ingredients apply to drinks
-    public float ServeTimeModifier { get; private set; } = 0f;
-    public float CustomerDrinkTimeModifier { get; private set; } = 0f;
-    public float PotencyModifier { get; private set; } = 0f;
+    public float ServeTimeModifier { get; private set; }
+    public float CustomerDrinkTimeModifier { get; private set; }
+    public float PotencyModifier { get; private set; }
 
     public List<IngredientMod> Mods { get; private set: } = new();
 
