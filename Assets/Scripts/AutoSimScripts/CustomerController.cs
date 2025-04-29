@@ -288,33 +288,49 @@ public class CustomerController : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(spawnInterval);
+            // Add variance of ±2 seconds to the spawn interval
+            float randomizedInterval = spawnInterval + UnityEngine.Random.Range(-2f, 2f);
+            // Make sure the interval doesn't go below 0
+            randomizedInterval = Mathf.Max(0.1f, randomizedInterval);
+
+            yield return new WaitForSeconds(randomizedInterval);
             SpawnCustomer();
         }
     }
 
     private void SpawnCustomer()
     {
-        // Find the first empty slot
-        int emptySlotIndex = FindEmptySlot();
+        // Find all empty slots and store their indices
+        List<int> emptySlots = new List<int>();
+        for (int i = 0; i < customerSlots.Length; i++)
+        {
+            if (customerSlots[i] == null)
+            {
+                emptySlots.Add(i);
+            }
+        }
 
         // If no empty slots, don't spawn
-        if (emptySlotIndex == -1)
+        if (emptySlots.Count == 0)
         {
             Debug.Log("No empty slots available for spawning customers.");
             return;
         }
 
+        // Choose a random empty slot
+        int randomIndex = UnityEngine.Random.Range(0, emptySlots.Count);
+        int chosenSlotIndex = emptySlots[randomIndex];
+
         AudioManager.Instance.PlaySound("customer_enters");
 
-        // Spawn a customer at the appropriate position
-        GameObject newCustomer = Instantiate(customerPrefab, spawnPoints[emptySlotIndex].position, Quaternion.identity, customerParent);
+        // Spawn a customer at the randomly chosen empty slot position
+        GameObject newCustomer = Instantiate(customerPrefab, spawnPoints[chosenSlotIndex].position, Quaternion.identity, customerParent);
 
-        // Store reference to the customer in the appropriate slot
-        customerSlots[emptySlotIndex] = newCustomer;
+        // Store reference to the customer in the chosen slot
+        customerSlots[chosenSlotIndex] = newCustomer;
 
         // For debugging
-        Debug.Log("Customer spawned in slot: " + emptySlotIndex);
+        Debug.Log("Customer spawned in slot: " + chosenSlotIndex);
     }
 
     private int FindEmptySlot()
