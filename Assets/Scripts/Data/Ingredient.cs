@@ -16,7 +16,7 @@ public class Ingredient
     public float CustomerDrinkTimeModifier { get; private set; }
     public float PotencyModifier { get; private set; }
 
-    public List<IngredientMod> Mods { get; private set: } = new();
+    public List<IngredientMod> Mods { get; private set: } = new List<IngredientMod>();
 
     public Ingredient(string name, float price, float sellPrice, string desc, Sprite sprite,
                      float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
