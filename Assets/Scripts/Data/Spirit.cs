@@ -15,7 +15,7 @@ public class Spirit : Ingredient
                  List<IngredientMod>  mods = null) 
                 : base(name, price, sellPrice, desc, sprite,
                 
-                    mods?.FindAll(m => m.StatID == nameof(ServeTimeModifier) && m.ModifierType = ModifierType.Additive)
+                    mods?.FindAll(m => m.StatID == nameof(ServeTimeModifier) && m.ModifierType == ModifierType.Additive)
                         .Sum(m => m.Value) ?? 0f,
                     mods?.FindAll(m => m.statID == nameof(CustomerDrinkTimeModifier) && m.ModifierType == ModifierType.Additive)
                         .Sum(m => m.Value) ?? 0f,
