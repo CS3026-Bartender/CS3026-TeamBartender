@@ -85,6 +85,7 @@ public class Customer : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         // Add money and remove customer
+        AudioManager.Instance.PlaySound("payment");
         CurrencyManager.Instance.AddMoney(MoneyPayed);
         CustomerControllerScript.RemoveCustomer(gameObject);
     }
@@ -121,6 +122,8 @@ public class Customer : MonoBehaviour
 
     public void ServeAfterCooldown()
     {
+        AudioManager.Instance.PlaySound("drink_made");
+
         // Stop any existing serving coroutine if it's running
         if (drinkServiceCoroutine != null)
         {
@@ -159,6 +162,7 @@ public class Customer : MonoBehaviour
             // Check if customer is fully satisfied during the process
             if (Current_satisfaction >= Max_satisfaction)
             {
+                AudioManager.Instance.PlaySound("finish_drink");
                 Pay();
                 yield break; // Exit the coroutine early
             }
@@ -170,6 +174,7 @@ public class Customer : MonoBehaviour
         Current_satisfaction = endSatisfaction;
         HealthBarSlider.value = Current_satisfaction;
 
+        AudioManager.Instance.PlaySound("finish_drink");
         // Check if fully satisfied after drinking
         if (Current_satisfaction >= Max_satisfaction)
         {

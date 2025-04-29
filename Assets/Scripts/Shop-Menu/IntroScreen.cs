@@ -9,7 +9,7 @@ public class IntroScreen : MonoBehaviour
     {
         if (!cc.performed) return;
 
-        AudioManager.Instance.PlaySound("close_intro_screen");
+        AudioManager.Instance.PlaySound("close_screen");
         seen = true;
         gameObject.SetActive(false);
     }

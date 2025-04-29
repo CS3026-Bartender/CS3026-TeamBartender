@@ -305,6 +305,8 @@ public class CustomerController : MonoBehaviour
             return;
         }
 
+        AudioManager.Instance.PlaySound("customer_enters");
+
         // Spawn a customer at the appropriate position
         GameObject newCustomer = Instantiate(customerPrefab, spawnPoints[emptySlotIndex].position, Quaternion.identity, customerParent);
 
