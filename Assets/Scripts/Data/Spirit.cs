@@ -20,7 +20,7 @@ public class Spirit : Ingredient
                     mods?.FindAll(m => m.statID == nameof(CustomerDrinkTimeModifier) && m.ModifierType == ModifierType.Additive)
                         .Sum(m => m.Value) ?? 0f,
                     mods?.FindAll(m => m.statID == nameof(PotencyModifier) && m.ModifierType == ModifierType.Additive)
-                        .Sum(m => m.Value) ?? 0f,
+                        .Sum(m => m.Value) ?? 0f
                     )
     {
         BaseServeTime = serveTime;
