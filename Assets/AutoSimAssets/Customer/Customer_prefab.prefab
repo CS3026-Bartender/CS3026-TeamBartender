@@ -544,7 +544,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 8599163382658682682, guid: 17dc221f70a71314c8abb420a26c9d5c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -593,6 +593,11 @@ MonoBehaviour:
   MoneyPayed: 25
   healthBarImage: {fileID: 964491651009820677}
   healthBarBackground: {fileID: 8409048362446759438}
+  sprites:
+  - {fileID: 8599163382658682682, guid: 17dc221f70a71314c8abb420a26c9d5c, type: 3}
+  - {fileID: -5898843706780930420, guid: eb381f2899f897c45bbe312aa617c809, type: 3}
+  - {fileID: -4202200428315544719, guid: 85064b9818332624bac37283c91a6bed, type: 3}
+  - {fileID: -5411976455666674785, guid: e367c1e981f19b1408c145f4695026d6, type: 3}
 --- !u!1 &8594436715131498856
 GameObject:
   m_ObjectHideFlags: 0

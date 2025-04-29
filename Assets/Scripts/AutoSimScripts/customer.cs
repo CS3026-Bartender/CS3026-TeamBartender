@@ -22,6 +22,12 @@ public class Customer : MonoBehaviour
     [SerializeField] private Image healthBarBackground;
     private Coroutine drinkServiceCoroutine;
 
+    // Random Sprite Selection
+
+    public Sprite[] sprites;
+
+    private SpriteRenderer spriteRenderer;
+
     private void Awake()
     {
         equippedDrinks = DrinkData.Instance.GetAllDrinksAsList();
@@ -32,7 +38,7 @@ public class Customer : MonoBehaviour
             CustomerControllerScript = ControllerObject.GetComponent<CustomerController>();
         }
 
-        spriteRenderer.sortingOrder = 0
+        
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -46,6 +52,23 @@ public class Customer : MonoBehaviour
         healthBarImage.color = regularColor;
         healthBarBackground.color = regularBackgroundColor;
         HealthBarSlider.value = Current_satisfaction;
+
+        //sprite selection
+        spriteRenderer = GetComponent<SpriteRenderer>(); // Get the SpriteRenderer component
+
+        if (sprites != null && sprites.Length > 0)
+        {
+            // Choose a random sprite index
+            int randomIndex = Random.Range(0, sprites.Length);
+
+            // Assign the random sprite to the SpriteRenderer
+            spriteRenderer.sprite = sprites[randomIndex];
+        }
+        else
+        {
+            Debug.LogWarning("No sprites assigned to the RandomSpriteSelector script.");
+        }
+
         MoneyPayed = 0;
         WantsDrink();
     }
