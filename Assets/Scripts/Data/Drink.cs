@@ -167,18 +167,19 @@ public class Drink
         var baseObj = IngredientData.GetIngValue(spiritID);
         if (!(baseObj is Spirit sp)) return 0f;
 
-        var prop typeof(Spirit).GetProperty("Base " + statID);
+        var prop = typeof(Spirit).GetProperty("Base " + statID);
         if (prop == null) return 0f;
         float baseVal = (float)prop.GetValue(sp);
 
         statTotals.TryGetValue((ModifierType.Additive, statID + "Modifier"), out float add);
         statTotals.TryGetValue((ModifierType.Multiplicative, statID + "Modifier"), out float mult));
 
-        return (baseVal + add) * mult;
+        return (baseVal + add) * (mult == 0f ? 1f : mult);
     }
 
     public void AddIngredient(string ing, int slot)
     {
+        if (slot < 0 || slot >= ingredients.Length) return;
         ingredients[slot] = ing;
 
         if (slot == 0)
