@@ -47,7 +47,7 @@ public class Drink
         if(!statTotals.ContainsKey(key))
             statTotals[key] = (type == ModifierType.Multiplicative) ? 1f : 0f;
         statTotals[key] = (type == ModifierType.Multiplicative)
-            ? statTotals[key] * val;
+            ? statTotals[key] * val
             : statTotals[key] + val;
     }
 
