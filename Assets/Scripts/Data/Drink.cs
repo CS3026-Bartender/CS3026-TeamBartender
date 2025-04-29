@@ -9,7 +9,7 @@ public class Drink
     public string spiritID;
     public string[] ingredients = new string[4];
 
-    private Dictionary<(ModifierType, string), float> statTotals = new();
+    private Dictionary<(ModifierType, string), float> statTotals = new Dictionary<(ModifierType, string), float>();
 
     public Drink(string name, string spirit)
     {
