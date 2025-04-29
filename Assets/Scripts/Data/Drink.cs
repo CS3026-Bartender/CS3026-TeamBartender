@@ -1,4 +1,7 @@
 using UnityEngine;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 public class Drink
 {
@@ -6,11 +9,46 @@ public class Drink
     public string spiritID;
     public string[] ingredients = new string[4];
 
+    private Dictionary<(ModifierType, string), float> statTotals = new();
+
     public Drink(string name, string spirit)
     {
         drinkName = name;
         spiritID = spirit;
         ingredients[0] = spirit;
+        RecalcModifiers();
+    }
+
+    public void RecalcModifiers()
+    {
+        statTotals.Clear;
+
+        foreach (var id in ingredients)
+        {
+            if (string.IsNullOrEmpty(id)) continue;
+            var ing = IngredientData.GetIngValue(id);
+            if (ing == null) continue;
+
+            Accumulate(ModifierType.Additive, nameof(ing.ServeTimeModifier), ing.ServeTimeModifier);
+            Accumulate(ModifierType.Additive, nameof(ing.CustomerDrinkTimeModifier), ing.CustomerDrinkTimeModifier);
+            Accumulate(ModifierType.Additive, nameof(ing.PotencyModifier), ing.PotencyModifier);
+
+            if (ing.Mods != null)
+            {
+                foreach (var m in ing.Mods)
+                    Accumulate(m.ModifierType, m.statID, m.Value);
+            }
+        }
+    }
+
+    private void Accumulate(ModifierType type, string stat, float val)
+    {
+        var key = (type, stat);
+        if(!statTotals.ContainsKey(key))
+            statTotals[key] = (type == ModifierType.Multiplicative) ? 1f : 0f;
+        statTotals[key] = (type == ModifierType.Multiplicative)
+            ? statTotals[key] * val;
+            : statTotals[key] + val;
     }
 
     public float GetCalculatedServeTime()
@@ -124,6 +162,21 @@ public class Drink
         return Mathf.Max(0f, totalPotency); // Ensure potency is not negative
     }
 
+    public float GetStat(string statID)
+    {
+        var baseObj = IngredientData.GetIngValue(spiritID);
+        if (!(baseObj is spiritID sp)) return 0f;
+
+        var prop typeof(Spirit).GetProperty("Base " + statID);
+        if (prop == null) return 0f;
+        float baseVal = (float)prop.GetValue(sp);
+
+        statTotals.TryGetValue((ModifierType.Additive, statID + "Modifier"), out float add);
+        statTotals.TryGetValue((ModifierType.Multiplicative, statID + "Modifier", out float mult));
+
+        return (baseVal + add) * mult;
+    }
+
     public void AddIngredient(string ing, int slot)
     {
         ingredients[slot] = ing;
@@ -132,6 +185,7 @@ public class Drink
         {
             spiritID = ing;
         }
+        RecalcModifiers();
     }
 
     // slot is the index of the ingredient
