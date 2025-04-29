@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class CustomerController : MonoBehaviour
 {
@@ -21,6 +22,12 @@ public class CustomerController : MonoBehaviour
     [SerializeField] private Image cooldownImage; // Reference to UI cooldown image WIP
     [SerializeField] private GameObject cooldownPanel; // Reference to cooldown panel WIP
 
+    [Header("TimerDisplayControl")]
+
+    [SerializeField] private TextMeshProUGUI timerText;
+
+    [SerializeField] private string postfix = "s";
+
     // Variables for targeted Customer
     public GameObject SelectedCustomer;
     [SerializeField] private Button[] CustomerTargetButtons;
@@ -37,6 +44,10 @@ public class CustomerController : MonoBehaviour
     // Cooldown tracking
     private bool isInCooldown = false;
     private Coroutine cooldownCoroutine;
+
+    public Slider CooldownBarSlider;
+
+
 
     private void Awake()
     {
@@ -74,19 +85,11 @@ public class CustomerController : MonoBehaviour
 
     private void Update()
     {
-        // Check for keyboard input to select customers
-        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
-        {
-            TrySelectCustomer(0);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            TrySelectCustomer(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
-        {
-            TrySelectCustomer(2);
-        }
+        //try to serve new customer if possible
+        TrySelectCustomer(0);
+        TrySelectCustomer(1);
+        TrySelectCustomer(2);
+        //yield return new WaitForSeconds(0.1f);
     }
 
     // Modified coroutine to handle the simulation duration with earnings overlay
@@ -95,7 +98,14 @@ public class CustomerController : MonoBehaviour
         Debug.Log($"Simulation will run for {simulationDuration} seconds before showing earnings");
 
         // Wait for the specified duration
-        yield return new WaitForSeconds(simulationDuration);
+        for (int i = 0; i < simulationDuration; i++) {
+            yield return new WaitForSeconds(1.0f);
+            if (timerText != null) {
+                timerText.text = $"{i}{postfix}";
+            }
+
+        }
+        //yield return new WaitForSeconds(simulationDuration);
 
         // Time's up! Stop spawning and clear all customers
         StopSpawning();
@@ -171,7 +181,7 @@ public class CustomerController : MonoBehaviour
             }
             else
             {
-                Debug.Log("Customer cannot be served at this time");
+                Debug.Log("Customer cannot be served at this time"); 
             }
         }
     }
@@ -220,6 +230,8 @@ public class CustomerController : MonoBehaviour
 
         float timeElapsed = 0f;
 
+        CooldownBarSlider.value = timeElapsed;
+
         while (timeElapsed < duration)
         {
             // Update cooldown fill image if assigned
@@ -228,6 +240,10 @@ public class CustomerController : MonoBehaviour
                 cooldownImage.fillAmount = 1f - (timeElapsed / duration);
             }
 
+            
+            CooldownBarSlider.value = (timeElapsed / duration);
+            
+
             timeElapsed += Time.deltaTime;
             yield return null;
         }
@@ -235,6 +251,7 @@ public class CustomerController : MonoBehaviour
         // Hide cooldown UI when done
         if (cooldownPanel != null)
         {
+            yield return new WaitForSeconds(0.2f);
             cooldownPanel.SetActive(false);
         }
 

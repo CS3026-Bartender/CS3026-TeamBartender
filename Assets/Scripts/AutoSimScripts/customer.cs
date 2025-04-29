@@ -22,16 +22,6 @@ public class Customer : MonoBehaviour
     [SerializeField] private Image healthBarBackground;
     private Coroutine drinkServiceCoroutine;
 
-    [Header("States")]
-
-    //States
-    public CustomerOrderingState orderingState;
-    public CustomerWaitingState waitingState;
-    public CustomerDrinkingState drinkingState;
-    public CustomerPayingState payingState;
-
-    //Current State
-    CustomerState state;
     private void Awake()
     {
         equippedDrinks = DrinkData.Instance.GetAllDrinksAsList();
@@ -41,6 +31,8 @@ public class Customer : MonoBehaviour
         {
             CustomerControllerScript = ControllerObject.GetComponent<CustomerController>();
         }
+
+        spriteRenderer.sortingOrder = 0
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -70,11 +62,6 @@ public class Customer : MonoBehaviour
 
     private void Pay()
     {
-        //enter new state
-        state = payingState;
-        state.Enter();
-
-
         DisplayText.text = "Paying";
         StartCoroutine(PayAndLeave());
     }
@@ -104,10 +91,6 @@ public class Customer : MonoBehaviour
             preferredDrink = equippedDrinks[randomIndex];
         }
         DisplayText.text = "Wants: " + (IngredientData.GetIngValue(preferredDrink.GetIngID(0))).DisplayName;
-
-        //Enter state
-        state = orderingState;
-        state.Enter();
     }
 
     public void Serve()
@@ -115,9 +98,6 @@ public class Customer : MonoBehaviour
         // Only change display text to "Waiting for" at this point
         DisplayText.text = "Waiting for " + (IngredientData.GetIngValue(preferredDrink.GetIngID(0))).DisplayName;
         CanBeServed = false;
-        // Note: The actual serving process will be triggered by ServeAfterCooldown
-        state = waitingState;
-        state.Enter();
     }
 
     public void ServeAfterCooldown()
@@ -135,10 +115,6 @@ public class Customer : MonoBehaviour
         MoneyPayed += preferredDrink.GetCalculatedSellPrice();
 
         drinkServiceCoroutine = StartCoroutine(FillSatisfactionOverTime());
-
-        //enter drinking state
-        state = drinkingState;
-        state.Enter();
     }
 
     private IEnumerator FillSatisfactionOverTime()

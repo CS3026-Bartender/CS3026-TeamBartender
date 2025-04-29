@@ -5,6 +5,8 @@ public class IntroScreen : MonoBehaviour
 {
     public static bool seen = false;
 
+
+
     public void Close(InputAction.CallbackContext cc)
     {
         if (!cc.performed) return;
