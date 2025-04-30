@@ -13,40 +13,56 @@ public class TooltipIngredientDisplay : TooltipDisplay
         }
 
         if (DebugLogger.Instance.logTooltip) Debug.Log("Displaying with TooltipIngredientDisplay method: " + ingDisplay.IngID);
-        Ingredient ing = IngredientData.GetIngValue(ingDisplay.IngID);
-        if (ing == null)
+        DrinkComponent comp = IngredientData.GetIngValue(ingDisplay.IngID);
+        if (comp == null)
         {
             return;
         }
-        header = ing.DisplayName;
-        content = ing.Description;
+        header = comp.DisplayName;
+        content = comp.Description;
 
-        if (ing is Spirit)
+        if (comp is Spirit sp)
         {
-            Spirit sp = (Spirit)ing;
-            content += "\nServe time: " + sp.BaseServeTime;
-            content += "\nDrink time: " + sp.BaseCustomerDrinkTime;
+            content += "\nServe time: " + sp.BaseServeTime + " s";
+            content += "\nDrink time: " + sp.BaseCustomerDrinkTime + " s";
             content += "\nPotency: " + sp.BasePotency;
-            content += "\nPrice: " + sp.Price;
+            content += "\nDrink Price: " + sp.BaseDrinkPrice + " ¤";
         }
-        else
+        else if (comp is Ingredient ing)
         {
-            if (ing.ServeTimeModifier != 0)
+            content += "\n";
+
+            string end = "";
+
+            if (ing.StatID == "serve_time")
             {
-                content += "\nServe time +" + ing.ServeTimeModifier;
+                content += "Serve time ";
+                end = "s";
             }
-            if (ing.CustomerDrinkTimeModifier != 0)
+            else if (ing.StatID == "drink_time")
             {
-                content += "\nDrink time +" + ing.CustomerDrinkTimeModifier;
+                content += "Drink time ";
+                end = "s";
             }
-            if (ing.PotencyModifier != 0)
+            else if (ing.StatID == "potency")
             {
-                content += "\nPotency +" + ing.PotencyModifier;
+                content += "Potency ";
             }
-            if (ing.Price != 0)
+            else if (ing.StatID == "drink_price")
             {
-                content += "\nPrice +" + ing.Price;
+                content += "Drink Price ";
+                end = "¤";
             }
+
+            if (ing.IsMult)
+            {
+                content += "x" + ing.StatMod;
+            }
+            else
+            {
+                content += "+" + ing.StatMod + " " + end;
+            }
+
         }
 
         Tooltip.Instance.Show(content, header);

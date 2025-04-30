@@ -15,7 +15,7 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
 
     private void FindValidSlots()
     {
-        Ingredient ing = IngredientData.GetIngValue(currentIng);
+        DrinkComponent ing = IngredientData.GetIngValue(currentIng);
         bool[][] slots = new bool[3][];
 
         // if spirit, first slot in each is available

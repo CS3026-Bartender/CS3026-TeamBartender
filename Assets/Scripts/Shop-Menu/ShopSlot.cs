@@ -25,7 +25,7 @@ public class ShopSlot : Slot
     override public void UpdateSlot(string newID)
     {
         base.UpdateSlot(newID);
-        Ingredient ing = IngredientData.GetIngValue(newID);
+        DrinkComponent ing = IngredientData.GetIngValue(newID);
         if (ing == null)
         {
             priceDisplay.text = "";

@@ -64,12 +64,12 @@ public class DrinkMenuManager : Manager<DrinkMenuManager>
             if (currIngID != null)
             {
                 // Sell old ingredient
-                Ingredient currIng = IngredientData.GetIngValue(currIngID);
+                DrinkComponent currIng = IngredientData.GetIngValue(currIngID);
                 if (DebugLogger.Instance.logDrinkLogic) Debug.Log("Selling " + currIng.DisplayName);
 
                 // Get currency
                 // TODO: make currency always float or always int
-                CurrencyManager.Instance.AddMoney((int)currIng.Price);
+                CurrencyManager.Instance.AddMoney((int)currIng.SellPrice);
             }
         }
 
