@@ -23,8 +23,14 @@ public static class IngredientData
                                 float serveTime, float customerDrinkTime, float potency,
                                 float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
     {
+        List<IngredientMod> mods = new()
+        {
+            newIngredientMod("ServeTime", ModifierType.Additive, serveTimeMod),
+            newIngredientMod("CustomerDrinkTime", ModifierType.Additive, customerDrinkTimeMod),
+            newIngredientMod("Potency", ModifierType.Additive, potencyMod)
+        }
         Spirit newSpirit = new Spirit(displayName, price, sellPrice, desc, sprite, serveTime, customerDrinkTime, potency,
-                                     serveTimeMod, customerDrinkTimeMod, potencyMod);
+                                     mods);
         bool success = spirits.TryAdd(id, newSpirit);
         if (!success)
         {
