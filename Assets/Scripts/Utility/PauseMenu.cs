@@ -1,6 +1,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine.InputSystem;
 
 public class PauseMenu : Manager<PauseMenu>
 {
@@ -28,8 +29,10 @@ public class PauseMenu : Manager<PauseMenu>
         GamePaused = false;
     }
 
-    public void TogglePause()
+    public void TogglePause(InputAction.CallbackContext cc)
     {
+        if (!cc.performed) return;
+
         if (GamePaused)
         {
             Unpause();

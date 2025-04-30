@@ -35,9 +35,13 @@ public class Customer : MonoBehaviour
         EnjoyingDrink,
         Paying
     }
+    // Random Sprite Selection
 
+    public Sprite[] sprites;
     // Current state
     private CustomerState currentState;
+
+    private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
@@ -49,6 +53,8 @@ public class Customer : MonoBehaviour
         {
             CustomerControllerScript = ControllerObject.GetComponent<CustomerController>();
         }
+
+        
     }
 
     // Start is called once before the first execution of Update
@@ -65,6 +71,23 @@ public class Customer : MonoBehaviour
         SatisfactionBarImage.color = regularColor;
         satisfactionBarBackground.color = regularBackgroundColor;
         SatisfactionBarSlider.value = Current_satisfaction;
+
+        //sprite selection
+        spriteRenderer = GetComponent<SpriteRenderer>(); // Get the SpriteRenderer component
+
+        if (sprites != null && sprites.Length > 0)
+        {
+            // Choose a random sprite index
+            int randomIndex = Random.Range(0, sprites.Length);
+
+            // Assign the random sprite to the SpriteRenderer
+            spriteRenderer.sprite = sprites[randomIndex];
+        }
+        else
+        {
+            Debug.LogWarning("No sprites assigned to the RandomSpriteSelector script.");
+        }
+
         MoneyPayed = 0;
 
         WantsDrink();

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class CustomerController : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public class CustomerController : MonoBehaviour
     [Header("Scene Settings")]
     [SerializeField] private EarningsOverlay earningsOverlay; // Reference to the earnings overlay
 
+
+    [Header("TimerDisplayControl")]
+
+    [SerializeField] private TextMeshProUGUI timerText;
+
+    [SerializeField] private string postfix = "s";
 
     // Variables for targeted Customer
     private GameObject currentlyServingCustomer;
@@ -38,6 +45,10 @@ public class CustomerController : MonoBehaviour
     // Cooldown tracking
     private bool isInCooldown = false;
     private Coroutine cooldownCoroutine;
+
+    public Slider CooldownBarSlider;
+
+
 
     private void Awake()
     {
@@ -72,7 +83,14 @@ public class CustomerController : MonoBehaviour
         Debug.Log($"Simulation will run for {simulationDuration} seconds before showing earnings");
 
         // Wait for the specified duration
-        yield return new WaitForSeconds(simulationDuration);
+        for (int i = 0; i < simulationDuration; i++) {
+            yield return new WaitForSeconds(1.0f);
+            if (timerText != null) {
+                timerText.text = $"{simulationDuration - i - 1}";
+            }
+
+        }
+        //yield return new WaitForSeconds(simulationDuration);
 
         // Time's up! Stop spawning and clear all customers
         StopSpawning();
@@ -244,8 +262,15 @@ public class CustomerController : MonoBehaviour
 
         float timeElapsed = 0f;
 
+        CooldownBarSlider.value = timeElapsed;
+
         while (timeElapsed < duration)
         {
+
+            
+            CooldownBarSlider.value = (timeElapsed / duration);
+            
+
             timeElapsed += Time.deltaTime;
             yield return null;
         }
