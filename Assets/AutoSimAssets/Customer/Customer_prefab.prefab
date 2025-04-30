@@ -634,14 +634,10 @@ MonoBehaviour:
   DisplayText: {fileID: 7139280402535381321}
   regularColor: {r: 0.8784314, g: 0.07843139, b: 0.09394004, a: 1}
   regularBackgroundColor: {r: 0.254717, g: 0, b: 0.036151886, a: 1}
-  HealthBarSlider: {fileID: 2437585060073691217}
+  SatisfactionBarSlider: {fileID: 2437585060073691217}
   MoneyPayed: 25
-  healthBarImage: {fileID: 964491651009820677}
-  healthBarBackground: {fileID: 8409048362446759438}
-  orderingState: {fileID: 4610309027047460725}
-  waitingState: {fileID: 518122775835712348}
-  drinkingState: {fileID: 6881915239431256144}
-  payingState: {fileID: 3349636660926094323}
+  SatisfactionBarImage: {fileID: 964491651009820677}
+  satisfactionBarBackground: {fileID: 8409048362446759438}
 --- !u!1 &7815565333389796183
 GameObject:
   m_ObjectHideFlags: 0
