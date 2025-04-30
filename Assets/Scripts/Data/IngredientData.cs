@@ -40,11 +40,11 @@ public static class IngredientData
     }
 
     public static void AddSpiritWithTiers(string id, string displayName, float price, float sellPrice, string desc, Sprite sprite,
-                                    float baseServeTime, float baseCustomerDrinkTime, float basePotency,
-                                    float serveTimeMod = 0f,float customerDrinkTimeMod = 0f, float potencyMod = 0f)
+                                    float serveTime, float customerDrinkTime, float potency,
+                                    float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
     {
         // Base spirit
-        AddSpirit(id, displayName, price, sellPrice, desc, sprite, baseServeTime, baseCustomerDrinkTime, basePotency, serveTimeMod, customerDrinkTimeMod, potencyMod);
+        AddSpirit(id, displayName, price, sellPrice, desc, sprite, serveTime, customerDrinkTime, potency, serveTimeMod, customerDrinkTimeMod, potencyMod);
 
         // Now add tiered variants
         string[] tiers       = { "Great", "Epic" };
