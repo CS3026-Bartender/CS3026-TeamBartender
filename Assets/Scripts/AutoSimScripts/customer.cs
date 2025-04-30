@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+
 public class Customer : MonoBehaviour
 {
     public int Max_satisfaction = 100;
@@ -10,27 +11,42 @@ public class Customer : MonoBehaviour
     public bool CanBeServed = true;
     public Drink preferredDrink;
     public TextMeshProUGUI DisplayText;
+
     // Colors for each customer type
     [SerializeField] private Color regularColor;
     [SerializeField] private Color regularBackgroundColor;
+
     private List<Drink> equippedDrinks;
     private CustomerController CustomerControllerScript;
-    public Slider HealthBarSlider;
+    public Slider SatisfactionBarSlider;
     [SerializeField] private float MoneyPayed;
+
     // Health bar images 
-    [SerializeField] private Image healthBarImage;
-    [SerializeField] private Image healthBarBackground;
+    [SerializeField] private Image SatisfactionBarImage;
+    [SerializeField] private Image satisfactionBarBackground;
+
     private Coroutine drinkServiceCoroutine;
 
+    // Customer states
+    public enum CustomerState
+    {
+        WaitingForDrink,
+        BeingServed,
+        EnjoyingDrink,
+        Paying
+    }
     // Random Sprite Selection
 
     public Sprite[] sprites;
+    // Current state
+    private CustomerState currentState;
 
     private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
         equippedDrinks = DrinkData.Instance.GetAllDrinksAsList();
+
         //Setup Interaction with CustomerController
         GameObject ControllerObject = GameObject.Find("CustomerController");
         if (ControllerObject != null)
@@ -40,15 +56,21 @@ public class Customer : MonoBehaviour
 
         
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    // Start is called once before the first execution of Update
     void Start()
     {
         Current_satisfaction = 0;
+
         // Check if health bar components are assigned
-        if (healthBarImage == null || healthBarBackground == null)
+        if (SatisfactionBarImage == null || satisfactionBarBackground == null)
         {
             Debug.LogError("Health bar images not assigned in inspector!");
         }
+
+        SatisfactionBarImage.color = regularColor;
+        satisfactionBarBackground.color = regularBackgroundColor;
+        SatisfactionBarSlider.value = Current_satisfaction;
         healthBarImage.color = regularColor;
         healthBarBackground.color = regularBackgroundColor;
         HealthBarSlider.value = Current_satisfaction;
@@ -70,13 +92,15 @@ public class Customer : MonoBehaviour
         }
 
         MoneyPayed = 0;
+
         WantsDrink();
     }
 
     public void IncreaseSatisfaction(float Satisfaction)
     {
         Current_satisfaction += Satisfaction;
-        HealthBarSlider.value = Current_satisfaction;
+        SatisfactionBarSlider.value = Current_satisfaction;
+
         if (Current_satisfaction >= Max_satisfaction && CustomerControllerScript != null)
         {
             Pay();
@@ -85,6 +109,9 @@ public class Customer : MonoBehaviour
 
     private void Pay()
     {
+        // Change state to paying
+        SetState(CustomerState.Paying);
+
         DisplayText.text = "Paying";
         StartCoroutine(PayAndLeave());
     }
@@ -100,24 +127,33 @@ public class Customer : MonoBehaviour
         CustomerControllerScript.RemoveCustomer(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public void WantsDrink()
     {
         CanBeServed = true;
+
         if (equippedDrinks != null && equippedDrinks.Count > 0)
         {
             int randomIndex = UnityEngine.Random.Range(0, equippedDrinks.Count);
             preferredDrink = equippedDrinks[randomIndex];
         }
+
+        // Set state to waiting for drink
+        SetState(CustomerState.WaitingForDrink);
+
         DisplayText.text = "Wants: " + (IngredientData.GetIngValue(preferredDrink.GetIngID(0))).DisplayName;
+
+        // Add self to the queue for service
+        if (CustomerControllerScript != null)
+        {
+            CustomerControllerScript.AddCustomerToQueue(gameObject);
+        }
     }
 
     public void Serve()
     {
+        // Change state to being served
+        SetState(CustomerState.BeingServed);
+
         // Only change display text to "Waiting for" at this point
         DisplayText.text = "Waiting for " + (IngredientData.GetIngValue(preferredDrink.GetIngID(0))).DisplayName;
         CanBeServed = false;
@@ -132,6 +168,9 @@ public class Customer : MonoBehaviour
         {
             StopCoroutine(drinkServiceCoroutine);
         }
+
+        // Change state to enjoying drink
+        SetState(CustomerState.EnjoyingDrink);
 
         DisplayText.text = "Enjoying " + (IngredientData.GetIngValue(preferredDrink.GetIngID(0))).DisplayName;
 
@@ -156,7 +195,7 @@ public class Customer : MonoBehaviour
 
             // Calculate current satisfaction using linear interpolation
             Current_satisfaction = Mathf.Lerp(startSatisfaction, endSatisfaction, t);
-            HealthBarSlider.value = Current_satisfaction;
+            SatisfactionBarSlider.value = Current_satisfaction;
 
             // Check if customer is fully satisfied during the process
             if (Current_satisfaction >= Max_satisfaction)
@@ -171,9 +210,10 @@ public class Customer : MonoBehaviour
 
         // Ensure we reach the exact target satisfaction at the end
         Current_satisfaction = endSatisfaction;
-        HealthBarSlider.value = Current_satisfaction;
+        SatisfactionBarSlider.value = Current_satisfaction;
 
         AudioManager.Instance.PlaySound("finish_drink");
+
         // Check if fully satisfied after drinking
         if (Current_satisfaction >= Max_satisfaction)
         {
@@ -184,5 +224,15 @@ public class Customer : MonoBehaviour
             // If not fully satisfied, ask for another drink
             WantsDrink();
         }
+    }
+
+    // Helper method to set the state and handle any state-specific logic
+    private void SetState(CustomerState newState)
+    {
+        // Update the current state
+        currentState = newState;
+
+        // Debug log for state changes
+        Debug.Log($"Customer state changed to: {newState}");
     }
 }

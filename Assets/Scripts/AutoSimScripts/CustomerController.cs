@@ -18,9 +18,6 @@ public class CustomerController : MonoBehaviour
     [Header("Scene Settings")]
     [SerializeField] private EarningsOverlay earningsOverlay; // Reference to the earnings overlay
 
-    [Header("Cooldown Settings")]
-    [SerializeField] private Image cooldownImage; // Reference to UI cooldown image WIP
-    [SerializeField] private GameObject cooldownPanel; // Reference to cooldown panel WIP
 
     [Header("TimerDisplayControl")]
 
@@ -29,17 +26,21 @@ public class CustomerController : MonoBehaviour
     [SerializeField] private string postfix = "s";
 
     // Variables for targeted Customer
-    public GameObject SelectedCustomer;
-    [SerializeField] private Button[] CustomerTargetButtons;
+    private GameObject currentlyServingCustomer;
     [SerializeField] private Transform Target;
     private SpriteRenderer targetSpriteRenderer;
 
     // Keep track of customers in each slot (null = empty)
     private GameObject[] customerSlots = new GameObject[3];
 
+    // Queue for customer service
+    private Queue<GameObject> customerQueue = new Queue<GameObject>();
+    private bool isProcessingQueue = false;
+
     // Coroutine reference for customer spawning
     private Coroutine spawnCoroutine;
     private Coroutine simulationCoroutine;
+    private Coroutine processQueueCoroutine;
 
     // Cooldown tracking
     private bool isInCooldown = false;
@@ -62,11 +63,6 @@ public class CustomerController : MonoBehaviour
 
         SpawnCustomer();
 
-        // Initialize cooldown UI if assigned
-        if (cooldownPanel != null)
-        {
-            cooldownPanel.SetActive(false);
-        }
     }
 
     private void Start()
@@ -74,22 +70,11 @@ public class CustomerController : MonoBehaviour
         // Start the spawning process
         spawnCoroutine = StartCoroutine(SpawnCustomersRoutine());
 
-        // Set up buttons to switch target
-        CustomerTargetButtons[0].onClick.AddListener(() => TrySelectCustomer(0));
-        CustomerTargetButtons[1].onClick.AddListener(() => TrySelectCustomer(1));
-        CustomerTargetButtons[2].onClick.AddListener(() => TrySelectCustomer(2));
-
         // Start the simulation timer
         simulationCoroutine = StartCoroutine(SimulationTimerRoutine());
-    }
 
-    private void Update()
-    {
-        //try to serve new customer if possible
-        TrySelectCustomer(0);
-        TrySelectCustomer(1);
-        TrySelectCustomer(2);
-        //yield return new WaitForSeconds(0.1f);
+        // Start processing the queue
+        processQueueCoroutine = StartCoroutine(ProcessCustomerQueueRoutine());
     }
 
     // Modified coroutine to handle the simulation duration with earnings overlay
@@ -114,7 +99,7 @@ public class CustomerController : MonoBehaviour
         // Wait a moment to let any animations finish if needed
         yield return new WaitForSeconds(0.5f);
 
-        // Show the earnings overlay instead of immediately switching scenes
+        // Show the earnings overlay 
         if (earningsOverlay != null)
         {
             Debug.Log("Simulation ended. Showing earnings overlay.");
@@ -127,10 +112,21 @@ public class CustomerController : MonoBehaviour
         }
     }
 
-    // New method to remove all customers at once
+    // Method to remove all customers at once
     private void ClearAllCustomers()
     {
         Debug.Log("Clearing all customers");
+
+        // Clear the queue
+        customerQueue.Clear();
+        currentlyServingCustomer = null;
+
+        // Stop processing the queue
+        if (processQueueCoroutine != null)
+        {
+            StopCoroutine(processQueueCoroutine);
+            processQueueCoroutine = null;
+        }
 
         for (int i = 0; i < customerSlots.Length; i++)
         {
@@ -141,69 +137,109 @@ public class CustomerController : MonoBehaviour
             }
         }
 
-        // Make sure the selected customer is cleared and target is hidden
-        SelectedCustomer = null;
+        // Hide target
         if (targetSpriteRenderer != null)
         {
             targetSpriteRenderer.enabled = false;
         }
+
+        isProcessingQueue = false;
     }
 
-    private void TrySelectCustomer(int index)
+    // Public method to add a customer to the queue
+    public void AddCustomerToQueue(GameObject customer)
     {
-        // Don't allow selection during cooldown
-        if (isInCooldown)
+        if (customer != null && !customerQueue.Contains(customer))
         {
-            Debug.Log("Cannot select customer during cooldown");
-            return;
+            customerQueue.Enqueue(customer);
+            Debug.Log("Customer added to queue. Queue size: " + customerQueue.Count);
         }
+    }
 
-        // Check if there's a customer in the slot
-        if (customerSlots[index] != null)
+    // Coroutine to process customers in the queue
+    private IEnumerator ProcessCustomerQueueRoutine()
+    {
+        while (true)
         {
-            // Check if the customer can be served
-            Customer customer = customerSlots[index].GetComponent<Customer>();
-
-            if (customer != null && customer.CanBeServed)
+            // If we're not already serving a customer and there are customers in the queue
+            if (!isProcessingQueue && customerQueue.Count > 0)
             {
-                // Select the customer
-                SelectedCustomer = customerSlots[index];
-                Target.position = spawnPoints[index].position;
+                isProcessingQueue = true;
 
-                // Ensure target sprite is visible when a customer is selected
-                if (targetSpriteRenderer != null)
+                // Get the next customer from the queue
+                GameObject nextCustomer = customerQueue.Dequeue();
+
+                // Check if the customer still exists and can be served
+                if (nextCustomer != null)
                 {
-                    targetSpriteRenderer.enabled = true;
-                }
+                    Customer customer = nextCustomer.GetComponent<Customer>();
 
-                // Prepare the customer's order
-                PrepareOrderForSelectedCustomer();
+                    if (customer != null && customer.CanBeServed)
+                    {
+                        currentlyServingCustomer = nextCustomer;
+
+                        // Find which slot the customer is in to position the target
+                        for (int i = 0; i < customerSlots.Length; i++)
+                        {
+                            if (customerSlots[i] == nextCustomer)
+                            {
+                                // Position and show the target
+                                Target.position = spawnPoints[i].position;
+                                if (targetSpriteRenderer != null)
+                                {
+                                    targetSpriteRenderer.enabled = true;
+                                }
+
+                                StartCoroutine(ServeCustomer(customer));
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // If the customer can't be served, move on to the next one
+                        isProcessingQueue = false;
+                    }
+                }
+                else
+                {
+                    // If the customer no longer exists, move on to the next one
+                    isProcessingQueue = false;
+                }
             }
-            else
-            {
-                Debug.Log("Customer cannot be served at this time"); 
-            }
+
+            yield return null;
         }
     }
 
-    private void PrepareOrderForSelectedCustomer()
+    private IEnumerator ServeCustomer(Customer customer)
     {
-        if (SelectedCustomer == null) return;
 
-        Customer customer = SelectedCustomer.GetComponent<Customer>();
-        if (customer != null)
+        // Get the serve time from the customer's preferred drink
+        float serveTime = customer.preferredDrink.GetCalculatedServeTime();
+
+        // Call the Serve method on the customer (changes display to "Waiting for")
+        customer.Serve();
+
+        // Start cooldown
+        StartCooldown(serveTime, customer);
+
+        Debug.Log("Automatically preparing drink for " + serveTime + " seconds");
+
+        // Wait for the cooldown to complete
+        yield return new WaitForSeconds(serveTime);
+
+        // Hide the target after serving is complete
+        if (targetSpriteRenderer != null)
         {
-            // Get the serve time from the customer's preferred drink
-            float serveTime = customer.preferredDrink.GetCalculatedServeTime();
-
-            // Call the Serve method on the customer (only changes display to "Preparing")
-            customer.Serve();
-
-            // Start cooldown
-            StartCooldown(serveTime, customer);
-
-            Debug.Log("Preparing drink for " + serveTime + " seconds");
+            targetSpriteRenderer.enabled = false;
         }
+
+        // Wait for a short pause between serving customers (0.25 seconds)
+        yield return new WaitForSeconds(0.25f);
+
+        isProcessingQueue = false;
+        currentlyServingCustomer = null;
     }
 
     private void StartCooldown(float duration, Customer customer)
@@ -222,11 +258,7 @@ public class CustomerController : MonoBehaviour
     {
         isInCooldown = true;
 
-        // Show cooldown UI if assigned
-        if (cooldownPanel != null)
-        {
-            cooldownPanel.SetActive(true);
-        }
+       
 
         float timeElapsed = 0f;
 
@@ -268,107 +300,84 @@ public class CustomerController : MonoBehaviour
             Debug.Log("Cooldown finished - Customer now enjoying drink");
         }
 
-        // Deselect customer and hide target when cooldown is finished
-        SelectedCustomer = null;
-        if (targetSpriteRenderer != null)
-        {
-            targetSpriteRenderer.enabled = false;
-        }
-
         isInCooldown = false;
     }
 
     private void OnDestroy()
     {
-        CustomerTargetButtons[0].onClick.RemoveListener(() => TrySelectCustomer(0));
-        CustomerTargetButtons[1].onClick.RemoveListener(() => TrySelectCustomer(1));
-        CustomerTargetButtons[2].onClick.RemoveListener(() => TrySelectCustomer(2));
-
         // Make sure to stop all coroutines when destroyed
-        if (spawnCoroutine != null)
-        {
-            StopCoroutine(spawnCoroutine);
-        }
-
-        if (simulationCoroutine != null)
-        {
-            StopCoroutine(simulationCoroutine);
-        }
-
-        if (cooldownCoroutine != null)
-        {
-            StopCoroutine(cooldownCoroutine);
-        }
+        StopAllCoroutines();
     }
 
     private IEnumerator SpawnCustomersRoutine()
     {
         while (true)
         {
-            yield return new WaitForSeconds(spawnInterval);
+            // Add variance of ±2 seconds to the spawn interval
+            float randomizedInterval = spawnInterval + UnityEngine.Random.Range(-2f, 2f);
+            // Make sure the interval doesn't go below 0.1
+            randomizedInterval = Mathf.Max(0.1f, randomizedInterval);
+
+            yield return new WaitForSeconds(randomizedInterval);
             SpawnCustomer();
         }
     }
 
     private void SpawnCustomer()
     {
-        // Find the first empty slot
-        int emptySlotIndex = FindEmptySlot();
+        // Find all empty slots and store their indices
+        List<int> emptySlots = new List<int>();
+        for (int i = 0; i < customerSlots.Length; i++)
+        {
+            if (customerSlots[i] == null)
+            {
+                emptySlots.Add(i);
+            }
+        }
 
         // If no empty slots, don't spawn
-        if (emptySlotIndex == -1)
+        if (emptySlots.Count == 0)
         {
             Debug.Log("No empty slots available for spawning customers.");
             return;
         }
 
+        // Choose a random empty slot
+        int randomIndex = UnityEngine.Random.Range(0, emptySlots.Count);
+        int chosenSlotIndex = emptySlots[randomIndex];
+
         AudioManager.Instance.PlaySound("customer_enters");
 
-        // Spawn a customer at the appropriate position
-        GameObject newCustomer = Instantiate(customerPrefab, spawnPoints[emptySlotIndex].position, Quaternion.identity, customerParent);
+        // Spawn a customer at the randomly chosen empty slot position
+        GameObject newCustomer = Instantiate(customerPrefab, spawnPoints[chosenSlotIndex].position, Quaternion.identity, customerParent);
 
-        // Store reference to the customer in the appropriate slot
-        customerSlots[emptySlotIndex] = newCustomer;
+        // Store reference to the customer in the chosen slot
+        customerSlots[chosenSlotIndex] = newCustomer;
 
         // For debugging
-        Debug.Log("Customer spawned in slot: " + emptySlotIndex);
+        Debug.Log("Customer spawned in slot: " + chosenSlotIndex);
     }
 
-    private int FindEmptySlot()
-    {
-        // Check slots in order (first, second, third)
-        for (int i = 0; i < customerSlots.Length; i++)
-        {
-            if (customerSlots[i] == null)
-            {
-                return i;
-            }
-        }
-
-        // No empty slots found
-        return -1;
-    }
-
-    // Public method to remove a customer (can be called from UI buttons, events, etc.)
+    // Public method to remove a customer
     public void RemoveCustomer(GameObject Customer)
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < customerSlots.Length; i++)
         {
             if (customerSlots[i] == Customer)
             {
-                // Check if the removed customer was the selected one
-                bool wasSelected = (Customer == SelectedCustomer);
+                // Check if the removed customer was being served
+                bool wasBeingServed = (Customer == currentlyServingCustomer);
 
                 Destroy(customerSlots[i]);
                 customerSlots[i] = null;
                 Debug.Log("Customer removed.");
 
-                // If the removed customer was selected, set selected to null and hide the target
-                if (wasSelected)
+                // If the removed customer was being served, clear reference
+                if (wasBeingServed)
                 {
-                    SelectedCustomer = null;
+                    currentlyServingCustomer = null;
 
-                    // Hide the target sprite renderer
+                    // Hide the target
                     if (targetSpriteRenderer != null)
                     {
                         targetSpriteRenderer.enabled = false;
@@ -379,7 +388,7 @@ public class CustomerController : MonoBehaviour
             }
         }
 
-        Debug.Log("Customer Couldn't be found");
+        Debug.Log("Customer couldn't be found");
     }
 
     // Stop the spawning process
