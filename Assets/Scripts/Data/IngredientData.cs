@@ -25,10 +25,11 @@ public static class IngredientData
     {
         List<IngredientMod> mods = new()
         {
-            newIngredientMod("ServeTime", ModifierType.Additive, serveTimeMod),
-            newIngredientMod("CustomerDrinkTime", ModifierType.Additive, customerDrinkTimeMod),
-            newIngredientMod("Potency", ModifierType.Additive, potencyMod)
+            new IngredientMod(ModifierType.Additive, nameof(ServeTimeModifier), serveTimeMod),
+            new IngredientMod(ModifierType.Additive, nameof(CustomerDrinkTimeModifier), customerDrinkTimeMod),
+            new IngredientMod(ModifierType.Additive, nameof(PotencyModifier), potencyMod)
         };
+
         Spirit newSpirit = new Spirit(displayName, price, sellPrice, desc, sprite, serveTime, customerDrinkTime, potency,
                                      mods);
         bool success = spirits.TryAdd(id, newSpirit);
