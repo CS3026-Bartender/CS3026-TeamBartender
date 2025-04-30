@@ -33,7 +33,5 @@ public class Spirit : Ingredient
             { nameof(BaseCustomerDrinkTime), customerDrinkTime },
             { nameof(BasePotency), potency }
         };
-        
-        if (mods != null) mods = mods;
     }
 }
