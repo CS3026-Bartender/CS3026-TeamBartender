@@ -10,12 +10,10 @@ public abstract class Manager<T> : MonoBehaviour where T : Manager<T>
         if (Instance == null)
         {
             Instance = (T)this;
-            Debug.Log("got an instance");
         }
         else
         {
             Destroy(gameObject);
-            Debug.Log("destroyed a new one");
         }
     }
 }

@@ -56,6 +56,7 @@ public class EarningsOverlay : MonoBehaviour
     // This method should be called by CustomerController when the simulation ends
     public void ShowEarningsOverlay()
     {
+        AudioManager.Instance.PlaySound("end_sim");
         if (CurrencyManager.Instance != null)
         {
             // Get the final money amount
@@ -206,6 +207,7 @@ public class EarningsOverlay : MonoBehaviour
         }
 
         // Load the shop scene
+        AudioManager.Instance.PlaySound("close_screen");
         SceneManager.LoadScene("Shop_Scene");
     }
 }

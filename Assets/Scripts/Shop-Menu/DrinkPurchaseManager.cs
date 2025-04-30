@@ -79,6 +79,7 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
     // Call if ingredient dropped outside valid slot
     public void CancelPurchase()
     {
+        AudioManager.Instance.PlaySound("place_fail");
         if (purchaseActive)
         {
             EndPurchase();
@@ -96,6 +97,7 @@ public class DrinkPurchaseManager : Manager<DrinkPurchaseManager>
             if (ShopManager.Instance.IsBuyAllowed(currentShopSlot) && DrinkMenuManager.Instance.CheckAddOkay(drinkSlot, currentIng, drinkIngSlot))
             {
                 if (DebugLogger.Instance.logPurchase) Debug.Log("Purchase is valid");
+                AudioManager.Instance.PlaySound("place");
                 // buy ingredient at shop slot, put in drink slot
                 shopMan.BuyIngredient(currentShopSlot);
                 drinkMan.AddIngredientToDrink(drinkSlot, currentIng, drinkIngSlot);
