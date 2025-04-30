@@ -8,6 +8,11 @@ public sealed class ShopManager : Manager<ShopManager>
 
     private ShopConfiguration currentShop;
 
+    private void Start()
+    {
+        InitializeShop();
+    }
+
     public void RefreshShop()
     {
         currentShop = new ShopConfiguration(1,ingsPerShopContents - 1);

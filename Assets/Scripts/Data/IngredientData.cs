@@ -37,7 +37,7 @@ public static class IngredientData
         {
             return null;
         }
-        if (id.StartsWith("sp"))
+        if (id.StartsWith("Liquor"))
         {
             return spirits.GetValueOrDefault(id);
         }

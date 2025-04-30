@@ -31,6 +31,6 @@ public class ShopSlot : Slot
             priceDisplay.text = "";
             return;
         }
-        priceDisplay.text = "$ " + ing.Price;
+        priceDisplay.text = ing.Price + "¤";
     }
 }

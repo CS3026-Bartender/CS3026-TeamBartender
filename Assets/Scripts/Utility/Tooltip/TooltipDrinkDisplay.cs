@@ -21,20 +21,12 @@ public class TooltipDrinkDisplay : TooltipDisplay
             return;
         }
 
-        header = drinkData.spiritID;
+        header = drinkData.drinkName;
 
-        if (drinkData.GetCalculatedSellPrice() != 0)
-        {   // This one MUST remain an equal. Else it keeps appending drink data to the display until next round.
-            content = "\nDrink Sell Price: " + drinkData.GetCalculatedSellPrice();
-        }
-        if (drinkData.GetCalculatedPotency() != 0)
-        {
-            content += "\nDrink Potency +" + drinkData.GetCalculatedPotency();
-        }
-        if (drinkData.GetCalculatedServeTime() != 0)
-        {
-            content += "\nDrink Serve Time: " + drinkData.GetCalculatedServeTime();
-        }
+        content = "Serve Time: " + drinkData.GetCalculatedServeTime() + "s";
+        content += "\nDrink Time: " + drinkData.GetCalculatedCustomerDrinkTime() + "s";
+        content += "\nPotency +" + drinkData.GetCalculatedPotency();
+        content += "\nDrink Price: " + drinkData.GetCalculatedSellPrice() + "¤";
 
         Tooltip.Instance.Show(content, header);
     }

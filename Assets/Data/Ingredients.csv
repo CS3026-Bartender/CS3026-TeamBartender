@@ -1,5 +1,25 @@
 id,displayName,price,sellPrice,description,statID,statMod,isMult
-ing_lime,Lime,1.25,0.75,Adds a sour citrus flavor and refreshing scent.,serve_time,0.8,true
-ing_lemon,Lemon,1.00,0.60,Bright and sour citrus that adds zesty notes.,drink_time,0.6,true
-ing_orange,Orange,1.50,0.90,Sweet citrus that balances stronger spirits.,drink_price,2,false
-ing_mint,Fresh Mint,1.75,1.05,Aromatic herb that adds a cool refreshing flavor.,potency,2,false
+Berry1,Strawberry,12,4,A tangy berry,drink_price,1.5,true
+Berry2,Better Strawberry,20,6,A tangy berry,drink_price,1.75,true
+Berry3,Amazing Strawberry,28,8,A tangy berry,drink_price,2,true
+Citrus1,Lunar Lime,12,4,A sour citrus,potency,1.5,true
+Citrus2,Better Lunar Lime,20,6,A sour citrus,potency,1.75,true
+Citrus3,Amazing Lunar Lime,28,8,A sour citrus,potency,2,true
+Coconut1,Gaganut,12,4,A sweet green substance,drink_time,0.7,true
+Coconut2,Better Gaganut,20,6,A sweet green substance,drink_time,0.6,true
+Coconut3,Amazing Gaganut,28,8,A sweet green substance,drink_time,0.5,true
+Melon1,Xenomelon,12,4,A bitter melon,drink_price,2,false
+Melon2,Better Xenomelon,20,6,A bitter melon,drink_price,3,false
+Melon3,Amazing Xenomelon,28,8,A bitter melon,drink_price,4,false
+Mint1,Cryo-Mint Leaves,12,4,A sharp herb,potency,20,false
+Mint2,Better Cryo-Mint Leaves,20,6,A sharp herb,potency,30,false
+Mint3,Amazing Cryo-Mint Leaves,28,8,A sharp herb,potency,40,false
+PinkFruit1,Warpfruit,12,4,A juicy fruit,drink_time,-1,false
+PinkFruit2,Better Warpfruit,20,6,A juicy fruit,drink_time,-1.5,false
+PinkFruit3,Amazing Warpfruit,28,8,A juicy fruit,drink_time,-2,false
+Soda1,Chrono Cola,12,4,A fizzy soda,serve_time,-1,false
+Soda2,Better Chrono Cola,20,6,A fizzy soda,serve_time,-1.5,false
+Soda3,Amazing Chrono Cola,28,8,A fizzy soda,serve_time,-2,false
+Syrup1,Hypernova Syrup,12,4,A smooth syrup,serve_time,0.7,true
+Syrup2,Better Hypernova Syrup,20,6,A smooth syrup,serve_time,0.6,true
+Syrup3,Amazing Hypernova Syrup,28,8,A smooth syrup,serve_time,0.5,true

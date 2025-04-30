@@ -155,7 +155,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: (ING_DESC)
+  m_text: PRICE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8a03c081b710d9d449be3b7e1cf11557, type: 2}
   m_sharedMaterial: {fileID: -3588195764545772396, guid: 8a03c081b710d9d449be3b7e1cf11557, type: 2}
@@ -474,9 +474,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5057115678806150006, guid: 70ed5a0d8a5470d1fae1dfe808f1ae60, type: 3}
+      propertyPath: m_fontColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5057115678806150006, guid: 70ed5a0d8a5470d1fae1dfe808f1ae60, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 16777215
+      objectReference: {fileID: 0}
     - target: {fileID: 6622348177787804562, guid: 70ed5a0d8a5470d1fae1dfe808f1ae60, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -69
+      objectReference: {fileID: 0}
+    - target: {fileID: 8579114083872675340, guid: 70ed5a0d8a5470d1fae1dfe808f1ae60, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

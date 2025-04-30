@@ -14,12 +14,13 @@ public class Sound : MonoBehaviour
 
     private void Start()
     {
-        source.volume = volume;
+        source.volume = volume * AudioManager.Instance.MasterVolume;
     }
 
     public void PlaySound()
     {
         GetNewPitch();
+        source.volume = volume * AudioManager.Instance.MasterVolume;
         source.Play();
     }
 

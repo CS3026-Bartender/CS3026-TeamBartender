@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class DrinkMenuDisplay : MonoBehaviour
 {
+    private void Start()
+    {
+        RefreshDisplay();
+    }
+
     public void RefreshDisplay()
     {
         for (int i = 0; i < 3; i++)

@@ -1,6 +1,5 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine.InputSystem;
 
 public class PauseMenu : Manager<PauseMenu>

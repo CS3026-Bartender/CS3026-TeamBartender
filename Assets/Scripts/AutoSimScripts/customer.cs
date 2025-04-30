@@ -19,7 +19,7 @@ public class Customer : MonoBehaviour
     private List<Drink> equippedDrinks;
     private CustomerController CustomerControllerScript;
     public Slider SatisfactionBarSlider;
-    [SerializeField] private float MoneyPayed;
+    public float MoneyPayed { get; private set; }
 
     // Health bar images 
     [SerializeField] private Image SatisfactionBarImage;

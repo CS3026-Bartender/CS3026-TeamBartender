@@ -70,12 +70,12 @@ public class EarningsOverlay : MonoBehaviour
             // Update UI text
             if (earningsText != null)
             {
-                earningsText.text = $"Day Earnings: ${earningsDifference:F2}";
+                earningsText.text = $"Day Earnings: {earningsDifference:F2}" + "¤";
             }
 
             if (totalMoneyText != null)
             {
-                totalMoneyText.text = $"Total Money: ${endingMoney:F2}";
+                totalMoneyText.text = $"Total Money: {endingMoney:F2}" + "¤";
             }
 
             // Show the overlay

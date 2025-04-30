@@ -1,5 +1,13 @@
 id,displayName,price,sellPrice,description,serveTime,customerDrinkTime,potency,drinkPrice
-sp_vodka,Vodka,8.50,5.10,A clear distilled alcoholic beverage with a clean taste.,1.2,7,20,5
-sp_rum,Rum,7.75,4.65,A liquor made by fermenting and distilling sugarcane molasses or juice.,1.0,7,25,6
-sp_gin,Gin,9.25,5.55,A distilled alcoholic drink flavored with juniper berries.,1.3,7,30,4
-sp_whiskey,Whiskey,12.50,7.50,A barrel-aged distilled spirit made from fermented grain mash.,1.5,9,40,7
+LiquorA1,LunarGlow,20,8,Only for the brave,5,2,50,5
+LiquorA2,Strong LunarGlow,40,15,Only for the very brave,5,2,75,8
+LiquorA3,Intense LunarGlow,60,22,Only for the bravest,5,2,100,11
+LiquorB1,Warpwine,15,6,Bright and floral,2,4,20,3
+LiquorB2,Quality Warpwine,30,12,Balanced and full,2,4,30,5
+LiquorB3,Finest Warpwine,45,18,Aged and complex,2,4,40,7
+LiquorC1,Vesper's Zad,25,10,A popular liquor,3,6,40,6
+LiquorC2,Vesper's Great Zad,50,20,A nice liquor,3,6,60,9
+LiquorC3,Vesper's Best Zad,75,28,A top-shelf liquor,3,6,80,12
+LiquorD1,Andromeda Ambrosia,20,8,An experience,1,8,30,4
+LiquorD2,Rare Andromeda Ambrosia,40,15,A rare experience,1,8,45,6
+LiquorD3,Unique Andromeda Ambrosia,60,22,A unique experience,1,8,60,8

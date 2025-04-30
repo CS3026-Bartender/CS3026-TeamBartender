@@ -4,7 +4,6 @@ using TMPro;
 public class MoneyDisplay : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI moneyText;
-    [SerializeField] private string prefix = "$";
 
     private void OnEnable()
     {
@@ -29,7 +28,7 @@ public class MoneyDisplay : MonoBehaviour
     {
         if (moneyText != null)
         {
-            moneyText.text = $"{prefix}{currentMoney}";
+            moneyText.text = currentMoney + "¤";
 
           
         }

@@ -8,6 +8,12 @@ public class DataReader : Manager<DataReader>
     [SerializeField] private Sprite defaultSprite;
     [SerializeField] private TextAsset ingredientsFile; // id,displayName,price,sellPrice,description,statID,statMod,isMult
     [SerializeField] private TextAsset spiritsFile; // id,displayName,price,sellPrice,description,serveTime,customerDrinkTime,potency,drinkTime
+
+    private void Start()
+    {
+        LoadIngredients();
+    }
+
     public void LoadIngredients()
     {
         LoadFile(ingredientsFile, LoadIngredient);
@@ -35,19 +41,23 @@ public class DataReader : Manager<DataReader>
         float.TryParse(values[6], out float statMod);
         bool.TryParse(values[7], out bool isMult);
         
-        IngredientData.AddIngredient(id, name, price, sellPrice, values[4], sprite,
+        IngredientData.AddIngredient(id, name, price, sellPrice, desc, sprite,
                                      statID, statMod, isMult);
     }
     private void LoadSpirit(string[] values)
     {
+        string id = values[0];
+        Sprite sprite = FindSprite(id);
+        string name = values[1];
         float.TryParse(values[2], out float price);
         float.TryParse(values[3], out float sellPrice);
+        string desc = values[4];
         float.TryParse(values[5], out float serveTime);
         float.TryParse(values[6], out float customerDrinkTime);
         float.TryParse(values[7], out float potency);
         float.TryParse(values[8], out float drinkPrice);
         // For spirits, we're not passing modifiers as you mentioned
-        IngredientData.AddSpirit(values[0], values[1], price, sellPrice, values[4], FindSprite(values[0]),
+        IngredientData.AddSpirit(id, name, price, sellPrice, desc, sprite,
                                  serveTime, customerDrinkTime, potency, drinkPrice);
     }
     private Sprite FindSprite(string id)

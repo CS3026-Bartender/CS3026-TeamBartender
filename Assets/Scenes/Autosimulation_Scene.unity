@@ -154,7 +154,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 64.16}
-  m_SizeDelta: {x: 652.16, y: 128.32}
+  m_SizeDelta: {x: 1200, y: 128.32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &25273834
 MonoBehaviour:
@@ -178,8 +178,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Nightly Earnings: $0.00'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a03c081b710d9d449be3b7e1cf11557, type: 2}
+  m_sharedMaterial: {fileID: -3588195764545772396, guid: 8a03c081b710d9d449be3b7e1cf11557, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 63.1
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -273,7 +273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &120728188
 RectTransform:
   m_ObjectHideFlags: 0
@@ -516,8 +516,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Press Anything To Continue
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a03c081b710d9d449be3b7e1cf11557, type: 2}
+  m_sharedMaterial: {fileID: -3588195764545772396, guid: 8a03c081b710d9d449be3b7e1cf11557, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -541,7 +541,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 67.25
+  m_fontSize: 62.9
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -610,7 +610,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 19.485, y: -301}
-  m_SizeDelta: {x: 824.42, y: 137.26}
+  m_SizeDelta: {x: 1200, y: 137.26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &445834288
 GameObject:
@@ -2561,8 +2561,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Night Finished!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a03c081b710d9d449be3b7e1cf11557, type: 2}
+  m_sharedMaterial: {fileID: -3588195764545772396, guid: 8a03c081b710d9d449be3b7e1cf11557, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2581,17 +2581,17 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 2425
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 114.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 200
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
@@ -2802,7 +2802,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.000030518, y: -87}
-  m_SizeDelta: {x: 652.16, y: 116.26}
+  m_SizeDelta: {x: 1200, y: 116.26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1401673203
 CanvasRenderer:
@@ -2834,8 +2834,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Total Money: $0.00'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a03c081b710d9d449be3b7e1cf11557, type: 2}
+  m_sharedMaterial: {fileID: -3588195764545772396, guid: 8a03c081b710d9d449be3b7e1cf11557, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2955,7 +2955,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneyText: {fileID: 1463679874}
-  prefix: $
 --- !u!114 &1463679874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3003,7 +3002,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 55.7
+  m_fontSize: 55.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

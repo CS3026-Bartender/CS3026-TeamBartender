@@ -23,12 +23,14 @@ public class DrinkData : MonoBehaviour
     public void ResetDrinks()
     {
         drinks.Clear();
+        AddDrink("", "LiquorB1", 0);
     }
 
     /// <returns>Drink</returns>
     public Drink AddDrink(string name, string spirit, int drinkPos)
     {
-        Drink drink = new(name, spirit);
+        string newName = IngredientData.GetIngValue(spirit).DisplayName + " Cocktail";
+        Drink drink = new(newName, spirit);
         drinks.Add(drinkPos, drink);
         Debug.Log(drinks[drinkPos].drinkName + " added");
         return drink;

@@ -132,6 +132,8 @@ public class CustomerController : MonoBehaviour
         {
             if (customerSlots[i] != null)
             {
+                Customer customer = customerSlots[i].GetComponent<Customer>();
+                CurrencyManager.Instance.AddMoney(customer.MoneyPayed);
                 Destroy(customerSlots[i]);
                 customerSlots[i] = null;
             }

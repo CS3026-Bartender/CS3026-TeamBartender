@@ -60,7 +60,14 @@ public class TooltipIngredientDisplay : TooltipDisplay
             }
             else
             {
-                content += "+" + ing.StatMod + " " + end;
+                if (ing.StatMod<0f)
+                {
+                    content += "–" + -ing.StatMod + end;
+                }
+                else
+                {
+                    content += "+" + ing.StatMod + end;
+                }
             }
 
         }

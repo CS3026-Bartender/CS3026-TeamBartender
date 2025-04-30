@@ -118,7 +118,7 @@ public class Drink
                 totalDrinkTime *= ingredient.StatMod;
             }
         }
-        return Mathf.Min(0.5f, totalDrinkTime); // Ensure drink time is at least 0.5 seconds
+        return Mathf.Max(0.5f, totalDrinkTime); // Ensure drink time is at least 0.5 seconds
     }
 
     // Get the potency of the drink
