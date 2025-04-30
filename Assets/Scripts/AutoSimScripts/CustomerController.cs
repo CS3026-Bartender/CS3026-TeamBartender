@@ -101,7 +101,7 @@ public class CustomerController : MonoBehaviour
         for (int i = 0; i < simulationDuration; i++) {
             yield return new WaitForSeconds(1.0f);
             if (timerText != null) {
-                timerText.text = $"{i}{postfix}";
+                timerText.text = $"{simulationDuration - i - 1}";
             }
 
         }
