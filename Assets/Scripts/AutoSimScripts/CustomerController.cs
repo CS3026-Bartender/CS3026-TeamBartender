@@ -266,11 +266,6 @@ public class CustomerController : MonoBehaviour
 
         while (timeElapsed < duration)
         {
-            // Update cooldown fill image if assigned
-            if (cooldownImage != null)
-            {
-                cooldownImage.fillAmount = 1f - (timeElapsed / duration);
-            }
 
             
             CooldownBarSlider.value = (timeElapsed / duration);
@@ -278,19 +273,6 @@ public class CustomerController : MonoBehaviour
 
             timeElapsed += Time.deltaTime;
             yield return null;
-        }
-
-        // Hide cooldown UI when done
-        if (cooldownPanel != null)
-        {
-            yield return new WaitForSeconds(0.2f);
-            cooldownPanel.SetActive(false);
-        }
-
-        // Reset cooldown image
-        if (cooldownImage != null)
-        {
-            cooldownImage.fillAmount = 1f;
         }
 
         // Now that cooldown is done, actually serve the drink

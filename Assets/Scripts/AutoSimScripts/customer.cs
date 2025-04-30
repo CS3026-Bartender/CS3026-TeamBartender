@@ -71,9 +71,6 @@ public class Customer : MonoBehaviour
         SatisfactionBarImage.color = regularColor;
         satisfactionBarBackground.color = regularBackgroundColor;
         SatisfactionBarSlider.value = Current_satisfaction;
-        healthBarImage.color = regularColor;
-        healthBarBackground.color = regularBackgroundColor;
-        HealthBarSlider.value = Current_satisfaction;
 
         //sprite selection
         spriteRenderer = GetComponent<SpriteRenderer>(); // Get the SpriteRenderer component
