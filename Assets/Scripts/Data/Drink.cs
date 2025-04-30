@@ -36,7 +36,7 @@ public class Drink
             if (ing.Mods != null)
             {
                 foreach (var m in ing.Mods)
-                    Accumulate(m.ModifierType, m.statID, m.Value);
+                    Accumulate(m.ModifierType, m.StatID, m.Value);
             }
         }
     }
