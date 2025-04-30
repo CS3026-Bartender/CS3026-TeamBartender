@@ -36,7 +36,7 @@ public class Ingredient
     public Ingredient(string name, float price, float sellPrice, string desc, Sprite sprite,
                      List<IngredientMod> mods
     ) : this(name, price, sellPrice, desc, sprite,
-        mods?.FindAll(m => m.StatID == nameof(ServeTimeModifier) && mods.ModifierType == ModifierType.Additive)
+        mods?.FindAll(m => m.StatID == nameof(ServeTimeModifier) && m.ModifierType == ModifierType.Additive)
             .Sum(m => m.Value),
         mods?.FindAll(m => m.StatID == nameof(CustomerDrinkTimeModifier) && m.ModifierType == ModifierType.Additive)
             .Sum(m => m.Value),
