@@ -36,12 +36,13 @@ public class Ingredient
     public Ingredient(string name, float price, float sellPrice, string desc, Sprite sprite,
                      List<IngredientMod> mods
     ) : this(name, price, sellPrice, desc, sprite,
-        mods?.FindAll(m => m.StatID == nameof(ServeTimeModifier) && m.ModifierType == ModifierType.Additive)
-            .Sum(m => m.Value),
-        mods?.FindAll(m => m.StatID == nameof(CustomerDrinkTimeModifier) && m.ModifierType == ModifierType.Additive)
-            .Sum(m => m.Value),
-        mods?.FindAll(m => m.StatID == nameof(PotencyModifier) && m.ModifierType == ModifierType.Additive)
-            .Sum(m => m.Value))
+        mods?.Where(m => m.StatID == "ServeTime" && m.ModifierType == ModifierType.Additive)
+            .Sum(m => m.Value) ?? 0f,
+        mods?.Where(m => m.StatID == "CustomerDrinkTime" && m.ModifierType == ModifierType.Additive)
+            .Sum(m => m.Value) ?? 0f,
+        mods?.Where(m => m.StatID == "Potency" && m.ModifierType == ModifierType.Additive)
+            .Sum(m => m.Value) ?? 0f)
+
     {
         Mods = mods;
     }
