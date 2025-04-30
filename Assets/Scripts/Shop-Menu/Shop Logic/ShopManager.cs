@@ -29,7 +29,7 @@ public sealed class ShopManager : Manager<ShopManager>
     public bool IsBuyAllowed(int slot)
     {
         string ingID = currentShop.GetIngID(slot);
-        Ingredient ing = IngredientData.GetIngValue(ingID);
+        DrinkComponent ing = IngredientData.GetIngValue(ingID);
 
         // check ing exists
         if (ing == null)

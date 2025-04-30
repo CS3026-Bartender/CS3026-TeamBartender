@@ -9,9 +9,9 @@ public static class IngredientData
     private static Dictionary<string, Spirit> spirits = new();
 
     public static void AddIngredient(string id, string displayName, float price, float sellPrice, string desc, Sprite sprite,
-                                float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
+                                string statID, float statMod, bool isMult)
     {
-        Ingredient newIng = new Ingredient(displayName, price, sellPrice, desc, sprite, serveTimeMod, customerDrinkTimeMod, potencyMod);
+        Ingredient newIng = new Ingredient(displayName, price, sellPrice, desc, sprite, statID, statMod, isMult);
         bool success = ingredients.TryAdd(id, newIng);
         if (!success)
         {
@@ -20,19 +20,18 @@ public static class IngredientData
     }
 
     public static void AddSpirit(string id, string displayName, float price, float sellPrice, string desc, Sprite sprite,
-                                float serveTime, float customerDrinkTime, float potency,
-                                float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
+                                float serveTime, float customerDrinkTime, float potency, float drinkPrice)
     {
-        Spirit newSpirit = new Spirit(displayName, price, sellPrice, desc, sprite, serveTime, customerDrinkTime, potency,
-                                     serveTimeMod, customerDrinkTimeMod, potencyMod);
+
+        Spirit newSpirit = new Spirit(displayName, price, sellPrice, desc, sprite, serveTime, customerDrinkTime, potency, drinkPrice);
         bool success = spirits.TryAdd(id, newSpirit);
         if (!success)
         {
             Debug.Log("Spirit could not be added due to repeat ID");
         }
     }
-
-    public static Ingredient GetIngValue(string id)
+    
+    public static DrinkComponent GetIngValue(string id)
     {
         if (id == null)
         {
@@ -89,7 +88,7 @@ public static class IngredientData
 
     public static void DebugPrintIng(string ingID)
     {
-        Ingredient ing = ingredients.GetValueOrDefault(ingID);
+        DrinkComponent ing = ingredients.GetValueOrDefault(ingID);
         Debug.Log(ing != null ? ing.GetDebug() : "Ingredient does not exist");
     }
 }

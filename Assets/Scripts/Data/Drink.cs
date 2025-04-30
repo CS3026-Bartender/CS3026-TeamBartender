@@ -1,4 +1,7 @@
 using UnityEngine;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 public class Drink
 {
@@ -19,53 +22,65 @@ public class Drink
             return 0f;
 
 
-        Ingredient baseIngredient = IngredientData.GetIngValue(ingredients[0]);
+        DrinkComponent baseIngredient = IngredientData.GetIngValue(ingredients[0]);
         if (!(baseIngredient is Spirit))
             return 0f;
 
         Spirit spirit = (Spirit)baseIngredient;
-        float totalServeTime = ((Spirit)spirit).BaseServeTime;
+        float totalServeTime = spirit.BaseServeTime;
 
-        // Apply modifiers from all ingredients
-        for (int i = 0; i < ingredients.Length; i++)
+        // Apply additive modifiers from all ingredients
+        for (int i = 1; i < ingredients.Length; i++)
         {
-            if (ingredients[i] != null)
+            Ingredient ingredient = (Ingredient)IngredientData.GetIngValue(ingredients[i]);
+            if (ingredient != null && !ingredient.IsMult && ingredient.StatID == "serve_time")
             {
-                Ingredient ingredient = IngredientData.GetIngValue(ingredients[i]);
-                totalServeTime += ingredient.ServeTimeModifier;
+                totalServeTime += ingredient.StatMod;
+            }
+        }
+        // Apply multiplicative modifiers
+        for (int i = 1; i < ingredients.Length; i++)
+        {
+            Ingredient ingredient = (Ingredient)IngredientData.GetIngValue(ingredients[i]);
+            if (ingredient != null && ingredient.IsMult && ingredient.StatID == "serve_time")
+            {
+                totalServeTime *= ingredient.StatMod;
             }
         }
 
         return Mathf.Max(0.1f, totalServeTime); // Ensure serve time is at least 0.1 seconds
     }
 
-    // Recalculate price based on all ingredients
-    public float GetCalculatedPrice()
-    {
-        float totalPrice = 0f;
-
-        for (int i = 0; i < ingredients.Length; i++)
-        {
-            if (ingredients[i] != null)
-            {
-                Ingredient ingredient = IngredientData.GetIngValue(ingredients[i]);
-                totalPrice += ingredient.Price;
-            }
-        }
-
-        return totalPrice;
-    }
-
     public float GetCalculatedSellPrice()
     {
-        float totalSellPrice = 0f;
+        if (ingredients[0] == null)
+            return 0f;
 
-        for (int i = 0; i < ingredients.Length; i++)
+
+        DrinkComponent baseIngredient = IngredientData.GetIngValue(ingredients[0]);
+        if (baseIngredient is not Spirit)
+            return 0f;
+
+        Spirit spirit = (Spirit)baseIngredient;
+
+        float totalSellPrice = spirit.BaseDrinkPrice;
+
+        // Apply additive modifiers from all ingredients
+        for (int i = 1; i < ingredients.Length; i++)
         {
-            if (ingredients[i] != null)
+            Ingredient ingredient = (Ingredient)IngredientData.GetIngValue(ingredients[i]);
+            if (ingredient != null && !ingredient.IsMult && ingredient.StatID == "drink_price")
             {
-                Ingredient ingredient = IngredientData.GetIngValue(ingredients[i]);
-                totalSellPrice += ingredient.SellPrice;
+                totalSellPrice += ingredient.StatMod;
+            }
+        }
+        // Apply multiplicative modifiers
+        for (int i = 1; i < ingredients.Length; i++)
+        {
+            Ingredient ingredient = (Ingredient)IngredientData.GetIngValue(ingredients[i]);
+            if (ingredient != null && ingredient.IsMult && ingredient.StatID == "drink_price")
+            {
+                totalSellPrice *= ingredient.StatMod;
             }
         }
 
@@ -78,24 +93,32 @@ public class Drink
         if (ingredients[0] == null)
             return 0f;
 
-        Ingredient baseIngredient = IngredientData.GetIngValue(ingredients[0]);
-        if (!(baseIngredient is Spirit))
+        DrinkComponent baseIngredient = IngredientData.GetIngValue(ingredients[0]);
+        if (baseIngredient is not Spirit)
             return 0f;
 
         Spirit spirit = (Spirit)baseIngredient;
         float totalDrinkTime = spirit.BaseCustomerDrinkTime;
 
-        // Apply modifiers from all ingredients
-        for (int i = 0; i < ingredients.Length; i++)
+        // Apply additive modifiers from all ingredients
+        for (int i = 1; i < ingredients.Length; i++)
         {
-            if (ingredients[i] != null)
+            Ingredient ingredient = (Ingredient)IngredientData.GetIngValue(ingredients[i]);
+            if (ingredient != null && !ingredient.IsMult && ingredient.StatID == "drink_time")
             {
-                Ingredient ingredient = IngredientData.GetIngValue(ingredients[i]);
-                totalDrinkTime += ingredient.CustomerDrinkTimeModifier;
+                totalDrinkTime += ingredient.StatMod;
             }
         }
-
-        return Mathf.Max(0.5f, totalDrinkTime); // Ensure drink time is at least 0.5 seconds
+        // Apply multiplicative modifiers
+        for (int i = 1; i < ingredients.Length; i++)
+        {
+            Ingredient ingredient = (Ingredient)IngredientData.GetIngValue(ingredients[i]);
+            if (ingredient != null && ingredient.IsMult && ingredient.StatID == "drink_time")
+            {
+                totalDrinkTime *= ingredient.StatMod;
+            }
+        }
+        return Mathf.Min(0.5f, totalDrinkTime); // Ensure drink time is at least 0.5 seconds
     }
 
     // Get the potency of the drink
@@ -104,20 +127,29 @@ public class Drink
         if (ingredients[0] == null)
             return 0f;
 
-        Ingredient baseIngredient = IngredientData.GetIngValue(ingredients[0]);
-        if (!(baseIngredient is Spirit))
+        DrinkComponent baseIngredient = IngredientData.GetIngValue(ingredients[0]);
+        if (baseIngredient is not Spirit)
             return 0f;
 
         Spirit spirit = (Spirit)baseIngredient;
         float totalPotency = spirit.BasePotency;
 
-        // Apply modifiers from all ingredients
-        for (int i = 0; i < ingredients.Length; i++)
+        // Apply additive modifiers from all ingredients
+        for (int i = 1; i < ingredients.Length; i++)
         {
-            if (ingredients[i] != null)
+            Ingredient ingredient = (Ingredient)IngredientData.GetIngValue(ingredients[i]);
+            if (ingredient != null && !ingredient.IsMult && ingredient.StatID == "potency")
             {
-                Ingredient ingredient = IngredientData.GetIngValue(ingredients[i]);
-                totalPotency += ingredient.PotencyModifier;
+                totalPotency += ingredient.StatMod;
+            }
+        }
+        // Apply multiplicative modifiers
+        for (int i = 1; i < ingredients.Length; i++)
+        {
+            Ingredient ingredient = (Ingredient)IngredientData.GetIngValue(ingredients[i]);
+            if (ingredient != null && ingredient.IsMult && ingredient.StatID == "potency")
+            {
+                totalPotency *= ingredient.StatMod;
             }
         }
 
@@ -126,6 +158,7 @@ public class Drink
 
     public void AddIngredient(string ing, int slot)
     {
+        if (slot < 0 || slot >= ingredients.Length) return;
         ingredients[slot] = ing;
 
         if (slot == 0)
