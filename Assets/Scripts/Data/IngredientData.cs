@@ -54,9 +54,9 @@ public static class IngredientData
         {
             string tierId       = $"{id}_{tiers[i]}";
             float m             = multipliers[i];
-            float tierServeTime = baseServeTime * m;
-            float tierDrinkTime = baseCustomerDrinkTime * m;
-            float tierPotency   = basePotency * m;
+            float tierServeTime = serveTime * m;
+            float tierDrinkTime = customerDrinkTime * m;
+            float tierPotency   = potency * m;
             float tierPrice     = price * m;
             float tierSellPrice = sellPrice * m;
 
