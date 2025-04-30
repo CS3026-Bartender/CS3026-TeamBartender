@@ -29,7 +29,7 @@ public class Ingredient
         ServeTimeModifier = serveTimeMod;
         CustomerDrinkTimeModifier = customerDrinkTimeMod;
         PotencyModifier = potencyMod;
-        Mods = new List<IngredientMod();
+        Mods = new List<IngredientMod>();
     }
 
     public Ingredient(string name, float price, float sellPrice, string desc, Sprite sprite,
