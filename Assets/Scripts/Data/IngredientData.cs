@@ -19,6 +19,21 @@ public static class IngredientData
         }
     }
 
+    public static void AddSpiritWithTiers(string id, string displayName, float price, float sellPrice, string desc, Sprite sprite,
+                                float serveTime, float customerDrinkTime, float potency,
+                                float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
+    {
+        List<IngredientMod> mods = new()
+        {
+            new IngredientMod("ServeTime", ModifierType.Additive, serveTimeMod),
+            new IngredientMod("CustomerDrinkTime", ModifierType.Additive, customerDrinkTimeMod),
+            new IngredientMod("Potency", ModifierType.Additive, potencyMod)
+        };
+
+        // Add base ingredient + tiers
+        AddIngredientWithTiers(id, displayName, price, sellPrice, desc, sprite, serveTime, customerDrinkTime, potency);
+    }
+
     public static void AddSpirit(string id, string displayName, float price, float sellPrice, string desc, Sprite sprite,
                                 float serveTime, float customerDrinkTime, float potency,
                                 float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
@@ -39,6 +54,36 @@ public static class IngredientData
         }
     }
 
+    // Helper method to create tiers for an ingredient
+    private static void AddIngredientWithTiers(string baseId, string displayName, float price, float sellPrice, string desc, Sprite sprite,
+                        float serveTime, float customerDrinkTime, float potency)
+    {
+        // Base ingredient
+        AddIngredient(baseId, displayName, price, sellPrice, desc, sprite, serveTime, customerDrinkTime, potency);
+
+        // Generate tiers
+        string[] tierNames = { "Great", "Epic" }; // Tiers: Great, Epic
+
+        // Tiers multipliers (10% for Great, 20% for Epic)
+        float[] tierMultipliers = { 1.1f, 1.2f }; 
+
+        for (int i = 0; i < tierNames.Length; i++)
+        {
+            string tierId = baseId + "_" + tierNames[i];
+            float multiplier = tierMultipliers[i];
+
+            // Apply the scaling
+            float newServeTime = serveTime * multiplier;
+            float newCustomerDrinkTime = customerDrinkTime * multiplier;
+            float newPotency = potency * multiplier;
+
+            // Add tiered ingredient
+            AddIngredient(tierId, tierNames[i] + " " + displayName, price * multiplier, sellPrice * multiplier, desc, sprite,
+                      newServeTime, newCustomerDrinkTime, newPotency);
+        }
+    }
+
+    
     public static Ingredient GetIngValue(string id)
     {
         if (id == null)
