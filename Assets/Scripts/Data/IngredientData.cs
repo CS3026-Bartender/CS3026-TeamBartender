@@ -54,6 +54,33 @@ public static class IngredientData
         }
     }
 
+    public static void AddSpiritWithTiers(string id, string displayName, float price, float sellPrice, string desc, Sprite sprite,
+                                    float baseServeTime, float baseCustomerDrinkTime, float basePotency,
+                                    float serveTimeMod = 0f,float customerDrinkTimeMod = 0f, float potencyMod = 0f)
+    {
+        // Base spirit
+        AddSpirit(id, displayName, price, sellPrice, desc, sprite, baseServeTime, baseCustomerDrinkTime, basePotency, serveTimeMod, customerDrinkTimeMod, potencyMod);
+
+        // Now add tiered variants
+        string[] tiers       = { "Great", "Epic" };
+        float[] multipliers  = { 1.10f, 1.20f };
+
+        for (int i = 0; i < tiers.Length; i++)
+        {
+            string tierId       = $"{id}_{tiers[i]}";
+            float m             = multipliers[i];
+            float tierServeTime = baseServeTime * m;
+            float tierDrinkTime = baseCustomerDrinkTime * m;
+            float tierPotency   = basePotency * m;
+            float tierPrice     = price * m;
+            float tierSellPrice = sellPrice * m;
+
+            AddSpirit(tierId,
+                      $"{tiers[i]} {displayName}", tierPrice, tierSellPrice, desc, sprite, tierServeTime, tierDrinkTime, tierPotency, serveTimeMod * m, customerDrinkTimeMod * m, potencyMod * m);
+        }
+    }
+
+
     // Helper method to create tiers for an ingredient
     private static void AddIngredientWithTiers(string baseId, string displayName, float price, float sellPrice, string desc, Sprite sprite,
                         float serveTime, float customerDrinkTime, float potency)
