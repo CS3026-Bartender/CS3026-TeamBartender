@@ -19,21 +19,6 @@ public static class IngredientData
         }
     }
 
-    public static void AddSpiritWithTiers(string id, string displayName, float price, float sellPrice, string desc, Sprite sprite,
-                                float serveTime, float customerDrinkTime, float potency,
-                                float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
-    {
-        List<IngredientMod> mods = new()
-        {
-            new IngredientMod("ServeTime", ModifierType.Additive, serveTimeMod),
-            new IngredientMod("CustomerDrinkTime", ModifierType.Additive, customerDrinkTimeMod),
-            new IngredientMod("Potency", ModifierType.Additive, potencyMod)
-        };
-
-        // Add base ingredient + tiers
-        AddIngredientWithTiers(id, displayName, price, sellPrice, desc, sprite, serveTime, customerDrinkTime, potency);
-    }
-
     public static void AddSpirit(string id, string displayName, float price, float sellPrice, string desc, Sprite sprite,
                                 float serveTime, float customerDrinkTime, float potency,
                                 float serveTimeMod = 0f, float customerDrinkTimeMod = 0f, float potencyMod = 0f)
@@ -79,7 +64,6 @@ public static class IngredientData
                       $"{tiers[i]} {displayName}", tierPrice, tierSellPrice, desc, sprite, tierServeTime, tierDrinkTime, tierPotency, serveTimeMod * m, customerDrinkTimeMod * m, potencyMod * m);
         }
     }
-
 
     // Helper method to create tiers for an ingredient
     private static void AddIngredientWithTiers(string baseId, string displayName, float price, float sellPrice, string desc, Sprite sprite,
