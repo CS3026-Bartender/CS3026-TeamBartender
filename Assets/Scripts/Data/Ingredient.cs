@@ -35,11 +35,11 @@ public class Ingredient
     public Ingredient(string name, float price, float sellPrice, string desc, Sprite sprite,
                      List<IngredientMod> mods
     ) : this(name, price, sellPrice, desc, sprite,
-        mods?.FindAll(m => m.StatID == nameof(ServeTimeModifier) && mods.ModifierType = ModifierType.Additive)
+        mods?.FindAll(m => m.StatID == nameof(ServeTimeModifier) && mods.ModifierType == ModifierType.Additive)
             .Sum(m => m.Value),
-        mods?.FindAll(m => m.statID == nameof(CustomerDrinkTimeModifier) && m.ModifierType == ModifierType.Additive)
+        mods?.FindAll(m => m.StatID == nameof(CustomerDrinkTimeModifier) && m.ModifierType == ModifierType.Additive)
             .Sum(m => m.Value),
-        mods?.FindAll(m => m.statID == nameof(PotencyModifier) && m.ModifierType == ModifierType.Additive)
+        mods?.FindAll(m => m.StatID == nameof(PotencyModifier) && m.ModifierType == ModifierType.Additive)
             .Sum(m => m.Value))
     {
         Mods = mods;
@@ -47,6 +47,6 @@ public class Ingredient
 
     public string GetDebug()
     {
-        return $"{DisplayName} ({Tier}), ${Price}, {Description}";
+        return $"{DisplayName}, ${Price}, {Description}";
     }
 }
