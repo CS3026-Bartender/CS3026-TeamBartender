@@ -25,9 +25,9 @@ public static class IngredientData
     {
         List<IngredientMod> mods = new()
         {
-            new IngredientMod(ModifierType.Additive, nameof(ServeTimeModifier), serveTimeMod),
-            new IngredientMod(ModifierType.Additive, nameof(CustomerDrinkTimeModifier), customerDrinkTimeMod),
-            new IngredientMod(ModifierType.Additive, nameof(PotencyModifier), potencyMod)
+            new IngredientMod(ModifierType.Additive, "ServeTime", serveTimeMod),
+            new IngredientMod(ModifierType.Additive, "CustomerDrinkTime", customerDrinkTimeMod),
+            new IngredientMod(ModifierType.Additive, "Potency", potencyMod)
         };
 
         Spirit newSpirit = new Spirit(displayName, price, sellPrice, desc, sprite, serveTime, customerDrinkTime, potency,
